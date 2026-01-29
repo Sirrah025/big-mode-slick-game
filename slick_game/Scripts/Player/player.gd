@@ -1,9 +1,9 @@
 extends CharacterBody3D
 
 var speed
-const WALK_SPEED = 5.0
-const SPRINT_SPEED = 8.0
-const JUMP_VELOCITY = 4.5
+@export var WALK_SPEED = 5.0
+@export var SPRINT_SPEED = 8.0
+@export var JUMP_VELOCITY = 4.5
 const MOUSE_SENSITIVITY = 0.0015
 
 #Head bob variables
@@ -58,8 +58,9 @@ func _physics_process(delta: float) -> void:
 		velocity.z = lerp(velocity.z, direction.z * speed, delta * 3.0)
 
 	#Head bob
-	t_bob += delta * velocity.length() * float(is_on_floor())
-	camera.transform.origin = _headbob(t_bob)
+	if Settings.head_bob_enabled:
+		t_bob += delta * velocity.length() * float(is_on_floor())
+		camera.transform.origin = _headbob(t_bob)
 
 	#FOV
 	var velocity_clamped = clamp(velocity.length(), 0.5, SPRINT_SPEED * 2)
