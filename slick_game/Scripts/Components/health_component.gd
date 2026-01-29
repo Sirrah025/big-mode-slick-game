@@ -1,9 +1,11 @@
 extends Node
 
+signal entity_died
+
 @export var health := 100
 
 
-
-
-func _on_hitbox_component_hit_box_hit(damage: int, speed_loss: float) -> void:
+func _on_damage(damage: int) -> void:
 	health -= damage
+	if health <= 0:
+		entity_died.emit()

@@ -1,0 +1,8 @@
+[gd_resource type="Resource" script_class="AttackData" format=3 uid="uid://bp3avlsoamum2"]
+
+[ext_resource type="Script" uid="uid://cv4qrlfo2ryb8" path="res://Entities/Attack_Data.gd" id="1_xlgf6"]
+
+[resource]
+script = ExtResource("1_xlgf6")
+speed_change = -1.0
+metadata/_custom_type_script = "uid://cv4qrlfo2ryb8"
