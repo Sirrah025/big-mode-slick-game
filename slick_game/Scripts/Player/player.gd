@@ -1,5 +1,6 @@
 extends CharacterBody3D
 
+# Speed variables
 var speed
 @export var WALK_SPEED = 5.0
 @export var SPRINT_SPEED = 8.0
@@ -14,6 +15,9 @@ var t_bob = 0.0
 #FOV variables
 const BASE_FOV = 75.0
 const FOV_CHANGE = 1.5
+
+# Speed Change Timer
+@onready var speed_change_cooldown_timer = %"Speed Change Cooldown"
 
 @onready var head = $Head
 @onready var camera = $Head/PlayerCamera
@@ -74,3 +78,12 @@ func _headbob(time) -> Vector3:
 	pos.y = sin(time * BOB_FREQ) * BOB_AMP
 	pos.x = cos(time * BOB_FREQ / 2) * BOB_AMP
 	return pos
+
+
+# Change speed of player temporarily
+func _on_alter_speed(speed_change: float) -> void:
+	# A timer needed to give players breathing room for negative speed changes
+	if speed_change_cooldown_timer.is_stopped() && speed_change < 0.0:
+		speed_change_cooldown_timer.start()
+	else:
+		speed += speed_change

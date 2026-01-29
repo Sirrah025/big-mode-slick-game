@@ -36,6 +36,11 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.505445, 0)
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Hitbox Component" unique_id=574987428]
 shape = SubResource("CapsuleShape3D_vgqql")
 
+[node name="Speed Change Cooldown" type="Timer" parent="." unique_id=1907676990]
+unique_name_in_owner = true
+wait_time = 2.0
+
 [connection signal="area_entered" from="Hitbox Component" to="Hitbox Component" method="_on_area_entered"]
 [connection signal="body_entered" from="Hitbox Component" to="Hitbox Component" method="_on_body_entered"]
-[connection signal="hit_box_hit" from="Hitbox Component" to="Health Component" method="_on_hitbox_component_hit_box_hit"]
+[connection signal="change_speed" from="Hitbox Component" to="." method="_on_alter_speed"]
+[connection signal="damage" from="Hitbox Component" to="Health Component" method="_on_damage"]

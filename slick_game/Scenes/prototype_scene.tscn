@@ -24,6 +24,11 @@ material = SubResource("StandardMaterial3D_j03km")
 size = Vector3(4, 2, 10)
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_lci7e"]
+sky_top_color = Color(0.25533897, 0.013022352, 0.33062598, 1)
+sky_horizon_color = Color(2.3102762e-06, 0.36333403, 0.5027083, 1)
+ground_bottom_color = Color(0, 0, 0, 1)
+ground_horizon_color = Color(2.4065375e-07, 0.3797114, 0.5697334, 1)
+ground_curve = 0.07210041
 
 [sub_resource type="Sky" id="Sky_3a2rb"]
 sky_material = SubResource("ProceduralSkyMaterial_lci7e")
