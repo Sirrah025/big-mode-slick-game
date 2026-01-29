@@ -15,6 +15,10 @@ run/main_scene="uid://c5vfddgd0xde0"
 config/features=PackedStringArray("4.6", "Forward Plus")
 config/icon="res://icon.svg"
 
+[autoload]
+
+Settings="*uid://5htr5nv5adyt"
+
 [display]
 
 window/size/viewport_width=1920
@@ -62,6 +66,8 @@ Sprint={
 
 3d_physics/layer_1="Player"
 3d_physics/layer_2="Level"
+3d_physics/layer_3="Player Attack"
+3d_physics/layer_4="Enemy Attack"
 
 [physics]
 
