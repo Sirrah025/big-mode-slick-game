@@ -3,6 +3,7 @@
 [ext_resource type="Script" uid="uid://ba464sf0lqcml" path="res://Scripts/Player/player.gd" id="1_v0iea"]
 [ext_resource type="PackedScene" uid="uid://bpxws01g1myf6" path="res://Systems/components/health_component.tscn" id="2_6t5aa"]
 [ext_resource type="PackedScene" uid="uid://b12fqgptd5y3d" path="res://Systems/components/hitbox_component.tscn" id="3_6t5aa"]
+[ext_resource type="Script" uid="uid://cqufbqehm15a" path="res://Scripts/Player/player_death_handler.gd" id="4_vgqql"]
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_f60y1"]
 radius = 0.375
@@ -31,6 +32,9 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.505445, 0)
 
 [node name="Health Component" parent="." unique_id=1334057615 instance=ExtResource("2_6t5aa")]
 
+[node name="Player Death Handler" type="Node" parent="." unique_id=928962245]
+script = ExtResource("4_vgqql")
+
 [node name="Hitbox Component" parent="." unique_id=973421447 instance=ExtResource("3_6t5aa")]
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Hitbox Component" unique_id=574987428]
@@ -40,6 +44,7 @@ shape = SubResource("CapsuleShape3D_vgqql")
 unique_name_in_owner = true
 wait_time = 2.0
 
+[connection signal="entity_died" from="Health Component" to="Player Death Handler" method="_on_entity_died"]
 [connection signal="area_entered" from="Hitbox Component" to="Hitbox Component" method="_on_area_entered"]
 [connection signal="body_entered" from="Hitbox Component" to="Hitbox Component" method="_on_body_entered"]
 [connection signal="change_speed" from="Hitbox Component" to="." method="_on_alter_speed"]
