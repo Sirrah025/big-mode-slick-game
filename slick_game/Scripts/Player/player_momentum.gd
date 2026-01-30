@@ -17,10 +17,10 @@ var GRAVITY = ProjectSettings.get_setting("physics/3d/default_gravity")
 
 const MOUSE_SENSITIVITY: float = 0.0015
 
-# --- Sliding ---
-@export var slide_force_multiplier: float = 11.6
-@export var slide_friction_multiplier: float = 0
-@export var slide_steer_multiplier: float = 0.15
+# --- Slipping ---
+@export var slip_force_multiplier: float = 11.6
+@export var slip_friction_multiplier: float = 0
+@export var slip_steer_multiplier: float = 0.15
 @export var is_sliding: bool = false
 
 # --- Dash ---
@@ -67,14 +67,14 @@ func _unhandled_input(event: InputEvent) -> void:
 	if event is InputEventMouseMotion:
 		head.rotate_y(-event.relative.x * MOUSE_SENSITIVITY)
 		camera.rotate_x(-event.relative.y * MOUSE_SENSITIVITY)
-		camera.rotation.x = clamp(camera.rotation.x, deg_to_rad(-40), deg_to_rad(60))
+		camera.rotation.x = clamp(camera.rotation.x, deg_to_rad(-50), deg_to_rad(60))
 
 func _physics_process(delta: float) -> void:
 	_apply_gravity(delta)
 	_handle_jump()
 	_update_momentum(delta)
 	_handle_dash()
-	_apply_velocity()
+	_apply_velocity(delta)
 	_update_headbob(delta)
 	_update_camera_tilt(delta)
 	_update_fov(delta)
@@ -110,7 +110,7 @@ func _update_momentum(delta: float) -> void:
 		applied_force = sprint_force
 		base_speed = sprint_base_speed
 	if is_sliding:
-		applied_force *= slide_force_multiplier
+		applied_force *= slip_force_multiplier
 
 	# Ensure minimum momentum
 	if momentum.length() < base_speed:
@@ -126,7 +126,7 @@ func _update_momentum(delta: float) -> void:
 	# Steering
 	var steer_strength = lerp(12.0, 3.0, speed_ratio)
 	if is_sliding:
-		steer_strength *= slide_steer_multiplier
+		steer_strength *= slip_steer_multiplier
 	momentum = momentum.normalized().slerp(input_dir, steer_strength * delta) * momentum.length()
 
 	# Reduce lateral drift
@@ -152,17 +152,17 @@ func _apply_friction(delta: float) -> void:
 	var speed_ratio = clamp(momentum.length() / max_speed, 0, 1)
 	var friction_strength = lerp(friction_low, friction_high, speed_ratio)
 	if is_sliding:
-		friction_strength *= slide_friction_multiplier
+		friction_strength *= slip_friction_multiplier
 	momentum = momentum.move_toward(Vector3.ZERO, friction_strength * delta)
 
 # --- Apply momentum to velocity ---
-func _apply_velocity() -> void:
+func _apply_velocity(delta) -> void:
 	var final_velocity = momentum
 	if is_dashing:
 		final_velocity += dash_velocity
 
 	if dash_velocity.length() > 0:
-		dash_velocity *= dash_decay_multiplier
+		dash_velocity *= dash_decay_multiplier * delta * 60
 		if dash_velocity.length() < 0.01:
 			dash_velocity = Vector3.ZERO
 
