@@ -1,0 +1,53 @@
+[gd_scene format=3 uid="uid://cwd2larse212k"]
+
+[ext_resource type="Script" uid="uid://di2n6ssehce0u" path="res://Scripts/next_scene.gd" id="1_28flt"]
+[ext_resource type="PackedScene" uid="uid://c5vfddgd0xde0" path="res://Scenes/prototype_scene.tscn" id="2_1ehe0"]
+
+[node name="Main Menu" type="Control" unique_id=1779451589]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Main Menu Components" type="VBoxContainer" parent="." unique_id=1441620085]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -77.5
+offset_top = -30.5
+offset_right = 77.5
+offset_bottom = 30.5
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="RichTextLabel" type="RichTextLabel" parent="Main Menu Components" unique_id=1240103253]
+custom_minimum_size = Vector2(1000, 257.975)
+layout_mode = 2
+theme_override_font_sizes/normal_font_size = 154
+bbcode_enabled = true
+text = "Slick Hacking"
+horizontal_alignment = 1
+
+[node name="Start Game" type="Button" parent="Main Menu Components" unique_id=1829671039]
+layout_mode = 2
+theme_override_font_sizes/font_size = 38
+text = "Start Game"
+script = ExtResource("1_28flt")
+next_scene = ExtResource("2_1ehe0")
+metadata/_edit_use_anchors_ = true
+
+[node name="Settings" type="Button" parent="Main Menu Components" unique_id=1420054076]
+layout_mode = 2
+theme_override_font_sizes/font_size = 38
+text = "Settings"
+script = ExtResource("1_28flt")
+metadata/_edit_use_anchors_ = true
+
+[connection signal="pressed" from="Main Menu Components/Start Game" to="Main Menu Components/Start Game" method="_on_start_game_pressed"]
+[connection signal="pressed" from="Main Menu Components/Settings" to="Main Menu Components/Settings" method="_on_settings_pressed"]

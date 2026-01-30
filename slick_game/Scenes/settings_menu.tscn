@@ -1,0 +1,76 @@
+[gd_scene format=3 uid="uid://clou8bnmvxlxq"]
+
+[ext_resource type="Script" uid="uid://ixavlecw5nk7" path="res://Scripts/set_video_settings.gd" id="1_7y5a0"]
+[ext_resource type="Script" uid="uid://di2n6ssehce0u" path="res://Scripts/next_scene.gd" id="2_h2y1r"]
+[ext_resource type="Script" uid="uid://cy255v3fd123b" path="res://Scripts/set_sound_settings.gd" id="4_3etfd"]
+[ext_resource type="Script" uid="uid://mllbhhegumkx" path="res://Scripts/set_game_settings.gd" id="4_h2y1r"]
+
+[node name="Settings Menu" type="Control" unique_id=423943875]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Back Button" type="Button" parent="." unique_id=2015885995]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -224.0
+offset_top = -164.0
+offset_right = -68.0
+offset_bottom = -68.0
+grow_horizontal = 0
+grow_vertical = 0
+theme_override_font_sizes/font_size = 64
+text = "Back"
+script = ExtResource("2_h2y1r")
+
+[node name="TabContainer" type="TabContainer" parent="." unique_id=399343739]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 464.0
+grow_horizontal = 2
+theme_override_font_sizes/font_size = 40
+tab_alignment = 1
+current_tab = 1
+all_tabs_in_front = true
+
+[node name="Video" type="VBoxContainer" parent="TabContainer" unique_id=147571436]
+visible = false
+layout_mode = 2
+script = ExtResource("1_7y5a0")
+metadata/_tab_index = 0
+
+[node name="Audio" type="VBoxContainer" parent="TabContainer" unique_id=1461703993]
+layout_mode = 2
+script = ExtResource("4_3etfd")
+metadata/_tab_index = 1
+
+[node name="Game" type="VBoxContainer" parent="TabContainer" unique_id=322908651]
+visible = false
+layout_mode = 2
+script = ExtResource("4_h2y1r")
+metadata/_tab_index = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="TabContainer/Game" unique_id=1795915575]
+layout_mode = 2
+
+[node name="RichTextLabel" type="RichTextLabel" parent="TabContainer/Game/HBoxContainer" unique_id=631461375]
+custom_minimum_size = Vector2(254.705, 62.07)
+layout_mode = 2
+theme_override_font_sizes/normal_font_size = 32
+text = "HeadBobbing"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="HeadbobCheckButton" type="CheckButton" parent="TabContainer/Game/HBoxContainer" unique_id=1941611775]
+layout_mode = 2
+
+[connection signal="pressed" from="Back Button" to="Back Button" method="_on_back_to_menu_pressed"]
+[connection signal="toggled" from="TabContainer/Game/HBoxContainer/HeadbobCheckButton" to="TabContainer/Game" method="_on_headbob_check_button_toggled"]

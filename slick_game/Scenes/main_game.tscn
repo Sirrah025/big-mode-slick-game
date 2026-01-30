@@ -1,0 +1,13 @@
+[gd_scene format=3 uid="uid://cdhc0ga7j26pn"]
+
+[ext_resource type="PackedScene" uid="uid://cwd2larse212k" path="res://Scenes/main_menu.tscn" id="1_l756w"]
+[ext_resource type="PackedScene" uid="uid://clou8bnmvxlxq" path="res://Scenes/settings_menu.tscn" id="2_pu3va"]
+
+[node name="Main Game" type="Node" unique_id=1415998825]
+
+[node name="Main Menu" parent="." unique_id=1779451589 instance=ExtResource("1_l756w")]
+unique_name_in_owner = true
+
+[node name="Settings Menu" parent="." unique_id=423943875 instance=ExtResource("2_pu3va")]
+unique_name_in_owner = true
+visible = false

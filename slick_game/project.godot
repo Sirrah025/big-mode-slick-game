@@ -11,20 +11,33 @@ config_version=5
 [application]
 
 config/name="Slick Game"
-run/main_scene="uid://c5vfddgd0xde0"
+run/main_scene="uid://cdhc0ga7j26pn"
 config/features=PackedStringArray("4.6", "Forward Plus")
 config/icon="res://icon.svg"
+
+[audio]
+
+buses/default_bus_layout="uid://bvscwyd48yj7q"
 
 [autoload]
 
 Settings="*uid://5htr5nv5adyt"
 GlobalSignals="*uid://cg8be46oyhk51"
+LoadScenes="*uid://cfrbntjytvmhg"
 
 [display]
 
 window/size/viewport_width=1920
 window/size/viewport_height=1080
-window/size/mode=3
+
+[file_customization]
+
+folder_colors={
+"res://Audio/": "red",
+"res://Scenes/": "green",
+"res://Scripts/": "purple",
+"res://Systems/": "gray"
+}
 
 [global_group]
 
