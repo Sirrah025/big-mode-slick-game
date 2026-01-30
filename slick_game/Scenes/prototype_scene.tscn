@@ -9,7 +9,7 @@ albedo_color = Color(0.94793504, 0.5137621, 0.3670795, 1)
 
 [sub_resource type="BoxMesh" id="BoxMesh_lci7e"]
 material = SubResource("StandardMaterial3D_lci7e")
-size = Vector3(42.59, 0.175, 51.125)
+size = Vector3(65.595, 0.175, 1000)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_3a2rb"]
 albedo_color = Color(0.31764707, 0.34117648, 0.57254905, 1)
@@ -49,7 +49,7 @@ sky = SubResource("Sky_3a2rb")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.4749904, 0)
 
 [node name="CSGMesh3D" type="CSGMesh3D" parent="." unique_id=981302533]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5331192, 1.1805716, 1.1573772)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5331192, 1.1805716, -457.78302)
 use_collision = true
 collision_layer = 2
 mesh = SubResource("BoxMesh_lci7e")
