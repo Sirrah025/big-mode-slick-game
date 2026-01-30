@@ -1,0 +1,25 @@
+[gd_scene format=3 uid="uid://b4yueer6n0p3a"]
+
+[ext_resource type="PackedScene" uid="uid://clou8bnmvxlxq" path="res://Scenes/Menus/settings_menu.tscn" id="1_vsq6n"]
+[ext_resource type="Script" uid="uid://di2n6ssehce0u" path="res://Scripts/Scene Changes/next_scene.gd" id="2_hydom"]
+
+[node name="In Game Settings Menu" unique_id=423943875 instance=ExtResource("1_vsq6n")]
+
+[node name="Back Button" type="Button" parent="." index="0" unique_id=919444405]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -224.0
+offset_top = -164.0
+offset_right = -68.0
+offset_bottom = -68.0
+grow_horizontal = 0
+grow_vertical = 0
+theme_override_font_sizes/font_size = 64
+text = "Back"
+script = ExtResource("2_hydom")
+
+[connection signal="pressed" from="Back Button" to="Back Button" method="_on_back_to_menu_pressed"]

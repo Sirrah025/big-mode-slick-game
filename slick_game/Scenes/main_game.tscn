@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://cdhc0ga7j26pn"]
 
-[ext_resource type="PackedScene" uid="uid://cwd2larse212k" path="res://Scenes/main_menu.tscn" id="1_l756w"]
-[ext_resource type="PackedScene" uid="uid://clou8bnmvxlxq" path="res://Scenes/settings_menu.tscn" id="2_pu3va"]
+[ext_resource type="PackedScene" uid="uid://cwd2larse212k" path="res://Scenes/Menus/main_menu.tscn" id="1_l756w"]
+[ext_resource type="PackedScene" uid="uid://clou8bnmvxlxq" path="res://Scenes/Menus/settings_menu.tscn" id="2_pu3va"]
 
 [node name="Main Game" type="Node" unique_id=1415998825]
 

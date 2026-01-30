@@ -1,8 +1,8 @@
 [gd_scene format=3 uid="uid://c5vfddgd0xde0"]
 
-[ext_resource type="PackedScene" uid="uid://cqqfiaudklw6k" path="res://Scenes/player.tscn" id="1_lci7e"]
-[ext_resource type="Script" uid="uid://cyiyfmn52x3va" path="res://Systems/components/Attack_Component.gd" id="2_3a2rb"]
-[ext_resource type="Resource" uid="uid://rwdi31u1fbjd" path="res://Entities/enemies/Attack Data/Player Boost.tres" id="3_j03km"]
+[ext_resource type="PackedScene" uid="uid://cqqfiaudklw6k" path="res://Scenes/player.tscn" id="1_kf5rd"]
+[ext_resource type="Script" uid="uid://cyiyfmn52x3va" path="res://Systems/components/Attack_Component.gd" id="2_3xn65"]
+[ext_resource type="Resource" uid="uid://rwdi31u1fbjd" path="res://Entities/enemies/Attack Data/Player Boost.tres" id="3_8goci"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_lci7e"]
 albedo_color = Color(0.94793504, 0.5137621, 0.3670795, 1)
@@ -45,7 +45,7 @@ sky = SubResource("Sky_3a2rb")
 
 [node name="Prototype Scene" type="Node3D" unique_id=245098700]
 
-[node name="Player" parent="." unique_id=99981486 instance=ExtResource("1_lci7e")]
+[node name="Player" parent="." unique_id=99981486 instance=ExtResource("1_kf5rd")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.4749904, 0)
 
 [node name="CSGMesh3D" type="CSGMesh3D" parent="." unique_id=981302533]
@@ -74,8 +74,8 @@ transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 0
 
 [node name="Boost Test" type="Area3D" parent="." unique_id=275752986]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.7070575, 10.433216)
-script = ExtResource("2_3a2rb")
-effect = ExtResource("3_j03km")
+script = ExtResource("2_3xn65")
+effect = ExtResource("3_8goci")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Boost Test" unique_id=1936104024]
 mesh = SubResource("PrismMesh_j03km")

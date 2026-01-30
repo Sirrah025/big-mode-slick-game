@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://cwd2larse212k"]
 
-[ext_resource type="Script" uid="uid://di2n6ssehce0u" path="res://Scripts/next_scene.gd" id="1_28flt"]
-[ext_resource type="PackedScene" uid="uid://c5vfddgd0xde0" path="res://Scenes/prototype_scene.tscn" id="2_1ehe0"]
+[ext_resource type="Script" uid="uid://di2n6ssehce0u" path="res://Scripts/Scene Changes/next_scene.gd" id="1_pha2q"]
+[ext_resource type="PackedScene" uid="uid://c5vfddgd0xde0" path="res://Scenes/Levels/prototype_scene.tscn" id="2_penys"]
 
 [node name="Main Menu" type="Control" unique_id=1779451589]
 layout_mode = 3
@@ -38,16 +38,24 @@ horizontal_alignment = 1
 layout_mode = 2
 theme_override_font_sizes/font_size = 38
 text = "Start Game"
-script = ExtResource("1_28flt")
-next_scene = ExtResource("2_1ehe0")
+script = ExtResource("1_pha2q")
+next_scene = ExtResource("2_penys")
 metadata/_edit_use_anchors_ = true
 
 [node name="Settings" type="Button" parent="Main Menu Components" unique_id=1420054076]
 layout_mode = 2
 theme_override_font_sizes/font_size = 38
 text = "Settings"
-script = ExtResource("1_28flt")
+script = ExtResource("1_pha2q")
+metadata/_edit_use_anchors_ = true
+
+[node name="Quit" type="Button" parent="Main Menu Components" unique_id=1525847825]
+layout_mode = 2
+theme_override_font_sizes/font_size = 38
+text = "Quit"
+script = ExtResource("1_pha2q")
 metadata/_edit_use_anchors_ = true
 
 [connection signal="pressed" from="Main Menu Components/Start Game" to="Main Menu Components/Start Game" method="_on_start_game_pressed"]
 [connection signal="pressed" from="Main Menu Components/Settings" to="Main Menu Components/Settings" method="_on_settings_pressed"]
+[connection signal="pressed" from="Main Menu Components/Quit" to="Main Menu Components/Quit" method="_on_quit_pressed"]
