@@ -15,6 +15,10 @@ height = 1.7
 radius = 0.375
 height = 1.7
 
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_x3wgy"]
+radius = 0.375
+height = 1.1796631
+
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_vgqql"]
 
 [node name="Player" type="CharacterBody3D" unique_id=99981486 groups=["Player"]]
@@ -22,10 +26,19 @@ collision_mask = 2
 script = ExtResource("1_vgqql")
 
 [node name="Mesh" type="MeshInstance3D" parent="." unique_id=667297727]
+visible = false
 mesh = SubResource("CapsuleMesh_f60y1")
 
-[node name="CollisionShape" type="CollisionShape3D" parent="." unique_id=1644640873]
+[node name="NormalHitBox" type="CollisionShape3D" parent="." unique_id=1644640873]
 shape = SubResource("CapsuleShape3D_v0iea")
+
+[node name="CrouchHitBox" type="CollisionShape3D" parent="." unique_id=930497082]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.2601685, 0)
+shape = SubResource("CapsuleShape3D_x3wgy")
+
+[node name="SpaceCheck" type="RayCast3D" parent="." unique_id=1683962218]
+target_position = Vector3(0, 0.85, 0)
+collision_mask = 2
 
 [node name="Head" type="Node3D" parent="." unique_id=248747626]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.505445, 0)
@@ -38,6 +51,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.505445, 0)
 script = ExtResource("4_vgqql")
 
 [node name="Hitbox Component" parent="." unique_id=973421447 instance=ExtResource("3_6t5aa")]
+visible = false
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Hitbox Component" unique_id=574987428]
 shape = SubResource("CapsuleShape3D_vgqql")
@@ -45,6 +59,7 @@ shape = SubResource("CapsuleShape3D_vgqql")
 [node name="Speed Change Cooldown" type="Timer" parent="." unique_id=1907676990]
 unique_name_in_owner = true
 wait_time = 2.0
+one_shot = true
 
 [node name="DashCooldownTimer" type="Timer" parent="." unique_id=963707597]
 wait_time = 2.0
@@ -54,12 +69,17 @@ one_shot = true
 wait_time = 0.5
 one_shot = true
 
+[node name="SlidingBoostCooldown" type="Timer" parent="." unique_id=2128327456]
+wait_time = 1.2
+one_shot = true
+
 [node name="SpeedTest" type="Label" parent="." unique_id=404264627]
 offset_right = 40.0
 offset_bottom = 23.0
 
 [node name="Pause Menu" type="Control" parent="." unique_id=1826141487]
 process_mode = 3
+visible = false
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -131,6 +151,7 @@ layout_mode = 1
 [connection signal="change_speed" from="Hitbox Component" to="." method="_on_alter_speed"]
 [connection signal="damage" from="Hitbox Component" to="Health Component" method="_on_damage"]
 [connection signal="timeout" from="DashDurationTimer" to="." method="_on_dash_duration_timer_timeout"]
+[connection signal="timeout" from="SlidingBoostCooldown" to="." method="_on_sliding_boost_cooldown_timeout"]
 [connection signal="pressed" from="Pause Menu/Container/Button Container/ResumeButton" to="Pause Menu" method="_on_resume_button_pressed"]
 [connection signal="pressed" from="Pause Menu/Container/Button Container/SettingsButton" to="Pause Menu" method="_on_settings_button_pressed"]
 [connection signal="pressed" from="Pause Menu/Container/Button Container/MainMenuButton" to="Pause Menu" method="_on_main_menu_button_pressed"]

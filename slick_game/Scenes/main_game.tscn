@@ -10,4 +10,3 @@ unique_name_in_owner = true
 
 [node name="Settings Menu" parent="." unique_id=423943875 instance=ExtResource("2_pu3va")]
 unique_name_in_owner = true
-visible = false
