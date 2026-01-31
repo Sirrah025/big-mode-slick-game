@@ -1,0 +1,13 @@
+[gd_resource type="ShaderMaterial" format=3 uid="uid://b8b5vnl3dyv4"]
+
+[ext_resource type="Shader" uid="uid://bm7oinlvktn7v" path="res://Entities/arts/PSX_Shader.gdshader" id="1_off5j"]
+[ext_resource type="Texture2D" uid="uid://b776e3erfk1h3" path="res://Entities/enemies/Ranged/Ranged Enemy Color Map.png" id="2_l3i22"]
+
+[resource]
+render_priority = 0
+shader = ExtResource("1_off5j")
+shader_parameter/affine_mapping = false
+shader_parameter/albedo = ExtResource("2_l3i22")
+shader_parameter/alpha_scissor = 0.5
+shader_parameter/jitter = 0.25
+shader_parameter/resolution = Vector2i(320, 240)

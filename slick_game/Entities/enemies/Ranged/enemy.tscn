@@ -1,0 +1,101 @@
+[gd_scene format=3 uid="uid://cmbapyfubp2th"]
+
+[ext_resource type="PackedScene" uid="uid://b471a5o1g2r5s" path="res://Entities/enemies/Ranged/Ranged Enemy.glb" id="1_ar4ve"]
+[ext_resource type="Script" uid="uid://dho186ajglld4" path="res://Scripts/Enemies/enemy_animation_tree.gd" id="2_0gfor"]
+[ext_resource type="Script" uid="uid://cf12b1w426f1g" path="res://Entities/enemies/Ranged/Ranged_Attack.gd" id="3_pa5df"]
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_pa5df"]
+animation = &"Float"
+
+[sub_resource type="AnimationNodeBlend2" id="AnimationNodeBlend2_ymcu4"]
+filter_enabled = true
+filters = ["", "Ranged Armature/Skeleton3D:Body"]
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_hyhlp"]
+animation = &"At Ready"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_jnjvl"]
+animation = &"Fire"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_2f1rj"]
+animation = &"Idle"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_lkdd0"]
+animation = &"Ready Fire"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_xc2wx"]
+advance_mode = 0
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_ryoam"]
+advance_mode = 0
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_uyk2m"]
+switch_mode = 2
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_ig0j2"]
+advance_mode = 0
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_wsalm"]
+switch_mode = 2
+advance_mode = 2
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_78gku"]
+advance_mode = 0
+
+[sub_resource type="AnimationNodeStateMachine" id="AnimationNodeStateMachine_q5n0g"]
+"states/At Ready/node" = SubResource("AnimationNodeAnimation_hyhlp")
+"states/At Ready/position" = Vector2(549, 100)
+states/End/position = Vector2(1007, 100)
+states/Fire/node = SubResource("AnimationNodeAnimation_jnjvl")
+states/Fire/position = Vector2(882, 100)
+states/Idle/node = SubResource("AnimationNodeAnimation_2f1rj")
+states/Idle/position = Vector2(380, 100)
+"states/Ready Fire/node" = SubResource("AnimationNodeAnimation_lkdd0")
+"states/Ready Fire/position" = Vector2(735, 100)
+transitions = ["Start", "Idle", SubResource("AnimationNodeStateMachineTransition_xc2wx"), "Idle", "At Ready", SubResource("AnimationNodeStateMachineTransition_ryoam"), "At Ready", "Ready Fire", SubResource("AnimationNodeStateMachineTransition_uyk2m"), "Ready Fire", "Fire", SubResource("AnimationNodeStateMachineTransition_ig0j2"), "Fire", "Ready Fire", SubResource("AnimationNodeStateMachineTransition_wsalm"), "Fire", "End", SubResource("AnimationNodeStateMachineTransition_78gku")]
+graph_offset = Vector2(122, 24)
+
+[sub_resource type="AnimationNodeBlendTree" id="AnimationNodeBlendTree_r5bsr"]
+graph_offset = Vector2(-698.9647, 42.527405)
+nodes/Animation/node = SubResource("AnimationNodeAnimation_pa5df")
+nodes/Animation/position = Vector2(-380, 380)
+"nodes/Float Blend/node" = SubResource("AnimationNodeBlend2_ymcu4")
+"nodes/Float Blend/position" = Vector2(60, 140)
+nodes/StateMachine/node = SubResource("AnimationNodeStateMachine_q5n0g")
+nodes/StateMachine/position = Vector2(-520, 120)
+node_connections = [&"output", 0, &"Float Blend", &"Float Blend", 0, &"StateMachine", &"Float Blend", 1, &"Animation"]
+
+[node name="Enemy" type="CharacterBody3D" unique_id=1279462332]
+
+[node name="NavigationAgent3D" type="NavigationAgent3D" parent="." unique_id=1252521370]
+
+[node name="Ranged Enemy" parent="." unique_id=1889161200 instance=ExtResource("1_ar4ve")]
+
+[node name="Skeleton3D" parent="Ranged Enemy/Ranged Armature" parent_id_path=PackedInt32Array(1889161200, 1903291253) index="0" unique_id=1197683865]
+bones/1/position = Vector3(0, 1.694772, 0)
+bones/5/rotation = Quaternion(-0.26579824, -0.1738688, -0.49822935, 0.8067766)
+bones/6/rotation = Quaternion(0.65280277, -2.5738034e-05, -0.46033502, 0.60161483)
+bones/8/rotation = Quaternion(-0.3180187, 0.15927142, 0.50693285, 0.78518534)
+bones/9/rotation = Quaternion(0.6751889, 2.40691e-05, 0.47612095, 0.5634082)
+bones/10/position = Vector3(2.1374474, 3.899799, 1.7322459)
+bones/11/position = Vector3(-1.9202275, -2.070725, -4.866846)
+bones/12/position = Vector3(-2.0701807, 3.9726703, 1.5263634)
+bones/13/position = Vector3(2.364166, -2.6123853, -5.385218)
+
+[node name="AnimationTree" type="AnimationTree" parent="." unique_id=24667294]
+root_node = NodePath("../Ranged Enemy")
+tree_root = SubResource("AnimationNodeBlendTree_r5bsr")
+anim_player = NodePath("../Ranged Enemy/AnimationPlayer")
+"parameters/Float Blend/blend_amount" = 1.0
+script = ExtResource("2_0gfor")
+
+[node name="Attack Origins" type="Node3D" parent="." unique_id=265711064]
+script = ExtResource("3_pa5df")
+
+[node name="Attack Origin Left" type="Node3D" parent="Attack Origins" unique_id=210210761]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.124920845, 0.3418885, 0.10684019)
+
+[node name="Attack Origin Right" type="Node3D" parent="Attack Origins" unique_id=1036819837]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.13478291, 0.3418885, 0.10684019)
+
+[editable path="Ranged Enemy"]
