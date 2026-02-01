@@ -1,0 +1,8 @@
+[gd_scene format=3 uid="uid://0ohuh8qqj64h"]
+
+[ext_resource type="Script" uid="uid://cyiyfmn52x3va" path="res://Systems/components/Attack_Component.gd" id="1_exnpa"]
+[ext_resource type="Resource" uid="uid://bp3avlsoamum2" path="res://Entities/enemies/Attack Data/Player Attack Data.tres" id="2_ov3rj"]
+
+[node name="Attack Component" type="Area3D" unique_id=777061356]
+script = ExtResource("1_exnpa")
+effect = ExtResource("2_ov3rj")

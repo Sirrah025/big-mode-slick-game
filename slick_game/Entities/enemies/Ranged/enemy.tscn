@@ -9,6 +9,7 @@
 [ext_resource type="Script" uid="uid://bt5lx546qxxbm" path="res://Scripts/Components/State Machine/State_Machine.gd" id="7_2f1rj"]
 [ext_resource type="Script" uid="uid://ddtnqi1undu5d" path="res://Scripts/Enemies/States/idle.gd" id="8_xc2wx"]
 [ext_resource type="Script" uid="uid://cmut33u2o3scq" path="res://Scripts/Enemies/States/attack.gd" id="9_ryoam"]
+[ext_resource type="Script" uid="uid://dmgiit17ys18i" path="res://Scripts/Enemies/States/aggressive.gd" id="9_uyk2m"]
 
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_pa5df"]
 animation = &"Float"
@@ -61,7 +62,7 @@ transitions = ["Start", "Idle", SubResource("AnimationNodeStateMachineTransition
 graph_offset = Vector2(-55, 2)
 
 [sub_resource type="AnimationNodeBlendTree" id="AnimationNodeBlendTree_r5bsr"]
-graph_offset = Vector2(-861, 91)
+graph_offset = Vector2(-679, 99)
 nodes/Animation/node = SubResource("AnimationNodeAnimation_pa5df")
 nodes/Animation/position = Vector2(-380, 380)
 "nodes/Float Blend/node" = SubResource("AnimationNodeBlend2_ymcu4")
@@ -84,15 +85,15 @@ script = ExtResource("1_jnjvl")
 [node name="Ranged Enemy" parent="." unique_id=291246549 instance=ExtResource("1_ar4ve")]
 
 [node name="Skeleton3D" parent="Ranged Enemy/Ranged Armature" parent_id_path=PackedInt32Array(291246549, 794327750) index="0" unique_id=1077688716]
-bones/1/position = Vector3(0, 1.8634189, 0)
-bones/5/rotation = Quaternion(0.0064260643, 0.04872845, -0.5822865, 0.8114967)
-bones/6/rotation = Quaternion(0.05068841, -4.2782973e-05, -0.035743777, 0.9980747)
-bones/8/rotation = Quaternion(0.0064260904, -0.04872849, 0.5822865, 0.8114967)
-bones/9/rotation = Quaternion(0.05068841, 4.2782973e-05, 0.035743777, 0.9980747)
-bones/10/position = Vector3(2.0993812, 1.3935988, -6.8738746e-07)
-bones/11/position = Vector3(-2.3641672, -0.060679875, -0.9693103)
-bones/12/position = Vector3(-2.0993812, 1.3935988, -6.8738746e-07)
-bones/13/position = Vector3(2.3641672, -0.060679875, -0.9693103)
+bones/1/position = Vector3(0, 1.6723558, 0)
+bones/5/rotation = Quaternion(-0.26579824, -0.1738688, -0.49822935, 0.8067766)
+bones/6/rotation = Quaternion(0.65280277, -2.5738034e-05, -0.46033502, 0.60161483)
+bones/8/rotation = Quaternion(-0.31801873, 0.15927142, 0.5069328, 0.7851852)
+bones/9/rotation = Quaternion(0.67518896, 2.4121255e-05, 0.47612092, 0.56340826)
+bones/10/position = Vector3(2.1374474, 3.899799, 1.7322459)
+bones/11/position = Vector3(-1.9202275, -2.070725, -4.866846)
+bones/12/position = Vector3(-2.0701807, 3.9726698, 1.5263634)
+bones/13/position = Vector3(2.364166, -2.6123853, -5.385218)
 
 [node name="AnimationTree" type="AnimationTree" parent="." unique_id=24667294]
 root_node = NodePath("../Ranged Enemy")
@@ -105,10 +106,10 @@ script = ExtResource("2_0gfor")
 script = ExtResource("3_pa5df")
 
 [node name="Attack Origin Left" type="Node3D" parent="Attack Origins" unique_id=210210761]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.124920845, 0.3418885, 0.10684019)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.54628706, 1.4221172, 0.40445513)
 
 [node name="Attack Origin Right" type="Node3D" parent="Attack Origins" unique_id=1036819837]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.13478291, 0.3418885, 0.10684019)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5331651, 1.3761499, 0.3567894)
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1875876108]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.3229582, 0)
@@ -130,13 +131,16 @@ starting_state = NodePath("Idle")
 [node name="Idle" type="Node" parent="Aggression State Machine" unique_id=1452591912]
 script = ExtResource("8_xc2wx")
 
+[node name="Aggressive" type="Node" parent="Aggression State Machine" unique_id=53630990]
+script = ExtResource("9_uyk2m")
+
 [node name="Attack" type="Node" parent="Aggression State Machine" unique_id=2122168653]
 script = ExtResource("9_ryoam")
 
 [connection signal="target_reached" from="NavigationAgent3D" to="." method="_on_navigation_agent_3d_target_reached"]
 [connection signal="damage" from="Hitbox Component" to="Health Component" method="_on_damage"]
 [connection signal="entity_died" from="Health Component" to="." method="_on_entity_died"]
+[connection signal="ready_weapons" from="Aggression State Machine/Aggressive" to="AnimationTree" method="_on_ready_weapons"]
 [connection signal="fire_weapons" from="Aggression State Machine/Attack" to="AnimationTree" method="_on_fire_weapons"]
-[connection signal="ready_weapons" from="Aggression State Machine/Attack" to="AnimationTree" method="_on_ready_weapons"]
 
 [editable path="Ranged Enemy"]

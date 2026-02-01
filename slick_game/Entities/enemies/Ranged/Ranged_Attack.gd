@@ -10,5 +10,5 @@ func _ready() -> void:
 func _process(delta: float) -> void:
 	pass
 
-func spawn_projectile(origin: Node3D, effect: AttackData):
+func spawn_projectile(origin: Node3D, projectile: Node3D):
 	pass

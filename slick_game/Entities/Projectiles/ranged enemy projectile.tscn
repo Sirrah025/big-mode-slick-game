@@ -1,0 +1,14 @@
+[gd_scene format=3 uid="uid://d04egmk8f1m25"]
+
+[ext_resource type="PackedScene" uid="uid://cko1w1s20lpje" path="res://Entities/Projectiles/projectile.tscn" id="1_e33he"]
+[ext_resource type="PackedScene" uid="uid://bp5jv66agtrw5" path="res://Entities/Projectiles/Projectile Attack.glb" id="2_ue7ed"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_ue7ed"]
+size = Vector3(0.125, 0.125, 0.125)
+
+[node name="Projectile" unique_id=1437025133 instance=ExtResource("1_e33he")]
+
+[node name="Projectile Attack" parent="." index="0" unique_id=2120539726 instance=ExtResource("2_ue7ed")]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Attack Component" parent_id_path=PackedInt32Array(777061356) index="0" unique_id=1324465610]
+shape = SubResource("BoxShape3D_ue7ed")

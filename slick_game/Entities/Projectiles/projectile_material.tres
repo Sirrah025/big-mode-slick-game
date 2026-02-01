@@ -1,0 +1,13 @@
+[gd_resource type="ShaderMaterial" format=3 uid="uid://c2ks8mvim3p84"]
+
+[ext_resource type="Shader" uid="uid://bm7oinlvktn7v" path="res://Entities/arts/PSX_Shader.gdshader" id="1_yh752"]
+[ext_resource type="Texture2D" uid="uid://fpwjxpdo8fev" path="res://Entities/Projectiles/Projectile Color Map.png" id="2_hy4cn"]
+
+[resource]
+render_priority = 0
+shader = ExtResource("1_yh752")
+shader_parameter/affine_mapping = false
+shader_parameter/albedo = ExtResource("2_hy4cn")
+shader_parameter/alpha_scissor = 0.5
+shader_parameter/jitter = 0.25
+shader_parameter/resolution = Vector2i(320, 240)
