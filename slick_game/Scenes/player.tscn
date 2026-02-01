@@ -41,10 +41,12 @@ target_position = Vector3(0, 0.85, 0)
 collision_mask = 2
 
 [node name="WallRayLeft" type="RayCast3D" parent="." unique_id=56403755]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.48622924, 0)
 target_position = Vector3(-1, 0, 0)
 collision_mask = 2
 
 [node name="WallRayRight" type="RayCast3D" parent="." unique_id=819014503]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.48622924, 0)
 target_position = Vector3(1, 0, 0)
 collision_mask = 2
 
@@ -80,6 +82,8 @@ one_shot = true
 [node name="SlidingBoostCooldown" type="Timer" parent="." unique_id=2128327456]
 wait_time = 1.2
 one_shot = true
+
+[node name="WallJumpPushDuration" type="Timer" parent="." unique_id=1703677272]
 
 [node name="SpeedTest" type="Label" parent="." unique_id=404264627]
 offset_right = 40.0
@@ -160,6 +164,7 @@ layout_mode = 1
 [connection signal="damage" from="Hitbox Component" to="Health Component" method="_on_damage"]
 [connection signal="timeout" from="DashDurationTimer" to="." method="_on_dash_duration_timer_timeout"]
 [connection signal="timeout" from="SlidingBoostCooldown" to="." method="_on_sliding_boost_cooldown_timeout"]
+[connection signal="timeout" from="WallJumpPushDuration" to="." method="_on_wall_jump_push_duration_timeout"]
 [connection signal="pressed" from="Pause Menu/Container/Button Container/ResumeButton" to="Pause Menu" method="_on_resume_button_pressed"]
 [connection signal="pressed" from="Pause Menu/Container/Button Container/SettingsButton" to="Pause Menu" method="_on_settings_button_pressed"]
 [connection signal="pressed" from="Pause Menu/Container/Button Container/MainMenuButton" to="Pause Menu" method="_on_main_menu_button_pressed"]
