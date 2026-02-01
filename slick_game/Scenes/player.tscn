@@ -20,7 +20,7 @@ height = 1.1796631
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_vgqql"]
 
 [node name="Player" type="CharacterBody3D" unique_id=99981486 groups=["Player"]]
-collision_mask = 2
+collision_mask = 50
 script = ExtResource("1_vgqql")
 
 [node name="Mesh" type="MeshInstance3D" parent="." unique_id=667297727]
@@ -83,6 +83,10 @@ one_shot = true
 
 [node name="WallJumpPushDuration" type="Timer" parent="." unique_id=1703677272]
 
+[node name="ProjectileCooldown" type="Timer" parent="." unique_id=1819641894]
+wait_time = 0.3
+one_shot = true
+
 [node name="SpeedTest" type="Label" parent="." unique_id=404264627]
 offset_right = 40.0
 offset_bottom = 23.0
@@ -95,8 +99,4 @@ offset_bottom = 23.0
 [connection signal="timeout" from="DashDurationTimer" to="." method="_on_dash_duration_timer_timeout"]
 [connection signal="timeout" from="SlidingBoostCooldown" to="." method="_on_sliding_boost_cooldown_timeout"]
 [connection signal="timeout" from="WallJumpPushDuration" to="." method="_on_wall_jump_push_duration_timeout"]
-[connection signal="pressed" from="Pause Menu/Container/Button Container/ResumeButton" to="Pause Menu" method="_on_resume_button_pressed"]
-[connection signal="pressed" from="Pause Menu/Container/Button Container/SettingsButton" to="Pause Menu" method="_on_settings_button_pressed"]
-[connection signal="pressed" from="Pause Menu/Container/Button Container/MainMenuButton" to="Pause Menu" method="_on_main_menu_button_pressed"]
-[connection signal="pressed" from="Pause Menu/Container/Button Container/QuitButton" to="Pause Menu" method="_on_quit_button_pressed"]
-[connection signal="close_settings" from="Pause Menu/Container/Settings Menu" to="Pause Menu" method="_on_settings_menu_close_settings"]
+[connection signal="timeout" from="ProjectileCooldown" to="." method="_on_projectile_cooldown_timeout"]

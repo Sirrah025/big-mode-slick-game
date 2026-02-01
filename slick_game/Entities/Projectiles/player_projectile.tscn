@@ -1,0 +1,222 @@
+[gd_scene format=3 uid="uid://dbti28kvbl0mp"]
+
+[ext_resource type="Script" uid="uid://ccetbbbrvq3wo" path="res://Entities/Projectiles/player_projectile.gd" id="1_ku0ug"]
+[ext_resource type="Material" uid="uid://c2ks8mvim3p84" path="res://Entities/Projectiles/projectile_material.tres" id="1_oqopr"]
+
+[sub_resource type="Gradient" id="Gradient_ku0ug"]
+colors = PackedColorArray(0, 0, 0, 1, 0, 0.543954, 0.932394, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_xba3s"]
+gradient = SubResource("Gradient_ku0ug")
+
+[sub_resource type="Curve" id="Curve_5vh5g"]
+_data = [Vector2(0, 0.56044), 0.0, 0.0, 0, 0, Vector2(0.44056, 0.747253), 0.0, 0.0, 0, 0, Vector2(1, 0.351648), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="CurveTexture" id="CurveTexture_0ror8"]
+curve = SubResource("Curve_5vh5g")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_u6xhk"]
+angle_min = 1.07288e-05
+angle_max = 360.0
+direction = Vector3(0, 0, -1)
+spread = 0.0
+initial_velocity_min = 1.0
+initial_velocity_max = 4.0
+angular_velocity_min = -1.60933e-05
+angular_velocity_max = 40.0
+gravity = Vector3(0, 0, 0)
+linear_accel_min = -2.23517e-06
+linear_accel_max = 5.0
+scale_min = 0.1
+scale_max = 0.4
+scale_curve = SubResource("CurveTexture_0ror8")
+color_initial_ramp = SubResource("GradientTexture1D_xba3s")
+hue_variation_min = -0.1
+hue_variation_max = 0.15
+
+[sub_resource type="Shader" id="Shader_ku0ug"]
+code = "// NOTE: Shader automatically converted from Godot Engine 4.6.stable's StandardMaterial3D.
+// Retro pixel-snapping + nearest albedo filtering integrated.
+
+shader_type spatial;
+render_mode blend_add, depth_draw_opaque, cull_back, diffuse_burley, specular_schlick_ggx, unshaded;
+
+uniform vec4 albedo : source_color;
+uniform sampler2D texture_albedo : source_color, filter_nearest, repeat_enable;
+uniform ivec2 albedo_texture_size;
+uniform float point_size : hint_range(0.1, 128.0, 0.1);
+
+uniform float roughness : hint_range(0.0, 1.0);
+uniform sampler2D texture_metallic : hint_default_white, filter_linear_mipmap, repeat_enable;
+uniform vec4 metallic_texture_channel;
+uniform sampler2D texture_roughness : hint_roughness_r, filter_linear_mipmap, repeat_enable;
+
+uniform float specular : hint_range(0.0, 1.0, 0.01);
+uniform float metallic : hint_range(0.0, 1.0, 0.01);
+
+uniform int particles_anim_h_frames : hint_range(1, 128);
+uniform int particles_anim_v_frames : hint_range(1, 128);
+uniform bool particles_anim_loop;
+
+uniform vec3 uv1_scale;
+uniform vec3 uv1_offset;
+uniform vec3 uv2_scale;
+uniform vec3 uv2_offset;
+
+// --- Retro effect uniforms ---
+uniform bool affine_mapping = false;
+uniform float alpha_scissor : hint_range(0, 1) = 0.5;
+uniform float jitter: hint_range(0, 1) = 0.25;
+uniform ivec2 resolution = ivec2(320, 240);
+
+vec4 snap_to_position(vec4 base_position)
+{
+    vec4 snapped_position = base_position;
+    snapped_position.xyz = base_position.xyz / base_position.w;
+
+    vec2 snap_resulotion = floor(vec2(resolution) * (1.0 - jitter));
+    snapped_position.x = floor(snap_resulotion.x * snapped_position.x) / snap_resulotion.x;
+    snapped_position.y = floor(snap_resulotion.y * snapped_position.y) / snap_resulotion.y;
+
+    snapped_position.xyz *= base_position.w;
+    return snapped_position;
+}
+
+void vertex() {
+    UV = UV * uv1_scale.xy + uv1_offset.xy;
+
+    // Billboard Mode: Particles
+    mat4 mat_world = mat4(
+            normalize(INV_VIEW_MATRIX[0]),
+            normalize(INV_VIEW_MATRIX[1]),
+            normalize(INV_VIEW_MATRIX[2]),
+            MODEL_MATRIX[3]);
+    mat_world = mat_world * mat4(
+            vec4(cos(INSTANCE_CUSTOM.x), -sin(INSTANCE_CUSTOM.x), 0.0, 0.0),
+            vec4(sin(INSTANCE_CUSTOM.x), cos(INSTANCE_CUSTOM.x), 0.0, 0.0),
+            vec4(0.0, 0.0, 1.0, 0.0),
+            vec4(0.0, 0.0, 0.0, 1.0));
+    MODELVIEW_MATRIX = VIEW_MATRIX * mat_world;
+
+    // Billboard Keep Scale: Enabled
+    MODELVIEW_MATRIX = MODELVIEW_MATRIX * mat4(
+            vec4(length(MODEL_MATRIX[0].xyz), 0.0, 0.0, 0.0),
+            vec4(0.0, length(MODEL_MATRIX[1].xyz), 0.0, 0.0),
+            vec4(0.0, 0.0, length(MODEL_MATRIX[2].xyz), 0.0),
+            vec4(0.0, 0.0, 0.0, 1.0));
+
+    MODELVIEW_NORMAL_MATRIX = mat3(MODELVIEW_MATRIX);
+
+    // --- Retro pixel-snapping of clip-space position ---
+    vec4 projected = PROJECTION_MATRIX * MODELVIEW_MATRIX * vec4(VERTEX, 1.0);
+    vec4 snapped_position = snap_to_position(projected);
+    if (affine_mapping) {
+        POSITION = snapped_position;
+        POSITION /= abs(POSITION.w);
+    } else {
+        POSITION = snapped_position;
+    }
+
+    float h_frames = float(particles_anim_h_frames);
+    float v_frames = float(particles_anim_v_frames);
+    float particle_total_frames = float(particles_anim_h_frames * particles_anim_v_frames);
+    float particle_frame = floor(INSTANCE_CUSTOM.z * float(particle_total_frames));
+    if (!particles_anim_loop) {
+        particle_frame = clamp(particle_frame, 0.0, particle_total_frames - 1.0);
+    } else {
+        particle_frame = mod(particle_frame, particle_total_frames);
+    }
+    UV /= vec2(h_frames, v_frames);
+    UV += vec2(mod(particle_frame, h_frames) / h_frames, floor((particle_frame + 0.5) / h_frames) / v_frames);
+}
+
+void fragment() {
+    vec2 base_uv = UV;
+
+    vec4 albedo_tex = texture(texture_albedo, base_uv);
+
+    // Vertex Color Use as Albedo: Enabled
+    albedo_tex *= COLOR;
+
+    ALBEDO = albedo.rgb * albedo_tex.rgb;
+
+    float metallic_tex = dot(texture(texture_metallic, base_uv), metallic_texture_channel);
+    METALLIC = metallic_tex * metallic;
+    SPECULAR = specular;
+
+    vec4 roughness_texture_channel = vec4(1.0, 0.0, 0.0, 0.0);
+    float roughness_tex = dot(texture(texture_roughness, base_uv), roughness_texture_channel);
+    ROUGHNESS = roughness_tex * roughness;
+    ALPHA *= albedo.a * albedo_tex.a;
+
+    ALPHA_SCISSOR_THRESHOLD = alpha_scissor;
+}"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_5vh5g"]
+render_priority = 0
+shader = SubResource("Shader_ku0ug")
+shader_parameter/albedo = Color(0.262274, 0.484728, 0.984179, 1)
+shader_parameter/albedo_texture_size = Vector2i(0, 0)
+shader_parameter/point_size = 1.0
+shader_parameter/roughness = 1.0
+shader_parameter/metallic_texture_channel = Vector4(1, 0, 0, 0)
+shader_parameter/specular = 0.5
+shader_parameter/metallic = 0.0
+shader_parameter/particles_anim_h_frames = 1
+shader_parameter/particles_anim_v_frames = 1
+shader_parameter/particles_anim_loop = false
+shader_parameter/uv1_scale = Vector3(1, 1, 1)
+shader_parameter/uv1_offset = Vector3(0, 0, 0)
+shader_parameter/uv2_scale = Vector3(1, 1, 1)
+shader_parameter/uv2_offset = Vector3(0, 0, 0)
+shader_parameter/affine_mapping = false
+shader_parameter/alpha_scissor = 0.5
+shader_parameter/jitter = 0.25
+shader_parameter/resolution = Vector2i(320, 240)
+
+[sub_resource type="QuadMesh" id="QuadMesh_ammkk"]
+material = SubResource("ShaderMaterial_5vh5g")
+size = Vector2(3.5, 3)
+
+[sub_resource type="SphereMesh" id="SphereMesh_ku0ug"]
+material = ExtResource("1_oqopr")
+radius = 0.1
+height = 0.2
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_oqopr"]
+margin = 0.02
+radius = 0.1
+
+[node name="PlayerProjectile" type="Node3D" unique_id=1857513781]
+script = ExtResource("1_ku0ug")
+
+[node name="Particle" type="GPUParticles3D" parent="." unique_id=350761247]
+transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0, 0, 0)
+amount = 250
+lifetime = 0.3
+randomness = 1.0
+local_coords = true
+draw_order = 3
+process_material = SubResource("ParticleProcessMaterial_u6xhk")
+draw_pass_1 = SubResource("QuadMesh_ammkk")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=1722931153]
+visible = false
+mesh = SubResource("SphereMesh_ku0ug")
+
+[node name="Hitbox" type="Area3D" parent="." unique_id=803733082]
+collision_layer = 4
+collision_mask = 18
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Hitbox" unique_id=915615605]
+shape = SubResource("SphereShape3D_oqopr")
+
+[node name="Despawn" type="Timer" parent="." unique_id=937617836]
+wait_time = 5.0
+one_shot = true
+autostart = true
+
+[connection signal="body_entered" from="Hitbox" to="Hitbox" method="_on_body_entered"]
+[connection signal="body_entered" from="Hitbox" to="." method="_on_hitbox_body_entered"]
+[connection signal="timeout" from="Despawn" to="." method="_on_despawn_timeout"]
