@@ -4,8 +4,6 @@
 [ext_resource type="PackedScene" uid="uid://bpxws01g1myf6" path="res://Systems/components/health_component.tscn" id="2_6t5aa"]
 [ext_resource type="PackedScene" uid="uid://b12fqgptd5y3d" path="res://Systems/components/hitbox_component.tscn" id="3_6t5aa"]
 [ext_resource type="Script" uid="uid://cqufbqehm15a" path="res://Scripts/Player/player_death_handler.gd" id="4_vgqql"]
-[ext_resource type="Script" uid="uid://bs32dhgfnbua4" path="res://Scripts/Menus/pause_menu.gd" id="5_fkybt"]
-[ext_resource type="PackedScene" uid="uid://b1ux1fepy6xeg" path="res://Scenes/Menus/in_game_settings_menu.tscn" id="6_x3wgy"]
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_f60y1"]
 radius = 0.375
@@ -77,74 +75,6 @@ one_shot = true
 offset_right = 40.0
 offset_bottom = 23.0
 
-[node name="Pause Menu" type="Control" parent="." unique_id=1826141487]
-process_mode = 3
-visible = false
-layout_mode = 3
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-script = ExtResource("5_fkybt")
-
-[node name="Container" type="ColorRect" parent="Pause Menu" unique_id=1328897744]
-process_mode = 2
-visible = false
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-color = Color(0.29411766, 0.29411766, 0.29411766, 0.70980394)
-
-[node name="Button Container" type="VBoxContainer" parent="Pause Menu/Container" unique_id=578492557]
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -20.0
-offset_top = -20.0
-offset_right = 20.0
-offset_bottom = 20.0
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="ResumeButton" type="Button" parent="Pause Menu/Container/Button Container" unique_id=1404351227]
-layout_mode = 2
-size_flags_horizontal = 4
-size_flags_vertical = 4
-theme_override_font_sizes/font_size = 45
-text = "Resume"
-
-[node name="SettingsButton" type="Button" parent="Pause Menu/Container/Button Container" unique_id=263038758]
-layout_mode = 2
-size_flags_horizontal = 4
-size_flags_vertical = 4
-theme_override_font_sizes/font_size = 45
-text = "Settings"
-
-[node name="MainMenuButton" type="Button" parent="Pause Menu/Container/Button Container" unique_id=1016327824]
-layout_mode = 2
-size_flags_horizontal = 4
-size_flags_vertical = 4
-theme_override_font_sizes/font_size = 45
-text = "Main Menu"
-
-[node name="QuitButton" type="Button" parent="Pause Menu/Container/Button Container" unique_id=557245696]
-layout_mode = 2
-size_flags_horizontal = 4
-size_flags_vertical = 4
-theme_override_font_sizes/font_size = 45
-text = "Quit Game"
-
-[node name="Settings Menu" parent="Pause Menu/Container" unique_id=423943875 instance=ExtResource("6_x3wgy")]
-visible = false
-layout_mode = 1
-
 [connection signal="entity_died" from="Health Component" to="Player Death Handler" method="_on_entity_died"]
 [connection signal="area_entered" from="Hitbox Component" to="Hitbox Component" method="_on_area_entered"]
 [connection signal="body_entered" from="Hitbox Component" to="Hitbox Component" method="_on_body_entered"]
@@ -152,8 +82,3 @@ layout_mode = 1
 [connection signal="damage" from="Hitbox Component" to="Health Component" method="_on_damage"]
 [connection signal="timeout" from="DashDurationTimer" to="." method="_on_dash_duration_timer_timeout"]
 [connection signal="timeout" from="SlidingBoostCooldown" to="." method="_on_sliding_boost_cooldown_timeout"]
-[connection signal="pressed" from="Pause Menu/Container/Button Container/ResumeButton" to="Pause Menu" method="_on_resume_button_pressed"]
-[connection signal="pressed" from="Pause Menu/Container/Button Container/SettingsButton" to="Pause Menu" method="_on_settings_button_pressed"]
-[connection signal="pressed" from="Pause Menu/Container/Button Container/MainMenuButton" to="Pause Menu" method="_on_main_menu_button_pressed"]
-[connection signal="pressed" from="Pause Menu/Container/Button Container/QuitButton" to="Pause Menu" method="_on_quit_button_pressed"]
-[connection signal="close_settings" from="Pause Menu/Container/Settings Menu" to="Pause Menu" method="_on_settings_menu_close_settings"]

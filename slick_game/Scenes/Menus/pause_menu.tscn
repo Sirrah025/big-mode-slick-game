@@ -1,0 +1,78 @@
+[gd_scene format=3 uid="uid://bo52f25xk47dk"]
+
+[ext_resource type="Script" uid="uid://bs32dhgfnbua4" path="res://Scripts/Menus/pause_menu.gd" id="1_1j166"]
+[ext_resource type="PackedScene" uid="uid://b1ux1fepy6xeg" path="res://Scenes/Menus/in_game_settings_menu.tscn" id="2_tf3q2"]
+
+[node name="Pause Menu" type="Control" unique_id=1489435571]
+process_mode = 3
+visible = false
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_1j166")
+
+[node name="Container" type="ColorRect" parent="." unique_id=453368773]
+process_mode = 2
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.29411766, 0.29411766, 0.29411766, 0.70980394)
+
+[node name="Button Container" type="VBoxContainer" parent="Container" unique_id=1043376587]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ResumeButton" type="Button" parent="Container/Button Container" unique_id=1446827505]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_font_sizes/font_size = 45
+text = "Resume"
+
+[node name="SettingsButton" type="Button" parent="Container/Button Container" unique_id=1970268510]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_font_sizes/font_size = 45
+text = "Settings"
+
+[node name="MainMenuButton" type="Button" parent="Container/Button Container" unique_id=2076452554]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_font_sizes/font_size = 45
+text = "Main Menu"
+
+[node name="QuitButton" type="Button" parent="Container/Button Container" unique_id=1114782015]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_font_sizes/font_size = 45
+text = "Quit Game"
+
+[node name="Settings Menu" parent="Container" unique_id=423943875 instance=ExtResource("2_tf3q2")]
+visible = false
+layout_mode = 1
+
+[connection signal="pressed" from="Container/Button Container/ResumeButton" to="." method="_on_resume_button_pressed"]
+[connection signal="pressed" from="Container/Button Container/SettingsButton" to="." method="_on_settings_button_pressed"]
+[connection signal="pressed" from="Container/Button Container/MainMenuButton" to="." method="_on_main_menu_button_pressed"]
+[connection signal="pressed" from="Container/Button Container/QuitButton" to="." method="_on_quit_button_pressed"]
+[connection signal="close_settings" from="Container/Settings Menu" to="." method="_on_settings_menu_close_settings"]
