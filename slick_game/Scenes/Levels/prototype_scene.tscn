@@ -4,6 +4,7 @@
 [ext_resource type="Script" uid="uid://cyiyfmn52x3va" path="res://Systems/components/Attack_Component.gd" id="2_3xn65"]
 [ext_resource type="Resource" uid="uid://rwdi31u1fbjd" path="res://Entities/enemies/Attack Data/Player Boost.tres" id="3_8goci"]
 [ext_resource type="PackedScene" uid="uid://cmbapyfubp2th" path="res://Entities/enemies/Ranged/enemy.tscn" id="4_3xn65"]
+[ext_resource type="PackedScene" uid="uid://bo52f25xk47dk" path="res://Scenes/Menus/pause_menu.tscn" id="5_8goci"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_lci7e"]
 albedo_color = Color(0.94793504, 0.5137621, 0.3670795, 1)
@@ -133,3 +134,5 @@ navigation_mesh = SubResource("NavigationMesh_kf5rd")
 
 [node name="Enemy" parent="." unique_id=1279462332 instance=ExtResource("4_3xn65")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.4584832, -11.557131)
+
+[node name="Pause Menu" parent="." unique_id=1489435571 instance=ExtResource("5_8goci")]

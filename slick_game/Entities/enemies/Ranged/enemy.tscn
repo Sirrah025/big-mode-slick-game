@@ -1,8 +1,14 @@
 [gd_scene format=3 uid="uid://cmbapyfubp2th"]
 
 [ext_resource type="PackedScene" uid="uid://b471a5o1g2r5s" path="res://Entities/enemies/Ranged/Ranged Enemy.glb" id="1_ar4ve"]
+[ext_resource type="Script" uid="uid://diqf0hsj5lvhc" path="res://Scripts/Enemies/enemy_movement.gd" id="1_jnjvl"]
 [ext_resource type="Script" uid="uid://dho186ajglld4" path="res://Scripts/Enemies/enemy_animation_tree.gd" id="2_0gfor"]
 [ext_resource type="Script" uid="uid://cf12b1w426f1g" path="res://Entities/enemies/Ranged/Ranged_Attack.gd" id="3_pa5df"]
+[ext_resource type="PackedScene" uid="uid://b12fqgptd5y3d" path="res://Systems/components/hitbox_component.tscn" id="4_hyhlp"]
+[ext_resource type="PackedScene" uid="uid://bpxws01g1myf6" path="res://Systems/components/health_component.tscn" id="5_jnjvl"]
+[ext_resource type="Script" uid="uid://bt5lx546qxxbm" path="res://Scripts/Components/State Machine/State_Machine.gd" id="7_2f1rj"]
+[ext_resource type="Script" uid="uid://ddtnqi1undu5d" path="res://Scripts/Enemies/States/idle.gd" id="8_xc2wx"]
+[ext_resource type="Script" uid="uid://cmut33u2o3scq" path="res://Scripts/Enemies/States/attack.gd" id="9_ryoam"]
 
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_pa5df"]
 animation = &"Float"
@@ -24,39 +30,38 @@ animation = &"Idle"
 animation = &"Ready Fire"
 
 [sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_xc2wx"]
-advance_mode = 0
-
-[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_ryoam"]
-advance_mode = 0
-
-[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_uyk2m"]
-switch_mode = 2
-
-[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_ig0j2"]
-advance_mode = 0
-
-[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_wsalm"]
-switch_mode = 2
 advance_mode = 2
 
 [sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_78gku"]
 advance_mode = 0
 
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_jnjvl"]
+advance_mode = 0
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_2f1rj"]
+switch_mode = 2
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_lkdd0"]
+switch_mode = 2
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_ryoam"]
+advance_mode = 0
+
 [sub_resource type="AnimationNodeStateMachine" id="AnimationNodeStateMachine_q5n0g"]
 "states/At Ready/node" = SubResource("AnimationNodeAnimation_hyhlp")
-"states/At Ready/position" = Vector2(549, 100)
+"states/At Ready/position" = Vector2(720, 100)
 states/End/position = Vector2(1007, 100)
 states/Fire/node = SubResource("AnimationNodeAnimation_jnjvl")
 states/Fire/position = Vector2(882, 100)
 states/Idle/node = SubResource("AnimationNodeAnimation_2f1rj")
 states/Idle/position = Vector2(380, 100)
 "states/Ready Fire/node" = SubResource("AnimationNodeAnimation_lkdd0")
-"states/Ready Fire/position" = Vector2(735, 100)
-transitions = ["Start", "Idle", SubResource("AnimationNodeStateMachineTransition_xc2wx"), "Idle", "At Ready", SubResource("AnimationNodeStateMachineTransition_ryoam"), "At Ready", "Ready Fire", SubResource("AnimationNodeStateMachineTransition_uyk2m"), "Ready Fire", "Fire", SubResource("AnimationNodeStateMachineTransition_ig0j2"), "Fire", "Ready Fire", SubResource("AnimationNodeStateMachineTransition_wsalm"), "Fire", "End", SubResource("AnimationNodeStateMachineTransition_78gku")]
-graph_offset = Vector2(122, 24)
+"states/Ready Fire/position" = Vector2(539, 100)
+transitions = ["Start", "Idle", SubResource("AnimationNodeStateMachineTransition_xc2wx"), "Fire", "End", SubResource("AnimationNodeStateMachineTransition_78gku"), "Idle", "Ready Fire", SubResource("AnimationNodeStateMachineTransition_jnjvl"), "Ready Fire", "At Ready", SubResource("AnimationNodeStateMachineTransition_2f1rj"), "Fire", "At Ready", SubResource("AnimationNodeStateMachineTransition_lkdd0"), "At Ready", "Fire", SubResource("AnimationNodeStateMachineTransition_ryoam")]
+graph_offset = Vector2(-55, 2)
 
 [sub_resource type="AnimationNodeBlendTree" id="AnimationNodeBlendTree_r5bsr"]
-graph_offset = Vector2(-698.9647, 42.527405)
+graph_offset = Vector2(-861, 91)
 nodes/Animation/node = SubResource("AnimationNodeAnimation_pa5df")
 nodes/Animation/position = Vector2(-380, 380)
 "nodes/Float Blend/node" = SubResource("AnimationNodeBlend2_ymcu4")
@@ -65,22 +70,29 @@ nodes/StateMachine/node = SubResource("AnimationNodeStateMachine_q5n0g")
 nodes/StateMachine/position = Vector2(-520, 120)
 node_connections = [&"output", 0, &"Float Blend", &"Float Blend", 0, &"StateMachine", &"Float Blend", 1, &"Animation"]
 
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_2f1rj"]
+radius = 0.6821289
+height = 2.63208
+
 [node name="Enemy" type="CharacterBody3D" unique_id=1279462332]
+collision_layer = 16
+collision_mask = 2
+script = ExtResource("1_jnjvl")
 
 [node name="NavigationAgent3D" type="NavigationAgent3D" parent="." unique_id=1252521370]
 
-[node name="Ranged Enemy" parent="." unique_id=1889161200 instance=ExtResource("1_ar4ve")]
+[node name="Ranged Enemy" parent="." unique_id=291246549 instance=ExtResource("1_ar4ve")]
 
-[node name="Skeleton3D" parent="Ranged Enemy/Ranged Armature" parent_id_path=PackedInt32Array(1889161200, 1903291253) index="0" unique_id=1197683865]
-bones/1/position = Vector3(0, 1.694772, 0)
-bones/5/rotation = Quaternion(-0.26579824, -0.1738688, -0.49822935, 0.8067766)
-bones/6/rotation = Quaternion(0.65280277, -2.5738034e-05, -0.46033502, 0.60161483)
-bones/8/rotation = Quaternion(-0.3180187, 0.15927142, 0.50693285, 0.78518534)
-bones/9/rotation = Quaternion(0.6751889, 2.40691e-05, 0.47612095, 0.5634082)
-bones/10/position = Vector3(2.1374474, 3.899799, 1.7322459)
-bones/11/position = Vector3(-1.9202275, -2.070725, -4.866846)
-bones/12/position = Vector3(-2.0701807, 3.9726703, 1.5263634)
-bones/13/position = Vector3(2.364166, -2.6123853, -5.385218)
+[node name="Skeleton3D" parent="Ranged Enemy/Ranged Armature" parent_id_path=PackedInt32Array(291246549, 794327750) index="0" unique_id=1077688716]
+bones/1/position = Vector3(0, 1.8634189, 0)
+bones/5/rotation = Quaternion(0.0064260643, 0.04872845, -0.5822865, 0.8114967)
+bones/6/rotation = Quaternion(0.05068841, -4.2782973e-05, -0.035743777, 0.9980747)
+bones/8/rotation = Quaternion(0.0064260904, -0.04872849, 0.5822865, 0.8114967)
+bones/9/rotation = Quaternion(0.05068841, 4.2782973e-05, 0.035743777, 0.9980747)
+bones/10/position = Vector3(2.0993812, 1.3935988, -6.8738746e-07)
+bones/11/position = Vector3(-2.3641672, -0.060679875, -0.9693103)
+bones/12/position = Vector3(-2.0993812, 1.3935988, -6.8738746e-07)
+bones/13/position = Vector3(2.3641672, -0.060679875, -0.9693103)
 
 [node name="AnimationTree" type="AnimationTree" parent="." unique_id=24667294]
 root_node = NodePath("../Ranged Enemy")
@@ -97,5 +109,34 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.124920845, 0.3418885, 0.106
 
 [node name="Attack Origin Right" type="Node3D" parent="Attack Origins" unique_id=1036819837]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.13478291, 0.3418885, 0.10684019)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1875876108]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.3229582, 0)
+shape = SubResource("CapsuleShape3D_2f1rj")
+
+[node name="Hitbox Component" parent="." unique_id=973421447 instance=ExtResource("4_hyhlp")]
+
+[node name="Hitbox Collision" type="CollisionShape3D" parent="Hitbox Component" unique_id=1140169131]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.3229582, 0)
+shape = SubResource("CapsuleShape3D_2f1rj")
+
+[node name="Health Component" parent="." unique_id=1334057615 instance=ExtResource("5_jnjvl")]
+health = 10
+
+[node name="Aggression State Machine" type="Node" parent="." unique_id=1002633854 node_paths=PackedStringArray("starting_state")]
+script = ExtResource("7_2f1rj")
+starting_state = NodePath("Idle")
+
+[node name="Idle" type="Node" parent="Aggression State Machine" unique_id=1452591912]
+script = ExtResource("8_xc2wx")
+
+[node name="Attack" type="Node" parent="Aggression State Machine" unique_id=2122168653]
+script = ExtResource("9_ryoam")
+
+[connection signal="target_reached" from="NavigationAgent3D" to="." method="_on_navigation_agent_3d_target_reached"]
+[connection signal="damage" from="Hitbox Component" to="Health Component" method="_on_damage"]
+[connection signal="entity_died" from="Health Component" to="." method="_on_entity_died"]
+[connection signal="fire_weapons" from="Aggression State Machine/Attack" to="AnimationTree" method="_on_fire_weapons"]
+[connection signal="ready_weapons" from="Aggression State Machine/Attack" to="AnimationTree" method="_on_ready_weapons"]
 
 [editable path="Ranged Enemy"]
