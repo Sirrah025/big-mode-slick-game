@@ -36,7 +36,6 @@ const MOUSE_SENSITIVITY: float = 0.0015
 @export var can_slide_boost = true
 @onready var slide_boost_cooldown_timer: Timer = $SlidingBoostCooldown
 
-@export var stand_camera_y: float = 0.0
 @export var crouch_camera_y: float = -0.5
 @export var camera_height_lerp_speed: float = 8.0
 
@@ -48,6 +47,32 @@ const MOUSE_SENSITIVITY: float = 0.0015
 var is_sliding: bool = false
 var is_crouching: bool = false
 var was_on_floor: bool = false
+
+# --- Wallrunning ---
+@export var wallrun_enabled: bool = true
+@export var wallrun_min_speed: float = 4.0
+@export var wallrun_gravity_scale: float = 0.25
+@export var wallrun_side_stick: float = 0.2
+@export var wallrun_bobbing_multiplier: float = 1.5
+
+@onready var wall_ray_left: RayCast3D = $WallRayLeft
+@onready var wall_ray_right: RayCast3D = $WallRayRight
+
+var is_wallrunning: bool = false
+var wall_normal: Vector3 = Vector3.ZERO
+var wall_dir: Vector3 = Vector3.ZERO
+var wall_side: int = 0   # -1 = left, +1 = right
+
+# --- Walljumping ---
+@onready var wall_jump_duration_node = $WallJumpPushDuration
+@export var wall_jump_duration_time := 0.8
+@export var wall_jump_decay_multiplier := 0.95
+@export var wall_jump_force: float = 16.0
+@export var wall_jump_boost: float = 1.4
+
+var is_wall_jumping: bool = false
+var wall_jump_velocity: Vector3 = Vector3.ZERO
+var wall_jump_direction: Vector3 = Vector3.ZERO
 
 # --- Dash ---
 @onready var dash_cooldown_node: Timer = $DashCooldownTimer
@@ -93,6 +118,7 @@ func _ready() -> void:
 	normal_hitbox.disabled = false
 	crouch_hitbox.disabled = true
 	can_slide_boost = true
+	wall_jump_duration_node.wait_time = wall_jump_duration_time
 	dash_duration_node.wait_time = dash_duration_time
 	dash_cooldown_node.wait_time = dash_cooldown_time
 
@@ -107,6 +133,7 @@ func _physics_process(delta: float) -> void:
 	_handle_slide_input()
 	_handle_jump()
 	_update_momentum(delta)
+	_handle_wallrun(delta)
 	_handle_dash()
 	_apply_velocity(delta)
 	_update_headbob(delta)
@@ -125,11 +152,20 @@ func _physics_process(delta: float) -> void:
 
 # --- Gravity ---
 func _apply_gravity(delta: float) -> void:
-	velocity.y = 0 if is_on_floor() else velocity.y - GRAVITY * delta
+	if is_wallrunning:
+		jumps_left = max_jumps - 1
 
-	# Reset jumps when on the floor
+	# If on the floor, zero vertical velocity and reset jumps
 	if is_on_floor():
+		velocity.y = 0
 		jumps_left = max_jumps
+		return
+
+	# While wallrunning apply reduced gravity
+	if is_wallrunning:
+		velocity.y = velocity.y - GRAVITY * wallrun_gravity_scale * delta
+	else:
+		velocity.y = velocity.y - GRAVITY * delta
 
 # --- Sliding ---
 func _handle_slide_input() -> void:
@@ -150,19 +186,24 @@ func _handle_jump() -> void:
 		if is_crouching or is_sliding:
 			if not can_stand():
 				return
-
+		
+		if is_wallrunning:
+			_handle_wall_jump()
+		
 		var jump_boost = 1.0
 		if is_crouching:
 			jump_boost = crouching_jump_boost
 		if is_sliding:
 			jump_boost = sliding_jump_boost
+		if is_wall_jumping:
+			jump_boost = wall_jump_boost
 		
 		_exit_slide()
 		_exit_crouch()
+		_exit_wallrun()
 		
 		velocity.y = jump_velocity * jump_boost
 		jumps_left -= 1
-
 
 # --- Momentum System ---
 func _update_momentum(delta: float) -> void:
@@ -250,13 +291,23 @@ func _apply_friction(delta: float) -> void:
 # --- Apply momentum to velocity ---
 func _apply_velocity(delta) -> void:
 	var final_velocity = momentum
+	
+	if is_wall_jumping:
+		final_velocity += wall_jump_velocity
+	
 	if is_dashing:
 		final_velocity += dash_velocity
+
+	if wall_jump_velocity.length() > 0:
+		wall_jump_velocity *= wall_jump_decay_multiplier * delta * 60
+		if wall_jump_velocity.length() < 0.01:
+			wall_jump_velocity = Vector3.ZERO
 
 	if dash_velocity.length() > 0:
 		dash_velocity *= dash_decay_multiplier * delta * 60
 		if dash_velocity.length() < 0.01:
 			dash_velocity = Vector3.ZERO
+	
 
 	velocity.x = final_velocity.x
 	velocity.z = final_velocity.z
@@ -266,6 +317,15 @@ func _apply_velocity(delta) -> void:
 		_enter_crouch()
 	
 	$SpeedTest.text = "Speed: " + str(final_velocity.length())
+
+func _handle_wall_jump() -> void:
+	var forward_dir = -head.transform.basis.z.normalized()
+	wall_jump_direction = (wall_normal + forward_dir).normalized()
+
+	# Activate wall jump
+	is_wall_jumping = true
+	wall_jump_velocity = wall_jump_direction * wall_jump_force
+	wall_jump_duration_node.start()
 
 func _handle_dash() -> void:
 	if Input.is_action_just_pressed("Dashing") and not dash_cooldown_node.is_stopped():
@@ -294,11 +354,16 @@ func _handle_dash() -> void:
 func _update_headbob(delta: float) -> void:
 	var bob_offset := Vector3.ZERO
 
-	if Settings.head_bob_enabled and is_on_floor() and !is_slipping and !is_sliding:
+	if Settings.head_bob_enabled and (is_on_floor() or is_wallrunning) and !is_slipping and !is_sliding:
 		bob_timer += delta * momentum.length()
-		bob_offset = _headbob(bob_timer)
+		
+		# Simple wallrun multiplier
+		var bob_multiplier = wallrun_bobbing_multiplier if is_wallrunning else 1.0
+		
+		bob_offset = _headbob(bob_timer) * bob_multiplier
 	else:
 		bob_timer = 0.0
+
 
 	var pos := camera.transform.origin
 	pos.y = camera_base_y + bob_offset.y 
@@ -317,7 +382,13 @@ func _update_camera_tilt(delta: float) -> void:
 
 	# Target tilt based on lateral movement
 	var target_tilt = clamp(-lateral_speed / max_speed * max_tilt_angle, -max_tilt_angle, max_tilt_angle)
-
+	
+	# add small tilt toward wall when wallrunning
+	if is_wallrunning:
+		var cam_right = camera.global_transform.basis.x
+		var wall_sign = sign(wall_normal.dot(cam_right))
+		target_tilt = lerp(target_tilt, wall_sign * -10.0, 0.6)
+	
 	# Smoothly interpolate current tilt
 	current_tilt = lerp(current_tilt, target_tilt, tilt_speed * delta)
 
@@ -328,7 +399,7 @@ func _update_camera_tilt(delta: float) -> void:
 
 # --- Camera Height ---
 func _update_camera_height(delta: float) -> void:
-	var target_y := stand_camera_y
+	var target_y := 0.0
 
 	if is_sliding or is_crouching:
 		target_y = crouch_camera_y
@@ -339,6 +410,74 @@ func _update_camera_height(delta: float) -> void:
 func _update_fov(delta: float) -> void:
 	var target_fov = BASE_FOV + FOV_CHANGE * clamp(momentum.length(), 0.5, max_speed * 2)
 	camera.fov = lerp(camera.fov, target_fov, delta * 8.0)
+
+# --- Wallrunning
+func _handle_wallrun(delta: float) -> void:
+	# Only if feature enabled and not on floor and not dashing
+	if not wallrun_enabled or is_on_floor() or is_dashing:
+		if is_wallrunning:
+			_exit_wallrun()
+		return
+
+	# Read rays
+	var left_hit = wall_ray_left.is_colliding()
+	var right_hit = wall_ray_right.is_colliding()
+
+	# Prefer the side the player is moving towards; fallback to whichever ray hits
+	var input_vector = Input.get_vector("Left", "Right", "Forward", "Back")
+	var want_left = input_vector.x < 0
+	var want_right = input_vector.x > 0
+
+	var start_side = 0
+	if left_hit and want_left:
+		start_side = -1
+	elif right_hit and want_right:
+		start_side = 1
+	elif left_hit:
+		start_side = -1
+	elif right_hit:
+		start_side = 1
+
+	# Try to start wallrun
+	if not is_wallrunning and start_side != 0 and momentum.length() >= wallrun_min_speed and not is_on_floor():
+		var ray = wall_ray_left if start_side == -1 else wall_ray_right
+		wall_normal = ray.get_collision_normal()
+		_enter_wallrun(start_side)
+	# If wallrunning, maintain it or exit
+	if is_wallrunning:
+		# If the side no longer hits the wall, stop
+		var current_ray = wall_ray_left if wall_side == -1 else wall_ray_right
+		if not current_ray.is_colliding():
+			_exit_wallrun()
+			return
+
+		# update wall normal and direction
+		wall_normal = current_ray.get_collision_normal()	
+		var forward = (head.transform.basis.z * -1).normalized()
+		wall_dir = (forward - wall_normal * forward.dot(wall_normal)).normalized()
+		var target_speed = max(momentum.length(), walk_base_speed)
+		momentum = momentum.normalized().slerp(wall_dir, 6.0 * delta) * target_speed
+
+		# Keep player close to wall by nudging momentum toward wall plane
+		var push = -wall_normal * wallrun_side_stick * momentum.length()
+		momentum += push * delta
+
+
+func _enter_wallrun(side: int) -> void:
+	is_wallrunning = true
+	wall_side = side
+
+	# reduce vertical velocity so player doesn't slam into wall immediately
+	if velocity.y < 0:
+		velocity.y *= 0.3
+
+func _exit_wallrun() -> void:
+	if not is_wallrunning:
+		return
+	is_wallrunning = false
+	wall_normal = Vector3.ZERO
+	wall_dir = Vector3.ZERO
+	wall_side = 0
 
 # --- Landing ---
 func _handle_landing() -> void:
@@ -417,3 +556,6 @@ func _on_dash_duration_timer_timeout() -> void:
 
 func _on_sliding_boost_cooldown_timeout() -> void:
 	can_slide_boost = true
+
+func _on_wall_jump_push_duration_timeout() -> void:
+	is_wall_jumping = false

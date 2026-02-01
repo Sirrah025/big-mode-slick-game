@@ -27,6 +27,14 @@ albedo_color = Color(0.5764706, 0.79607844, 0.31764707, 1)
 material = SubResource("StandardMaterial3D_j03km")
 size = Vector3(4, 2, 10)
 
+[sub_resource type="BoxMesh" id="BoxMesh_8goci"]
+material = SubResource("StandardMaterial3D_j03km")
+size = Vector3(4, 11.08, 44.025)
+
+[sub_resource type="BoxMesh" id="BoxMesh_8j8bn"]
+material = SubResource("StandardMaterial3D_j03km")
+size = Vector3(21.22, 14.85, 32.575)
+
 [sub_resource type="BoxMesh" id="BoxMesh_3xn65"]
 material = SubResource("StandardMaterial3D_j03km")
 size = Vector3(4, 1.12, 10)
@@ -79,6 +87,24 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10.299749, 4.4717865, 16.336
 use_collision = true
 collision_layer = 2
 mesh = SubResource("BoxMesh_j03km")
+
+[node name="CSGMesh3D6" type="CSGMesh3D" parent="." unique_id=425182836]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13.452581, 4.4717865, -37.180206)
+use_collision = true
+collision_layer = 2
+mesh = SubResource("BoxMesh_8goci")
+
+[node name="CSGMesh3D7" type="CSGMesh3D" parent="." unique_id=1322246667]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8.495123, 4.4717865, -56.204636)
+use_collision = true
+collision_layer = 2
+mesh = SubResource("BoxMesh_8goci")
+
+[node name="CSGMesh3D8" type="CSGMesh3D" parent="." unique_id=196699856]
+transform = Transform3D(-0.4019478, 0, 0.9156626, 0, 1, 0, -0.9156626, 0, -0.4019478, 0.2794876, 4.4717865, -101.8685)
+use_collision = true
+collision_layer = 2
+mesh = SubResource("BoxMesh_8j8bn")
 
 [node name="CSGMesh3D4" type="CSGMesh3D" parent="." unique_id=1216652564]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10.299749, 3.1337519, 3.4685621)
