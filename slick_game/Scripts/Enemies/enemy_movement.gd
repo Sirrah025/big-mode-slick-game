@@ -3,15 +3,14 @@ extends CharacterBody3D
 @export_category("Attack Parameters")
 @export var min_attack_margin: = 0.0
 @export var max_attack_margin: float
-@export var Idle_Path: Path3D
-@onready var Idle_Path_Curve = Idle_Path.get_curve()
-var Idle_Targets_index: int
-@export var activation_margin := 0.0
 
 
 @export_category("Movement Data")
 @export var speed = 5.0
 @export var turn_speed = 4.0
+@export var Idle_Path: Path3D
+@onready var Idle_Path_Curve = Idle_Path.get_curve()
+var Idle_Targets_index: int
 
 
 @onready var nav_agent := $NavigationAgent3D
@@ -43,18 +42,26 @@ func movement(delta: float) -> void:
 		print_debug("Skipping to next frame")
 		await get_tree().physics_frame
 	# We grab destination and subtract our global_position from it
-	var destination = nav_agent.get_next_path_position()
-	var target_vector = destination - global_transform.origin
-	# if local_destination.length_squared() > 1.0:
-	target_vector = target_vector.normalized() * speed
-	# We set velocity
-	velocity = target_vector
-	#velocity = velocity.move_toward(velocity, delta)
-	# Make model look at target
-	if not destination.is_equal_approx(global_position):
-		look_at(Vector3(-destination.x, global_position.y, -destination.z), Vector3.UP)
-		rotate_y(deg_to_rad(Forward_Direction.rotation.y * turn_speed)) 
+	if nav_agent.target_position == global_position:
+		velocity = global_position
+		look_at_target(player_target.global_position)
+	else: 
+		var destination = nav_agent.get_next_path_position()
+		var target_vector = destination - global_transform.origin
+		# if local_destination.length_squared() > 1.0:
+		target_vector = target_vector.normalized() * speed
+		# We set velocity
+		velocity = target_vector
+		#velocity = velocity.move_toward(velocity, delta)
+		look_at_target(destination)
 	move_and_slide()
+
+# Make model look at target
+func look_at_target(target) -> void:
+	if not target.is_equal_approx(global_position):
+		look_at(Vector3(target.x, global_position.y, target.z), Vector3.UP)
+		rotate_y(deg_to_rad(Forward_Direction.rotation.y * turn_speed)) 
+
 
 # helper function
 func check_target_reached(target: Vector3) -> bool:
@@ -79,8 +86,7 @@ func distance_to_player() -> float:
 
 
 func _on_entity_died() -> void:
-	# queue_free()
-	pass # Replace with function body.
+	queue_free()
 
 
 func _on_navigation_agent_3d_navigation_finished() -> void:

@@ -9,7 +9,8 @@ signal fire_weapons
 ## Virtual function
 ## Called upon state entering StateMachine
 func enter() -> void:
-	fire_weapons.emit()
+	parent.velocity = Vector3(0,0,0)
+	fire_weapon()
 
 ## Virtual function
 ## Called upon state exiting State Machine

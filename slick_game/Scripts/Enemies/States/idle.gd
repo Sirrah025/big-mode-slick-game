@@ -4,6 +4,7 @@ var Idle_Path_Pos
 
 @onready var state_machine = get_parent()
 
+@onready var vision_raycasts = %Vision.get_children()
 
 ## Virtual function
 ## Called upon state entering StateMachine
@@ -19,9 +20,9 @@ func exit() -> void:
 ## Called within _process
 ## var delta: delta from _process
 func update(delta) -> void:
-	# during Idle State 	
-	if activated_by_player():
-		state_machine.change_state($"../Aggressive")
+	for vision_raycast in vision_raycasts:
+		if vision_raycast.is_colliding():
+			_activate_aggression()
 
 ## Virtual function
 ## Called within _physics_process
@@ -45,9 +46,6 @@ func target_reached() -> void:
 	# Set target_position to new position on idle path
 	parent.set_new_idle_target_pos()
 
-func activated_by_player() -> bool:
-	if (
-		parent.player_target.global_position.distance_to(parent.global_position) < parent.activation_margin
-	):
-		return true
-	return false
+func _activate_aggression() -> void:
+	print_debug("We are aggressive now")
+	state_machine.change_state($"../Aggressive")

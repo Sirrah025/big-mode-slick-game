@@ -9,8 +9,8 @@ signal ready_weapons
 ## Virtual function
 ## Called upon state entering StateMachine
 func enter() -> void:
+	parent.nav_agent.navigation_finished.emit()
 	ready_weapons.emit()
-	set_nav_target()
 
 ## Virtual function
 ## Called upon state exiting State Machine
@@ -28,16 +28,18 @@ func update(delta) -> void:
 ## var delta: delta from _physics_process
 func physics_update(delta) -> void:
 	if parent.check_target_reached(parent.player_target.global_position):
-		parent.nav_agent.target_reached.emit()
+		parent.nav_agent.navigation_finished.emit()
 
 func set_nav_target() -> void:
+	var target_direction # 
 	var target_pos = parent.player_target.global_position
 	if target_pos.distance_to(parent.global_position) > parent.max_attack_margin:
-		var direction = (parent.global_position - target_pos).normalized()
-		target_pos -= direction * parent.max_attack_margin
+		target_direction = (parent.global_position - target_pos).normalized()
+		# target_pos -= direction * parent.max_attack_margin
 	elif target_pos.distance_to(parent.global_position) < parent.min_attack_margin:
-		var direction = (target_pos - parent.global_position).normalized()
-		target_pos += direction * parent.min_attack_margin
+		target_direction = (target_pos - parent.global_position).normalized()
+		# target_pos += direction * parent.min_attack_margin
+	parent.nav_agent.target_position = target_direction
 
 ## Virtual function
 ## Called for pathfinding states
@@ -49,4 +51,10 @@ func target_reached() -> void:
 		):
 		set_nav_target()
 	else:
+		parent.nav_agent.target_position = parent.global_position
 		state_machine.change_state($"../Attack")
+
+
+func _on_animation_player_animation_finished(anim_name: StringName) -> void:
+	if anim_name == "Ready Fire":
+		set_nav_target()
