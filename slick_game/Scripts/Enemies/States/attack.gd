@@ -4,6 +4,8 @@ extends State
 signal fire_weapons
 
 
+@onready var state_machine = get_parent()
+
 ## Virtual function
 ## Called upon state entering StateMachine
 func enter() -> void:
@@ -34,3 +36,8 @@ func target_reached() -> void:
 
 func fire_weapon() -> void:
 	fire_weapons.emit()
+
+
+func _on_animation_tree_animation_finished(anim_name: StringName) -> void:
+	if anim_name == "Fire":
+		state_machine.change_state($"../Aggressive")

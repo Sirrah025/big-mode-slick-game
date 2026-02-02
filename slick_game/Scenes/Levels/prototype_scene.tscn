@@ -57,6 +57,13 @@ sky = SubResource("Sky_3a2rb")
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_c2tmr"]
 
+[sub_resource type="Curve3D" id="Curve3D_8goci"]
+_data = {
+"points": PackedVector3Array(0, 0, 0, 0, 0, 0, -3.71, 0, -22.16, 0, 0, 0, 0, 0, 0, 8.735, 0, -15.725, 0, 0, 0, 0, 0, 0, -1.845, 0, -8.68),
+"tilts": PackedFloat32Array(0, 0, 0)
+}
+point_count = 3
+
 [sub_resource type="NavigationMesh" id="NavigationMesh_kf5rd"]
 
 [node name="Prototype Scene" type="Node3D" unique_id=245098700]
@@ -129,10 +136,17 @@ mesh = SubResource("PrismMesh_j03km")
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Boost Test" unique_id=780757304]
 shape = SubResource("BoxShape3D_c2tmr")
 
+[node name="Path3D" type="Path3D" parent="." unique_id=2074012010]
+curve = SubResource("Curve3D_8goci")
+
 [node name="NavigationRegion3D" type="NavigationRegion3D" parent="." unique_id=1872904870]
 navigation_mesh = SubResource("NavigationMesh_kf5rd")
 
-[node name="Enemy" parent="." unique_id=1279462332 instance=ExtResource("4_3xn65")]
+[node name="Enemy" parent="." unique_id=1279462332 node_paths=PackedStringArray("Idle_Path") instance=ExtResource("4_3xn65")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.4584832, -11.557131)
+min_attack_margin = 6.0
+max_attack_margin = 12.0
+Idle_Path = NodePath("../Path3D")
+activation_margin = 12.0
 
 [node name="Pause Menu" parent="." unique_id=1489435571 instance=ExtResource("5_8goci")]
