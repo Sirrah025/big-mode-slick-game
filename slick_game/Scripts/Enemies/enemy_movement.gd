@@ -30,29 +30,31 @@ func _ready() -> void:
 	# Set Idle Index to 0
 	Idle_Targets_index = 0
 	# Start idle movement if not already set
-	nav_agent.target_position = Idle_Path_Curve.get_point_position(Idle_Targets_index)
+	set_new_idle_target_pos()
 
 
 func _physics_process(delta: float) -> void:
 	Aggression_State_Machine.current_state.physics_update(delta)
 	movement(delta)
-	move_and_slide()
 
 
 func movement(delta: float) -> void:
+	if nav_agent.is_navigation_finished():
+		print_debug("Skipping to next frame")
+		await get_tree().physics_frame
 	# We grab destination and subtract our global_position from it
-	await get_tree().process_frame
 	var destination = nav_agent.get_next_path_position()
-	var target_destination = destination - global_transform.origin
+	var target_vector = destination - global_transform.origin
 	# if local_destination.length_squared() > 1.0:
-	target_destination = target_destination.normalized() * speed
+	target_vector = target_vector.normalized() * speed
 	# We set velocity
-	velocity = target_destination
+	velocity = target_vector
 	#velocity = velocity.move_toward(velocity, delta)
 	# Make model look at target
-	if not target_destination.is_equal_approx(global_position):
-		look_at(Vector3(destination.x, global_position.y, destination.z), Vector3.UP)
-	rotate_y(deg_to_rad(Forward_Direction.rotation.y * turn_speed)) 
+	if not destination.is_equal_approx(global_position):
+		look_at(Vector3(-destination.x, global_position.y, -destination.z), Vector3.UP)
+		rotate_y(deg_to_rad(Forward_Direction.rotation.y * turn_speed)) 
+	move_and_slide()
 
 # helper function
 func check_target_reached(target: Vector3) -> bool:
@@ -62,14 +64,25 @@ func check_target_reached(target: Vector3) -> bool:
 		return true
 	return false
 
+func check_idle_target_reached(target: Vector3) -> bool:
+	if target.distance_to(global_position) < 2.1:
+		return true
+	return false
+
+func set_new_idle_target_pos() -> void:
+	print_debug("We have set a new position")
+	nav_agent.target_position = Idle_Path_Curve.get_point_position(Idle_Targets_index)
+
+# Another helper function for common calls to distance to player
 func distance_to_player() -> float:
 	return player_target.global_position.distance_to(global_position)
-
-
-func _on_navigation_agent_3d_target_reached() -> void:
-	Aggression_State_Machine.current_state.target_reached()
 
 
 func _on_entity_died() -> void:
 	# queue_free()
 	pass # Replace with function body.
+
+
+func _on_navigation_agent_3d_navigation_finished() -> void:
+	print_debug("We reached Target!")
+	Aggression_State_Machine.current_state.target_reached()

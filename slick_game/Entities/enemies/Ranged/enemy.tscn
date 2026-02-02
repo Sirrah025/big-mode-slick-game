@@ -92,13 +92,16 @@ min_attack_margin = 3.0
 max_attack_margin = 9.0
 
 [node name="NavigationAgent3D" type="NavigationAgent3D" parent="." unique_id=1252521370]
+path_desired_distance = 12.0
+target_desired_distance = 3.0
+debug_enabled = true
 
 [node name="FaceDirection" type="Node3D" parent="." unique_id=1571494642]
 
 [node name="Ranged Enemy" parent="." unique_id=291246549 instance=ExtResource("1_ar4ve")]
 
 [node name="Skeleton3D" parent="Ranged Enemy/Ranged Armature" parent_id_path=PackedInt32Array(291246549, 794327750) index="0" unique_id=1077688716]
-bones/1/position = Vector3(0, 1.8331575, 0)
+bones/1/position = Vector3(0, 1.7728506, 0)
 bones/5/rotation = Quaternion(0.0064260643, 0.04872845, -0.5822865, 0.8114967)
 bones/6/rotation = Quaternion(0.05068841, -4.2782973e-05, -0.035743777, 0.9980747)
 bones/8/rotation = Quaternion(0.0064260904, -0.04872849, 0.5822865, 0.8114967)
@@ -153,7 +156,7 @@ script = ExtResource("9_ryoam")
 
 [node name="Reaction Timer" type="Timer" parent="." unique_id=617705300]
 
-[connection signal="target_reached" from="NavigationAgent3D" to="." method="_on_navigation_agent_3d_target_reached"]
+[connection signal="navigation_finished" from="NavigationAgent3D" to="." method="_on_navigation_agent_3d_navigation_finished"]
 [connection signal="animation_finished" from="AnimationTree" to="Aggression State Machine/Attack" method="_on_animation_tree_animation_finished"]
 [connection signal="damage" from="Hitbox Component" to="Health Component" method="_on_damage"]
 [connection signal="entity_died" from="Health Component" to="." method="_on_entity_died"]
