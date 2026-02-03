@@ -43,7 +43,7 @@ func movement(delta: float) -> void:
 		await get_tree().physics_frame
 	# We grab destination and subtract our global_position from it
 	if nav_agent.target_position == global_position:
-		velocity = global_position
+		velocity = Vector3.ZERO
 		look_at_target(player_target.global_position)
 	else: 
 		var destination = nav_agent.get_next_path_position()
@@ -55,6 +55,7 @@ func movement(delta: float) -> void:
 		#velocity = velocity.move_toward(velocity, delta)
 		look_at_target(destination)
 	move_and_slide()
+
 
 # Make model look at target
 func look_at_target(target) -> void:

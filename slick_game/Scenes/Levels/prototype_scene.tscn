@@ -147,8 +147,8 @@ curve = SubResource("Curve3D_8goci")
 
 [node name="Enemy" parent="." unique_id=1279462332 node_paths=PackedStringArray("Idle_Path") instance=ExtResource("4_3xn65")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.4584832, -11.557131)
-min_attack_margin = 6.0
-max_attack_margin = 12.0
+min_attack_margin = 4.0
+max_attack_margin = 5.0
 Idle_Path = NodePath("../Path3D")
 
 [node name="Pause Menu" parent="." unique_id=1489435571 instance=ExtResource("5_8goci")]

@@ -5,6 +5,8 @@ signal fire_weapons
 
 
 @onready var state_machine = get_parent()
+@onready var reaction_timer = %"Reaction Timer"
+
 
 ## Virtual function
 ## Called upon state entering StateMachine

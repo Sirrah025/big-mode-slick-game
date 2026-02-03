@@ -1,5 +1,9 @@
 extends State
 
+
+signal ready_weapons
+
+
 var Idle_Path_Pos
 
 @onready var state_machine = get_parent()
@@ -14,7 +18,7 @@ func enter() -> void:
 ## Virtual function
 ## Called upon state exiting State Machine
 func exit() -> void:
-	pass
+	ready_weapons.emit()
 
 ## Virtual function
 ## Called within _process

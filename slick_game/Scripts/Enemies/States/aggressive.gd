@@ -1,16 +1,12 @@
 extends State
 
 
-signal ready_weapons
-
-
 @onready var state_machine = get_parent()
 
 ## Virtual function
 ## Called upon state entering StateMachine
 func enter() -> void:
 	parent.nav_agent.navigation_finished.emit()
-	ready_weapons.emit()
 
 ## Virtual function
 ## Called upon state exiting State Machine
@@ -29,9 +25,10 @@ func update(delta) -> void:
 func physics_update(delta) -> void:
 	if parent.check_target_reached(parent.player_target.global_position):
 		parent.nav_agent.navigation_finished.emit()
+	pass
 
 func set_nav_target() -> void:
-	var target_direction # 
+	var target_direction 
 	var target_pos = parent.player_target.global_position
 	if target_pos.distance_to(parent.global_position) > parent.max_attack_margin:
 		target_direction = (parent.global_position - target_pos).normalized()
@@ -39,6 +36,8 @@ func set_nav_target() -> void:
 	elif target_pos.distance_to(parent.global_position) < parent.min_attack_margin:
 		target_direction = (target_pos - parent.global_position).normalized()
 		# target_pos += direction * parent.min_attack_margin
+	else:
+		target_direction = parent.global_position
 	parent.nav_agent.target_position = target_direction
 
 ## Virtual function
