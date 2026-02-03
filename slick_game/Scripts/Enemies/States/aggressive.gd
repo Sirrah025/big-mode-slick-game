@@ -25,20 +25,21 @@ func update(delta) -> void:
 func physics_update(delta) -> void:
 	if parent.check_target_reached(parent.player_target.global_position):
 		parent.nav_agent.navigation_finished.emit()
-	pass
 
 func set_nav_target() -> void:
 	var target_direction 
 	var target_pos = parent.player_target.global_position
-	if target_pos.distance_to(parent.global_position) > parent.max_attack_margin:
+	var distance = target_pos.distance_to(parent.global_position)
+	if distance > parent.max_attack_margin:
 		target_direction = (parent.global_position - target_pos).normalized()
-		# target_pos -= direction * parent.max_attack_margin
-	elif target_pos.distance_to(parent.global_position) < parent.min_attack_margin:
+		target_direction *= distance - parent.max_attack_margin
+	elif distance < parent.min_attack_margin and parent.min_attack_margin > 0.0:
 		target_direction = (target_pos - parent.global_position).normalized()
-		# target_pos += direction * parent.min_attack_margin
+		target_direction *= parent.max_attack_margin - distance
 	else:
 		target_direction = parent.global_position
 	parent.nav_agent.target_position = target_direction
+	print_debug("Nav data: " + str(parent.nav_agent.target_position) + " compared to: " + str(parent.player_target.global_position))
 
 ## Virtual function
 ## Called for pathfinding states

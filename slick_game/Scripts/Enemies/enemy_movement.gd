@@ -31,10 +31,14 @@ func _ready() -> void:
 	# Start idle movement if not already set
 	set_new_idle_target_pos()
 
+func _process(delta: float) -> void:
+	print_debug(str(player_target.global_position))
+
 
 func _physics_process(delta: float) -> void:
 	Aggression_State_Machine.current_state.physics_update(delta)
 	movement(delta)
+	move_and_slide()
 
 
 func movement(delta: float) -> void:
@@ -42,7 +46,7 @@ func movement(delta: float) -> void:
 		print_debug("Skipping to next frame")
 		await get_tree().physics_frame
 	# We grab destination and subtract our global_position from it
-	if nav_agent.target_position == global_position:
+	if nav_agent.target_position.distance_to(global_position) < 0.1:
 		velocity = Vector3.ZERO
 		look_at_target(player_target.global_position)
 	else: 
@@ -54,7 +58,6 @@ func movement(delta: float) -> void:
 		velocity = target_vector
 		#velocity = velocity.move_toward(velocity, delta)
 		look_at_target(destination)
-	move_and_slide()
 
 
 # Make model look at target
@@ -66,8 +69,8 @@ func look_at_target(target) -> void:
 
 # helper function
 func check_target_reached(target: Vector3) -> bool:
-	if min_attack_margin > 0.0 and target.distance_to(global_position) < min_attack_margin:
-		return false
+	if min_attack_margin > 0.0 and target.distance_to(global_position) >= min_attack_margin:
+		return true
 	if target.distance_to(global_position) <= max_attack_margin:
 		return true
 	return false

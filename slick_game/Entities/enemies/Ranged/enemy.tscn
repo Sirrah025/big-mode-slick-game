@@ -90,6 +90,7 @@ height = 2.63208
 [node name="Enemy" type="CharacterBody3D" unique_id=1279462332]
 collision_layer = 16
 collision_mask = 2
+axis_lock_linear_y = true
 script = ExtResource("1_jnjvl")
 min_attack_margin = 3.0
 max_attack_margin = 9.0
@@ -127,15 +128,15 @@ shape = SubResource("SphereShape3D_ryoam")
 transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 0, 0, 0)
 
 [node name="Skeleton3D" parent="Ranged Enemy/Ranged Armature" parent_id_path=PackedInt32Array(291246549, 794327750) index="0" unique_id=1077688716]
-bones/1/position = Vector3(0, 1.694772, 0)
-bones/5/rotation = Quaternion(-0.26579824, -0.1738688, -0.49822935, 0.8067766)
-bones/6/rotation = Quaternion(0.65280277, -2.5738034e-05, -0.46033502, 0.60161483)
-bones/8/rotation = Quaternion(-0.3180187, 0.15927142, 0.50693285, 0.78518534)
-bones/9/rotation = Quaternion(0.6751889, 2.40691e-05, 0.47612095, 0.5634082)
-bones/10/position = Vector3(2.1374474, 3.899799, 1.7322459)
-bones/11/position = Vector3(-1.9202275, -2.070725, -4.866846)
-bones/12/position = Vector3(-2.0701807, 3.9726703, 1.5263634)
-bones/13/position = Vector3(2.364166, -2.6123853, -5.385218)
+bones/1/position = Vector3(0, 1.8432181, 0)
+bones/5/rotation = Quaternion(0.0064260643, 0.04872845, -0.5822865, 0.8114967)
+bones/6/rotation = Quaternion(0.05068841, -4.2782973e-05, -0.035743777, 0.9980747)
+bones/8/rotation = Quaternion(0.0064260904, -0.04872849, 0.5822865, 0.8114967)
+bones/9/rotation = Quaternion(0.05068841, 4.2782973e-05, 0.035743777, 0.9980747)
+bones/10/position = Vector3(2.0993812, 1.3935988, -6.8738746e-07)
+bones/11/position = Vector3(-2.3641672, -0.060679875, -0.9693103)
+bones/12/position = Vector3(-2.0993812, 1.3935988, -6.8738746e-07)
+bones/13/position = Vector3(2.3641672, -0.060679875, -0.9693103)
 
 [node name="AnimationTree" type="AnimationTree" parent="." unique_id=24667294]
 root_node = NodePath("../Ranged Enemy")
@@ -187,7 +188,7 @@ wait_time = 0.5
 [connection signal="navigation_finished" from="NavigationAgent3D" to="." method="_on_navigation_agent_3d_navigation_finished"]
 [connection signal="body_entered" from="FaceDirection/Near Vision" to="Aggression State Machine/Idle" method="_activate_aggression" unbinds=1]
 [connection signal="animation_finished" from="Ranged Enemy/AnimationPlayer" to="Aggression State Machine/Aggressive" method="_on_animation_player_animation_finished"]
-[connection signal="animation_finished" from="AnimationTree" to="Aggression State Machine/Attack" method="_on_animation_tree_animation_finished"]
+[connection signal="animation_finished" from="Ranged Enemy/AnimationPlayer" to="Aggression State Machine/Attack" method="_on_animation_tree_animation_finished"]
 [connection signal="damage" from="Hitbox Component" to="Health Component" method="_on_damage"]
 [connection signal="entity_died" from="Health Component" to="." method="_on_entity_died"]
 [connection signal="ready_weapons" from="Aggression State Machine/Idle" to="AnimationTree" method="_on_ready_weapons"]
