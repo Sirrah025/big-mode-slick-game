@@ -11,7 +11,7 @@ signal fire_weapons
 ## Virtual function
 ## Called upon state entering StateMachine
 func enter() -> void:
-	parent.velocity = Vector3(0,0,0)
+	parent.velocity = Vector3(0,0,0) # extra measure that enemy does not move
 	fire_weapon()
 
 ## Virtual function
@@ -41,6 +41,12 @@ func fire_weapon() -> void:
 	fire_weapons.emit()
 
 
-func _on_animation_tree_animation_finished(anim_name: StringName) -> void:
-	if anim_name == "Fire":
+func _on_reaction_timer_timeout() -> void:
+	if parent.distance_to_player() <= parent.max_attack_margin:
+		fire_weapon()
+	else:
 		state_machine.change_state($"../Aggressive")
+
+
+func _on_fire_animation_finished() -> void:
+	reaction_timer.start()
