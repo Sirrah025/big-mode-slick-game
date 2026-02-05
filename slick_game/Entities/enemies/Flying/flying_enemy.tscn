@@ -1,0 +1,24 @@
+[gd_scene format=3 uid="uid://yn5gq8dea23p"]
+
+[ext_resource type="PackedScene" uid="uid://dvm2ofty1p7q5" path="res://Entities/enemies/Flying/Flying Enemy.glb" id="1_eo8h7"]
+[ext_resource type="Script" uid="uid://bt5lx546qxxbm" path="res://Scripts/Components/State Machine/State_Machine.gd" id="2_sr74k"]
+[ext_resource type="Script" uid="uid://ddtnqi1undu5d" path="res://Scripts/Enemies/States/idle.gd" id="3_6dmh2"]
+
+[node name="Flying Enemy" type="CharacterBody3D" unique_id=1939878184]
+
+[node name="Flying Enemy" parent="." unique_id=1619327984 instance=ExtResource("1_eo8h7")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.671, 0)
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Flying Enemy" unique_id=1234038425]
+
+[node name="AnimationTree" type="AnimationTree" parent="." unique_id=2030492841]
+
+[node name="Flying Aggression State Machine" type="Node" parent="." unique_id=1110185002 node_paths=PackedStringArray("starting_state")]
+script = ExtResource("2_sr74k")
+starting_state = NodePath("Idle")
+metadata/_custom_type_script = "uid://bt5lx546qxxbm"
+
+[node name="Idle" type="Node" parent="Flying Aggression State Machine" unique_id=438119377]
+script = ExtResource("3_6dmh2")
+
+[editable path="Flying Enemy"]

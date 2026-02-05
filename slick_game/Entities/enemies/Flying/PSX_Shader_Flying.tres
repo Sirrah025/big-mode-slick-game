@@ -1,0 +1,13 @@
+[gd_resource type="ShaderMaterial" format=3 uid="uid://b2eegxgwdhc2k"]
+
+[ext_resource type="Shader" uid="uid://bm7oinlvktn7v" path="res://Entities/arts/PSX_Shader.gdshader" id="1_lfvdd"]
+[ext_resource type="Texture2D" uid="uid://yocvh8erold8" path="res://Entities/enemies/Flying/Flying Bot Color Map.png" id="2_eaiie"]
+
+[resource]
+render_priority = 0
+shader = ExtResource("1_lfvdd")
+shader_parameter/affine_mapping = false
+shader_parameter/albedo = ExtResource("2_eaiie")
+shader_parameter/alpha_scissor = 0.5
+shader_parameter/jitter = 0.25
+shader_parameter/resolution = Vector2i(320, 240)
