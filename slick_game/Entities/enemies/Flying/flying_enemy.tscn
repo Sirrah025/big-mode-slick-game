@@ -21,4 +21,7 @@ metadata/_custom_type_script = "uid://bt5lx546qxxbm"
 [node name="Idle" type="Node" parent="Flying Aggression State Machine" unique_id=438119377]
 script = ExtResource("3_6dmh2")
 
+[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="." unique_id=1793205621]
+bus = &"SFX"
+
 [editable path="Flying Enemy"]

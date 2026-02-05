@@ -131,7 +131,7 @@ shape = SubResource("SphereShape3D_ryoam")
 transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 0, 0, 0)
 
 [node name="Skeleton3D" parent="Ranged Enemy/Ranged Armature" parent_id_path=PackedInt32Array(291246549, 794327750) index="0" unique_id=1077688716]
-bones/1/position = Vector3(0, 1.4786123, 0)
+bones/1/position = Vector3(0, 1.7619873, 0)
 bones/5/rotation = Quaternion(0.0064260643, 0.04872845, -0.5822865, 0.8114967)
 bones/6/rotation = Quaternion(0.05068841, -4.2782973e-05, -0.035743777, 0.9980747)
 bones/8/rotation = Quaternion(0.0064260904, -0.04872849, 0.5822865, 0.8114967)
@@ -188,6 +188,9 @@ script = ExtResource("9_ryoam")
 unique_name_in_owner = true
 wait_time = 0.5
 one_shot = true
+
+[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="." unique_id=944263023]
+bus = &"SFX"
 
 [connection signal="navigation_finished" from="NavigationAgent3D" to="." method="_on_navigation_agent_3d_navigation_finished"]
 [connection signal="body_entered" from="FaceDirection/Near Vision" to="Aggression State Machine/Idle" method="_activate_aggression" unbinds=1]

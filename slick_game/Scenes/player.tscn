@@ -87,6 +87,9 @@ one_shot = true
 offset_right = 40.0
 offset_bottom = 23.0
 
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="." unique_id=725111486]
+bus = &"SFX"
+
 [connection signal="entity_died" from="Health Component" to="Player Death Handler" method="_on_entity_died"]
 [connection signal="area_entered" from="Hitbox Component" to="Hitbox Component" method="_on_area_entered"]
 [connection signal="body_entered" from="Hitbox Component" to="Hitbox Component" method="_on_body_entered"]
@@ -95,8 +98,3 @@ offset_bottom = 23.0
 [connection signal="timeout" from="DashDurationTimer" to="." method="_on_dash_duration_timer_timeout"]
 [connection signal="timeout" from="SlidingBoostCooldown" to="." method="_on_sliding_boost_cooldown_timeout"]
 [connection signal="timeout" from="WallJumpPushDuration" to="." method="_on_wall_jump_push_duration_timeout"]
-[connection signal="pressed" from="Pause Menu/Container/Button Container/ResumeButton" to="Pause Menu" method="_on_resume_button_pressed"]
-[connection signal="pressed" from="Pause Menu/Container/Button Container/SettingsButton" to="Pause Menu" method="_on_settings_button_pressed"]
-[connection signal="pressed" from="Pause Menu/Container/Button Container/MainMenuButton" to="Pause Menu" method="_on_main_menu_button_pressed"]
-[connection signal="pressed" from="Pause Menu/Container/Button Container/QuitButton" to="Pause Menu" method="_on_quit_button_pressed"]
-[connection signal="close_settings" from="Pause Menu/Container/Settings Menu" to="Pause Menu" method="_on_settings_menu_close_settings"]
