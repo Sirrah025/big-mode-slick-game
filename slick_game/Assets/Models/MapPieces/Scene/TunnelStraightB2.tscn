@@ -96,5 +96,4 @@ surface_material_override/1 = ExtResource("2_iukrp")
 surface_material_override/2 = ExtResource("3_6p37e")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=748908264]
-visible = false
 shape = SubResource("ConcavePolygonShape3D_kmqur")
