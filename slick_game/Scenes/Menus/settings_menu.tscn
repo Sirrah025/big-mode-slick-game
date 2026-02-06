@@ -34,48 +34,6 @@ layout_mode = 2
 script = ExtResource("4_3etfd")
 metadata/_tab_index = 1
 
-[node name="HBoxContainer" type="HBoxContainer" parent="TabContainer/Audio" unique_id=1579407957]
-layout_mode = 2
-
-[node name="RichTextLabel" type="RichTextLabel" parent="TabContainer/Audio/HBoxContainer" unique_id=242900606]
-custom_minimum_size = Vector2(254.705, 62.07)
-layout_mode = 2
-theme_override_font_sizes/normal_font_size = 32
-text = "Master"
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="Master Slider" type="HSlider" parent="TabContainer/Audio/HBoxContainer" unique_id=2018587905]
-layout_mode = 2
-
-[node name="HBoxContainer2" type="HBoxContainer" parent="TabContainer/Audio" unique_id=700624810]
-layout_mode = 2
-
-[node name="RichTextLabel" type="RichTextLabel" parent="TabContainer/Audio/HBoxContainer2" unique_id=1842064119]
-custom_minimum_size = Vector2(254.705, 62.07)
-layout_mode = 2
-theme_override_font_sizes/normal_font_size = 32
-text = "Music"
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="Music Slider" type="HSlider" parent="TabContainer/Audio/HBoxContainer2" unique_id=536980639]
-layout_mode = 2
-
-[node name="HBoxContainer3" type="HBoxContainer" parent="TabContainer/Audio" unique_id=11851438]
-layout_mode = 2
-
-[node name="RichTextLabel" type="RichTextLabel" parent="TabContainer/Audio/HBoxContainer3" unique_id=1829696515]
-custom_minimum_size = Vector2(254.705, 62.07)
-layout_mode = 2
-theme_override_font_sizes/normal_font_size = 32
-text = "Sound Effects"
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="SFX Slider" type="HSlider" parent="TabContainer/Audio/HBoxContainer3" unique_id=1455242072]
-layout_mode = 2
-
 [node name="Game" type="VBoxContainer" parent="TabContainer" unique_id=322908651]
 visible = false
 layout_mode = 2
@@ -96,7 +54,4 @@ vertical_alignment = 1
 [node name="HeadbobCheckButton" type="CheckButton" parent="TabContainer/Game/HBoxContainer" unique_id=1941611775]
 layout_mode = 2
 
-[connection signal="value_changed" from="TabContainer/Audio/HBoxContainer/Master Slider" to="TabContainer/Audio" method="_on_master_slider_value_changed"]
-[connection signal="value_changed" from="TabContainer/Audio/HBoxContainer2/Music Slider" to="TabContainer/Audio" method="_on_music_slider_value_changed"]
-[connection signal="value_changed" from="TabContainer/Audio/HBoxContainer3/SFX Slider" to="TabContainer/Audio" method="_on_sfx_slider_value_changed"]
 [connection signal="toggled" from="TabContainer/Game/HBoxContainer/HeadbobCheckButton" to="TabContainer/Game" method="_on_headbob_check_button_toggled"]

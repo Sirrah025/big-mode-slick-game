@@ -11,16 +11,8 @@
 [ext_resource type="Script" uid="uid://cmut33u2o3scq" path="res://Scripts/Enemies/States/attack.gd" id="9_ryoam"]
 [ext_resource type="Script" uid="uid://dmgiit17ys18i" path="res://Scripts/Enemies/States/aggressive.gd" id="9_uyk2m"]
 
-[sub_resource type="SphereShape3D" id="SphereShape3D_ryoam"]
-radius = 8.0
-
-[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_ryoam"]
-animation = &"Fire"
-
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_pa5df"]
 animation = &"Float"
-
-[sub_resource type="AnimationNodeBlend2" id="AnimationNodeBlend2_uyk2m"]
 
 [sub_resource type="AnimationNodeBlend2" id="AnimationNodeBlend2_ymcu4"]
 filter_enabled = true
@@ -49,11 +41,9 @@ advance_mode = 0
 
 [sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_2f1rj"]
 switch_mode = 2
-advance_mode = 2
 
 [sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_lkdd0"]
 switch_mode = 2
-advance_mode = 2
 
 [sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_ryoam"]
 advance_mode = 0
@@ -69,22 +59,17 @@ states/Idle/position = Vector2(380, 100)
 "states/Ready Fire/node" = SubResource("AnimationNodeAnimation_lkdd0")
 "states/Ready Fire/position" = Vector2(539, 100)
 transitions = ["Start", "Idle", SubResource("AnimationNodeStateMachineTransition_xc2wx"), "Fire", "End", SubResource("AnimationNodeStateMachineTransition_78gku"), "Idle", "Ready Fire", SubResource("AnimationNodeStateMachineTransition_jnjvl"), "Ready Fire", "At Ready", SubResource("AnimationNodeStateMachineTransition_2f1rj"), "Fire", "At Ready", SubResource("AnimationNodeStateMachineTransition_lkdd0"), "At Ready", "Fire", SubResource("AnimationNodeStateMachineTransition_ryoam")]
-graph_offset = Vector2(67, 3)
+graph_offset = Vector2(-55, 2)
 
 [sub_resource type="AnimationNodeBlendTree" id="AnimationNodeBlendTree_r5bsr"]
-graph_offset = Vector2(-705.4131, 321.47827)
-nodes/output/position = Vector2(660, 140)
+graph_offset = Vector2(-679, 99)
 nodes/Animation/node = SubResource("AnimationNodeAnimation_pa5df")
 nodes/Animation/position = Vector2(-380, 380)
 "nodes/Float Blend/node" = SubResource("AnimationNodeBlend2_ymcu4")
 "nodes/Float Blend/position" = Vector2(60, 140)
 nodes/StateMachine/node = SubResource("AnimationNodeStateMachine_q5n0g")
 nodes/StateMachine/position = Vector2(-520, 120)
-"nodes/Death Blend/node" = SubResource("AnimationNodeBlend2_uyk2m")
-"nodes/Death Blend/position" = Vector2(320, 240)
-"nodes/Animation 2/node" = SubResource("AnimationNodeAnimation_ryoam")
-"nodes/Animation 2/position" = Vector2(60, 440)
-node_connections = [&"output", 0, &"Death Blend", &"Float Blend", 0, &"StateMachine", &"Float Blend", 1, &"Animation", &"Death Blend", 0, &"Float Blend", &"Death Blend", 1, &"Animation 2"]
+node_connections = [&"output", 0, &"Float Blend", &"Float Blend", 0, &"StateMachine", &"Float Blend", 1, &"Animation"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_2f1rj"]
 radius = 0.6821289
@@ -93,60 +78,28 @@ height = 2.63208
 [node name="Enemy" type="CharacterBody3D" unique_id=1279462332]
 collision_layer = 16
 collision_mask = 2
-axis_lock_linear_y = true
 script = ExtResource("1_jnjvl")
-min_attack_margin = 3.0
-max_attack_margin = 9.0
-
-[node name="VisibleOnScreenEnabler3D" type="VisibleOnScreenEnabler3D" parent="." unique_id=471586035]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.4175256, 0.04169178)
-aabb = AABB(-0.8566707, -1.3326589, -0.39766416, 1.7133414, 2.6653178, 0.7953283)
 
 [node name="NavigationAgent3D" type="NavigationAgent3D" parent="." unique_id=1252521370]
-target_desired_distance = 3.0
-debug_enabled = true
-
-[node name="FaceDirection" type="Node3D" parent="." unique_id=1571494642]
-
-[node name="Vision" type="Node3D" parent="FaceDirection" unique_id=1385892364]
-unique_name_in_owner = true
-transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 0, 2.395, 0)
-
-[node name="RayCast3D" type="RayCast3D" parent="FaceDirection/Vision" unique_id=272358943]
-target_position = Vector3(0, 0, 20)
-
-[node name="RayCast3D2" type="RayCast3D" parent="FaceDirection/Vision" unique_id=975641300]
-target_position = Vector3(-13, 0, 13)
-
-[node name="RayCast3D3" type="RayCast3D" parent="FaceDirection/Vision" unique_id=430874097]
-target_position = Vector3(13, 0, 13)
-
-[node name="Near Vision" type="Area3D" parent="FaceDirection" unique_id=673163198]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.395, 0)
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="FaceDirection/Near Vision" unique_id=809951471]
-shape = SubResource("SphereShape3D_ryoam")
 
 [node name="Ranged Enemy" parent="." unique_id=291246549 instance=ExtResource("1_ar4ve")]
-transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 0, 0, 0)
 
 [node name="Skeleton3D" parent="Ranged Enemy/Ranged Armature" parent_id_path=PackedInt32Array(291246549, 794327750) index="0" unique_id=1077688716]
-bones/1/position = Vector3(0, 1.7619873, 0)
-bones/5/rotation = Quaternion(0.0064260643, 0.04872845, -0.5822865, 0.8114967)
-bones/6/rotation = Quaternion(0.05068841, -4.2782973e-05, -0.035743777, 0.9980747)
-bones/8/rotation = Quaternion(0.0064260904, -0.04872849, 0.5822865, 0.8114967)
-bones/9/rotation = Quaternion(0.05068841, 4.2782973e-05, 0.035743777, 0.9980747)
-bones/10/position = Vector3(2.0993812, 1.3935988, -6.8738746e-07)
-bones/11/position = Vector3(-2.3641672, -0.060679875, -0.9693103)
-bones/12/position = Vector3(-2.0993812, 1.3935988, -6.8738746e-07)
-bones/13/position = Vector3(2.3641672, -0.060679875, -0.9693103)
+bones/1/position = Vector3(0, 1.6723558, 0)
+bones/5/rotation = Quaternion(-0.26579824, -0.1738688, -0.49822935, 0.8067766)
+bones/6/rotation = Quaternion(0.65280277, -2.5738034e-05, -0.46033502, 0.60161483)
+bones/8/rotation = Quaternion(-0.31801873, 0.15927142, 0.5069328, 0.7851852)
+bones/9/rotation = Quaternion(0.67518896, 2.4121255e-05, 0.47612092, 0.56340826)
+bones/10/position = Vector3(2.1374474, 3.899799, 1.7322459)
+bones/11/position = Vector3(-1.9202275, -2.070725, -4.866846)
+bones/12/position = Vector3(-2.0701807, 3.9726698, 1.5263634)
+bones/13/position = Vector3(2.364166, -2.6123853, -5.385218)
 
 [node name="AnimationTree" type="AnimationTree" parent="." unique_id=24667294]
 root_node = NodePath("../Ranged Enemy")
 tree_root = SubResource("AnimationNodeBlendTree_r5bsr")
 anim_player = NodePath("../Ranged Enemy/AnimationPlayer")
 "parameters/Float Blend/blend_amount" = 1.0
-"parameters/Death Blend/blend_amount" = 0.0
 script = ExtResource("2_0gfor")
 
 [node name="Attack Origins" type="Node3D" parent="." unique_id=265711064]
@@ -184,20 +137,10 @@ script = ExtResource("9_uyk2m")
 [node name="Attack" type="Node" parent="Aggression State Machine" unique_id=2122168653]
 script = ExtResource("9_ryoam")
 
-[node name="Reaction Timer" type="Timer" parent="." unique_id=617705300]
-unique_name_in_owner = true
-wait_time = 0.5
-one_shot = true
-
-[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="." unique_id=944263023]
-bus = &"SFX"
-
-[connection signal="navigation_finished" from="NavigationAgent3D" to="." method="_on_navigation_agent_3d_navigation_finished"]
-[connection signal="body_entered" from="FaceDirection/Near Vision" to="Aggression State Machine/Idle" method="_activate_aggression" unbinds=1]
+[connection signal="target_reached" from="NavigationAgent3D" to="." method="_on_navigation_agent_3d_target_reached"]
 [connection signal="damage" from="Hitbox Component" to="Health Component" method="_on_damage"]
 [connection signal="entity_died" from="Health Component" to="." method="_on_entity_died"]
-[connection signal="ready_weapons" from="Aggression State Machine/Idle" to="AnimationTree" method="_on_ready_weapons"]
+[connection signal="ready_weapons" from="Aggression State Machine/Aggressive" to="AnimationTree" method="_on_ready_weapons"]
 [connection signal="fire_weapons" from="Aggression State Machine/Attack" to="AnimationTree" method="_on_fire_weapons"]
-[connection signal="timeout" from="Reaction Timer" to="Aggression State Machine/Attack" method="_on_reaction_timer_timeout"]
 
 [editable path="Ranged Enemy"]

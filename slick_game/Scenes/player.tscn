@@ -20,7 +20,7 @@ height = 1.1796631
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_vgqql"]
 
 [node name="Player" type="CharacterBody3D" unique_id=99981486 groups=["Player"]]
-collision_mask = 58
+collision_mask = 50
 script = ExtResource("1_vgqql")
 
 [node name="Mesh" type="MeshInstance3D" parent="." unique_id=667297727]
@@ -84,15 +84,13 @@ one_shot = true
 wait_time = 0.5
 one_shot = true
 
-[node name="ProjectileCooldown" type="Timer" parent="." unique_id=1304084785]
+[node name="ProjectileCooldown" type="Timer" parent="." unique_id=1819641894]
+wait_time = 0.3
 one_shot = true
 
 [node name="SpeedTest" type="Label" parent="." unique_id=404264627]
 offset_right = 40.0
 offset_bottom = 23.0
-
-[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="." unique_id=725111486]
-bus = &"SFX"
 
 [connection signal="entity_died" from="Health Component" to="Player Death Handler" method="_on_entity_died"]
 [connection signal="area_entered" from="Hitbox Component" to="Hitbox Component" method="_on_area_entered"]

@@ -11,8 +11,8 @@ func _process(delta: float) -> void:
 	pass
 
 func _on_ready_weapons():
-	get("parameters/StateMachine/playback").travel("Ready Fire")
+	set("parameters/StateMachine/playback", "At Ready")
 
 
 func _on_fire_weapons():
-	get("parameters/StateMachine/playback").travel("Fire")
+	set("parameters/StateMachine/playback", "Fire")

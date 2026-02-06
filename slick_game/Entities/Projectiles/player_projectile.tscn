@@ -1,6 +1,6 @@
-[gd_scene format=3 uid="uid://c0g3hm828nitu"]
+[gd_scene format=3 uid="uid://dbti28kvbl0mp"]
 
-[ext_resource type="Script" uid="uid://crn354ijjwvhd" path="res://Scripts/Components/player_projectile.gd" id="1_ku0ug"]
+[ext_resource type="Script" uid="uid://ccetbbbrvq3wo" path="res://Entities/Projectiles/player_projectile.gd" id="1_ku0ug"]
 [ext_resource type="Material" uid="uid://c2ks8mvim3p84" path="res://Entities/Projectiles/projectile_material.tres" id="1_oqopr"]
 
 [sub_resource type="Gradient" id="Gradient_ku0ug"]
@@ -217,6 +217,6 @@ wait_time = 5.0
 one_shot = true
 autostart = true
 
-[connection signal="body_entered" from="Hitbox" to="." method="_on_hitbox_body_entered"]
 [connection signal="body_entered" from="Hitbox" to="Hitbox" method="_on_body_entered"]
+[connection signal="body_entered" from="Hitbox" to="." method="_on_hitbox_body_entered"]
 [connection signal="timeout" from="Despawn" to="." method="_on_despawn_timeout"]

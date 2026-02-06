@@ -24,7 +24,6 @@ buses/default_bus_layout="uid://bvscwyd48yj7q"
 Settings="*uid://5htr5nv5adyt"
 GlobalSignals="*uid://cg8be46oyhk51"
 LoadScenes="*uid://cfrbntjytvmhg"
-SoundHandler="*uid://bvlj3trnb2wfh"
 
 [display]
 
@@ -88,7 +87,7 @@ Dashing={
 }
 Shooting={
 "deadzone": 0.2,
-"events": [Object(InputEventMouseButton,"resource_local_to_scene":false,"resource_name":"","device":-1,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"button_mask":1,"position":Vector2(293, 24),"global_position":Vector2(302, 72),"factor":1.0,"button_index":1,"canceled":false,"pressed":true,"double_click":true,"script":null)
+"events": [Object(InputEventMouseButton,"resource_local_to_scene":false,"resource_name":"","device":-1,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"button_mask":1,"position":Vector2(107, 13),"global_position":Vector2(116, 61),"factor":1.0,"button_index":1,"canceled":false,"pressed":true,"double_click":false,"script":null)
 ]
 }
 Sliding={

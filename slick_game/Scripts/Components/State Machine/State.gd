@@ -5,6 +5,7 @@
 class_name State
 extends Node
 
+signal change_anim(state: String)
 signal play_audio(sound: AudioStreamWAV)
 signal transitioned()
 
