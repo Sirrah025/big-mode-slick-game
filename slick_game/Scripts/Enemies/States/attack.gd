@@ -4,15 +4,10 @@ extends State
 signal fire_weapons
 
 
-@onready var state_machine = get_parent()
-@onready var reaction_timer = %"Reaction Timer"
-
-
 ## Virtual function
 ## Called upon state entering StateMachine
 func enter() -> void:
-	parent.velocity = Vector3(0,0,0) # extra measure that enemy does not move
-	fire_weapon()
+	fire_weapons.emit()
 
 ## Virtual function
 ## Called upon state exiting State Machine
@@ -39,14 +34,3 @@ func target_reached() -> void:
 
 func fire_weapon() -> void:
 	fire_weapons.emit()
-
-
-func _on_reaction_timer_timeout() -> void:
-	if parent.distance_to_player() <= parent.max_attack_margin:
-		fire_weapon()
-	else:
-		state_machine.change_state($"../Aggressive")
-
-
-func _on_fire_animation_finished() -> void:
-	reaction_timer.start()

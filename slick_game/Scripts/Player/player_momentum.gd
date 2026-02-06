@@ -179,6 +179,25 @@ func _apply_gravity(delta: float) -> void:
 	else:
 		velocity.y = velocity.y - GRAVITY * delta
 
+# --- Shooting ---
+func _handle_shooting():
+	if Input.is_action_pressed("Shooting") and can_shoot:
+		var projectile = player_projectile_scene.instantiate()
+		get_tree().current_scene.add_child(projectile)
+
+		var cam_transform = camera.global_transform
+
+		var spawn_position = cam_transform.origin
+		spawn_position += cam_transform.basis.x * projectile_x_offset
+		spawn_position += cam_transform.basis.y * projectile_y_offset
+		spawn_position += cam_transform.basis.z * projectile_z_offset
+
+		projectile.global_transform.origin = spawn_position
+		projectile.global_transform.basis = cam_transform.basis
+
+		projectile_cooldown_timer.start()
+		can_shoot = false
+
 # --- Sliding ---
 func _handle_slide_input() -> void:
 	if Input.is_action_just_pressed("Sliding") and is_on_floor():
