@@ -30,6 +30,7 @@ SoundHandler="*uid://bvlj3trnb2wfh"
 
 window/size/viewport_width=1920
 window/size/viewport_height=1080
+window/size/mode=3
 
 [file_customization]
 
@@ -108,6 +109,7 @@ Pause={
 3d_physics/layer_3="Player Attack"
 3d_physics/layer_4="Enemy Attack"
 3d_physics/layer_5="Enemy Hitbox"
+3d_physics/layer_6="Slipping"
 
 [physics]
 

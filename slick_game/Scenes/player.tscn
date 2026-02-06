@@ -20,11 +20,10 @@ height = 1.1796631
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_vgqql"]
 
 [node name="Player" type="CharacterBody3D" unique_id=99981486 groups=["Player"]]
-collision_mask = 2
+collision_mask = 58
 script = ExtResource("1_vgqql")
 
 [node name="Mesh" type="MeshInstance3D" parent="." unique_id=667297727]
-visible = false
 mesh = SubResource("CapsuleMesh_f60y1")
 
 [node name="NormalHitBox" type="CollisionShape3D" parent="." unique_id=1644640873]
@@ -83,6 +82,9 @@ one_shot = true
 
 [node name="WallJumpPushDuration" type="Timer" parent="." unique_id=1703677272]
 
+[node name="ProjectileCooldown" type="Timer" parent="." unique_id=1304084785]
+one_shot = true
+
 [node name="SpeedTest" type="Label" parent="." unique_id=404264627]
 offset_right = 40.0
 offset_bottom = 23.0
@@ -98,3 +100,4 @@ bus = &"SFX"
 [connection signal="timeout" from="DashDurationTimer" to="." method="_on_dash_duration_timer_timeout"]
 [connection signal="timeout" from="SlidingBoostCooldown" to="." method="_on_sliding_boost_cooldown_timeout"]
 [connection signal="timeout" from="WallJumpPushDuration" to="." method="_on_wall_jump_push_duration_timeout"]
+[connection signal="timeout" from="ProjectileCooldown" to="." method="_on_projectile_cooldown_timeout"]
