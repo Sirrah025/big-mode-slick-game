@@ -17,9 +17,19 @@ var GRAVITY = ProjectSettings.get_setting("physics/3d/default_gravity")
 
 const MOUSE_SENSITIVITY: float = 0.0015
 
+# --- Shooting ---
+@onready var player_projectile_scene: PackedScene = preload("res://Entities/Projectiles/player_projectile.tscn")
+@onready var projectile_cooldown_timer: Timer = $ProjectileCooldown
+@export var projectile_x_offset: float = 1.2
+@export var projectile_y_offset: float = -0.2
+@export var projectile_z_offset: float = 0.5
+
+var projectile_cooldown = 0.3
+var can_shoot: bool = true
+
 # --- Slipping ---
 @export var slip_force_multiplier: float = 11.6
-@export var slip_friction_multiplier: float = 0
+@export var slip_friction_multiplier: float = 0.0
 @export var slip_steer_multiplier: float = 0.15
 @export var is_slipping: bool = false
 
@@ -118,6 +128,7 @@ func _ready() -> void:
 	normal_hitbox.disabled = false
 	crouch_hitbox.disabled = true
 	can_slide_boost = true
+	projectile_cooldown_timer.wait_time = projectile_cooldown
 	wall_jump_duration_node.wait_time = wall_jump_duration_time
 	dash_duration_node.wait_time = dash_duration_time
 	dash_cooldown_node.wait_time = dash_cooldown_time
@@ -130,6 +141,7 @@ func _unhandled_input(event: InputEvent) -> void:
 
 func _physics_process(delta: float) -> void:
 	_apply_gravity(delta)
+	_handle_shooting()
 	_handle_slide_input()
 	_handle_jump()
 	_update_momentum(delta)
@@ -289,7 +301,7 @@ func _apply_friction(delta: float) -> void:
 
 
 # --- Apply momentum to velocity ---
-func _apply_velocity(delta) -> void:
+func _apply_velocity(delta: float) -> void:
 	var final_velocity = momentum
 	
 	if is_wall_jumping:
@@ -489,6 +501,25 @@ func _handle_landing() -> void:
 			else:
 				_enter_crouch()
 
+# --- Shooting ---
+func _handle_shooting():
+	if Input.is_action_pressed("Shooting") and can_shoot:
+		var projectile = player_projectile_scene.instantiate()
+		get_tree().current_scene.add_child(projectile)
+
+		var cam_transform = camera.global_transform
+
+		var spawn_position = cam_transform.origin
+		spawn_position += cam_transform.basis.x * projectile_x_offset
+		spawn_position += cam_transform.basis.y * projectile_y_offset
+		spawn_position += cam_transform.basis.z * projectile_z_offset
+
+		projectile.global_transform.origin = spawn_position
+		projectile.global_transform.basis = cam_transform.basis
+
+		projectile_cooldown_timer.start()
+		can_shoot = false
+
 # --- Handle Sliding States ---
 func _enter_slide() -> void:
 	if is_sliding:
@@ -559,3 +590,6 @@ func _on_sliding_boost_cooldown_timeout() -> void:
 
 func _on_wall_jump_push_duration_timeout() -> void:
 	is_wall_jumping = false
+
+func _on_projectile_cooldown_timeout() -> void:
+	can_shoot = true

@@ -147,6 +147,7 @@ curve = SubResource("Curve3D_8goci")
 
 [node name="Enemy" parent="." unique_id=1279462332 node_paths=PackedStringArray("Idle_Path") instance=ExtResource("4_3xn65")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.4584832, -11.557131)
+axis_lock_linear_y = false
 min_attack_margin = 0.0
 max_attack_margin = 10.0
 turn_speed = 2.0

@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://cko1w1s20lpje"]
 
-[ext_resource type="Script" uid="uid://doas2t16lkpy3" path="res://Scripts/Components/projectile_attack.gd" id="1_rca8h"]
-[ext_resource type="PackedScene" uid="uid://0ohuh8qqj64h" path="res://Systems/components/attack_component.tscn" id="3_x5b6o"]
+[ext_resource type="Script" path="res://Scripts/Components/projectile_attack.gd" id="1_rca8h"]
+[ext_resource type="PackedScene" path="res://Systems/components/attack_component.tscn" id="3_x5b6o"]
 
 [node name="Projectile" type="Node3D" unique_id=1437025133]
 script = ExtResource("1_rca8h")
