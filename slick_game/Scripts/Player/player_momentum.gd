@@ -5,11 +5,11 @@ extends CharacterBody3D
 @export var sprint_base_speed: float = 9.0 
 @export var walk_force: float = 2.5
 @export var sprint_force: float = 8.0
-@export var max_speed: float = 24.0
+@export var max_speed: float = 28.0
 @export var max_jumps: int = 2
 @export var friction_low: float = 10.0
 @export var friction_high: float = 5.5
-@export var jump_velocity: float = 5.5
+@export var jump_velocity: float = 9.5
 @export var air_control: float = 1.0
 var jumps_left: int = max_jumps
 
@@ -111,7 +111,7 @@ var camera_base_y: float = 0.0
 var current_tilt: float = 0.0 
 
 # --- Head Bob ---
-const BOB_FREQ: float = 1.6
+const BOB_FREQ: float = 1.2
 const BOB_AMP: float = 0.09
 var bob_timer: float = 0.0
 

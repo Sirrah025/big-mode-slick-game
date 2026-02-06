@@ -1,5 +1,9 @@
 [gd_scene format=4 uid="uid://d4gtowpb3nsis"]
 
+[ext_resource type="Material" uid="uid://dy2jamrliisif" path="res://Assets/Materials/Main.tres" id="1_oie7r"]
+[ext_resource type="Material" uid="uid://bj11augueeexj" path="res://Assets/Materials/Secondary.tres" id="2_6nqa6"]
+[ext_resource type="Material" uid="uid://py7da67qt44x" path="res://Assets/Materials/Third.tres" id="3_chipm"]
+
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_81shm"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_hdewi"]
@@ -78,9 +82,18 @@ _surfaces = [{
 blend_shape_mode = 0
 shadow_mesh = SubResource("ArrayMesh_lh8u7")
 
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_oie7r"]
+points = PackedVector3Array(10.508404, 0.7150882, 33.007595, -10.508404, 0.7150882, 33.007595, 10.508404, -0.7150882, 33.007595, 10.508404, 0.7150882, -33.007595, -10.508404, -0.7150882, 33.007595, -10.508404, 0.7150882, -33.007595, 10.508404, -0.7150882, -33.007595, -10.508404, -0.7150882, -33.007595)
+
 [node name="FloatingPlatformLong" type="StaticBody3D" unique_id=569186872]
 collision_layer = 2
 collision_mask = 29
 
 [node name="FloatingPlatformLong" type="MeshInstance3D" parent="." unique_id=646882597]
 mesh = SubResource("ArrayMesh_h55de")
+surface_material_override/0 = ExtResource("1_oie7r")
+surface_material_override/1 = ExtResource("2_6nqa6")
+surface_material_override/2 = ExtResource("3_chipm")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=839487773]
+shape = SubResource("ConvexPolygonShape3D_oie7r")

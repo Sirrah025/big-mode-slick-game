@@ -1,5 +1,9 @@
 [gd_scene format=4 uid="uid://khiacnwal1qa"]
 
+[ext_resource type="Material" uid="uid://dy2jamrliisif" path="res://Assets/Materials/Main.tres" id="1_tc5yx"]
+[ext_resource type="Material" uid="uid://bj11augueeexj" path="res://Assets/Materials/Secondary.tres" id="2_wgm03"]
+[ext_resource type="Material" uid="uid://py7da67qt44x" path="res://Assets/Materials/Third.tres" id="3_mx72h"]
+
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_hcvwf"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_4xny6"]
@@ -91,6 +95,9 @@ collision_mask = 29
 
 [node name="TunnelStaightB1" type="MeshInstance3D" parent="." unique_id=324927176]
 mesh = SubResource("ArrayMesh_pmpsk")
+surface_material_override/0 = ExtResource("1_tc5yx")
+surface_material_override/1 = ExtResource("2_wgm03")
+surface_material_override/2 = ExtResource("3_mx72h")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=931647766]
 shape = SubResource("ConcavePolygonShape3D_65ulc")

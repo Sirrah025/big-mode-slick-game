@@ -1,0 +1,302 @@
+[gd_scene format=3 uid="uid://dyb3ij30xphsd"]
+
+[ext_resource type="PackedScene" uid="uid://dwxt7lr6rqo1i" path="res://Assets/Models/MapPieces/Scene/TunnelStraightB2.tscn" id="1_s08vq"]
+[ext_resource type="PackedScene" uid="uid://cqqfiaudklw6k" path="res://Scenes/player.tscn" id="2_o3eya"]
+[ext_resource type="PackedScene" uid="uid://4f0ajngttscr" path="res://Assets/Models/MapPieces/Scene/TunnelCurvedB.tscn" id="3_vl75t"]
+[ext_resource type="PackedScene" uid="uid://nkto3g8rm4fd" path="res://Assets/Models/MapPieces/Scene/TunnelStraightV2.tscn" id="4_soxo8"]
+[ext_resource type="PackedScene" uid="uid://cuc7gmdntdihm" path="res://Assets/Models/MapPieces/Scene/TunnelCurvedV2.tscn" id="5_hmlj4"]
+[ext_resource type="PackedScene" uid="uid://khiacnwal1qa" path="res://Assets/Models/MapPieces/Scene/TunnelStraightB1.tscn" id="6_nrkev"]
+[ext_resource type="PackedScene" uid="uid://cmnlj2nos7ylr" path="res://Assets/Models/MapPieces/Scene/TunnelAsceningB.tscn" id="7_5bh32"]
+[ext_resource type="PackedScene" uid="uid://dcroebu8h3ysn" path="res://Assets/Models/MapPieces/Scene/TunnelStraightV1.tscn" id="8_tf6wi"]
+[ext_resource type="PackedScene" uid="uid://dpqu6lbcel5e" path="res://Assets/Models/MapPieces/Scene/TunnelCurvedV1.tscn" id="9_5bh32"]
+[ext_resource type="PackedScene" uid="uid://dc8mx6w6mxi10" path="res://Assets/Models/Platforms/Scene/LifterPlatformA.tscn" id="10_tf6wi"]
+[ext_resource type="PackedScene" uid="uid://bmjyu5s6v8anl" path="res://Assets/Models/Platforms/Scene/PillarA.tscn" id="11_8io8c"]
+[ext_resource type="PackedScene" uid="uid://5rhmm03bklbg" path="res://Assets/Models/Platforms/Scene/PillarB.tscn" id="12_c5l35"]
+[ext_resource type="PackedScene" uid="uid://c2k6fjrkgryut" path="res://Assets/Models/Platforms/Scene/FloatingPlatformSquare.tscn" id="13_i7ckp"]
+[ext_resource type="PackedScene" uid="uid://gap5hmpomjsl" path="res://Assets/Models/Platforms/Scene/FloatingPlatformWide.tscn" id="14_sekmo"]
+[ext_resource type="PackedScene" uid="uid://mey0cnkyif0e" path="res://Assets/Models/Platforms/Scene/WallExtensionA.tscn" id="15_b2yks"]
+[ext_resource type="PackedScene" uid="uid://dhmc3qi0wdkdf" path="res://Assets/Models/Platforms/Scene/CubePlatformA.tscn" id="15_n0006"]
+[ext_resource type="PackedScene" uid="uid://4ufgkp3tx8s4" path="res://Assets/Models/Platforms/Scene/BigPlatformB.tscn" id="16_d7fl6"]
+[ext_resource type="PackedScene" uid="uid://7ved2usd5j6e" path="res://Assets/Models/Platforms/Scene/CubePillarA.tscn" id="17_d7fl6"]
+[ext_resource type="PackedScene" uid="uid://cvm5mvl2dw7ij" path="res://Assets/Models/Platforms/Scene/CubePillarB.tscn" id="18_kki8d"]
+[ext_resource type="PackedScene" uid="uid://by5tu0fk85xiu" path="res://Assets/Models/Platforms/Scene/CubePlatformB.tscn" id="19_br0nr"]
+[ext_resource type="PackedScene" uid="uid://dxocilyy2b75b" path="res://Assets/Models/Platforms/Scene/HalfCube.tscn" id="20_d5bmo"]
+
+[sub_resource type="Shader" id="Shader_0d4o7"]
+code = "
+// NOTE: Shader automatically converted from Godot Engine 4.3.stable's ProceduralSkyMaterial.
+
+shader_type sky;
+render_mode use_debanding;
+
+uniform vec4 sky_top_color : source_color = vec4(0.385, 0.454, 0.55, 1.0);
+uniform vec4 sky_horizon_color : source_color = vec4(0.646, 0.656, 0.67, 1.0);
+uniform float sky_curve : hint_range(0, 1) = 0.15;
+uniform float sky_energy = 1.0; // In Lux.
+uniform sampler2D sky_cover : filter_linear, source_color, hint_default_black;
+uniform vec4 sky_cover_modulate : source_color = vec4(1.0, 1.0, 1.0, 1.0);
+uniform vec4 ground_bottom_color : source_color = vec4(0.2, 0.169, 0.133, 1.0);
+uniform vec4 ground_horizon_color : source_color = vec4(0.646, 0.656, 0.67, 1.0);
+uniform float ground_curve : hint_range(0, 1) = 0.02;
+uniform float ground_energy = 1.0;
+uniform float sun_angle_max = 30.0;
+uniform float sun_curve : hint_range(0, 1) = 0.15;
+uniform float exposure : hint_range(0, 128) = 1.0;
+
+uniform sampler2D cloud_texture;
+uniform sampler2D cloud_texture2;
+uniform vec2 cloud_direction;
+uniform vec2 cloud_direction2;
+uniform vec2 cloud_scale;
+uniform float cloud_speed;
+uniform float cloud_speed2;
+uniform float cloud_distance;
+
+void sky() {
+	float v_angle = acos(clamp(EYEDIR.y, -1.0, 1.0));
+	float c = (1.0 - v_angle / (PI * 0.5));
+	vec3 sky = mix(sky_horizon_color.rgb, sky_top_color.rgb, clamp(1.0 - pow(1.0 - c, 1.0 / sky_curve), 0.0, 1.0));
+	sky *= sky_energy;
+
+	if (LIGHT0_ENABLED) {
+		float sun_angle = acos(dot(LIGHT0_DIRECTION, EYEDIR));
+		if (sun_angle < LIGHT0_SIZE) {
+			sky = LIGHT0_COLOR * LIGHT0_ENERGY;
+		} else if (sun_angle < sun_angle_max) {
+			float c2 = (sun_angle - LIGHT0_SIZE) / (sun_angle_max - LIGHT0_SIZE);
+			sky = mix(LIGHT0_COLOR * LIGHT0_ENERGY, sky, clamp(1.0 - pow(1.0 - c2, 1.0 / sun_curve), 0.0, 1.0));
+		}
+	}
+
+	if (LIGHT1_ENABLED) {
+		float sun_angle = acos(dot(LIGHT1_DIRECTION, EYEDIR));
+		if (sun_angle < LIGHT1_SIZE) {
+			sky = LIGHT1_COLOR * LIGHT1_ENERGY;
+		} else if (sun_angle < sun_angle_max) {
+			float c2 = (sun_angle - LIGHT1_SIZE) / (sun_angle_max - LIGHT1_SIZE);
+			sky = mix(LIGHT1_COLOR * LIGHT1_ENERGY, sky, clamp(1.0 - pow(1.0 - c2, 1.0 / sun_curve), 0.0, 1.0));
+		}
+	}
+
+	if (LIGHT2_ENABLED) {
+		float sun_angle = acos(dot(LIGHT2_DIRECTION, EYEDIR));
+		if (sun_angle < LIGHT2_SIZE) {
+			sky = LIGHT2_COLOR * LIGHT2_ENERGY;
+		} else if (sun_angle < sun_angle_max) {
+			float c2 = (sun_angle - LIGHT2_SIZE) / (sun_angle_max - LIGHT2_SIZE);
+			sky = mix(LIGHT2_COLOR * LIGHT2_ENERGY, sky, clamp(1.0 - pow(1.0 - c2, 1.0 / sun_curve), 0.0, 1.0));
+		}
+	}
+
+	if (LIGHT3_ENABLED) {
+		float sun_angle = acos(dot(LIGHT3_DIRECTION, EYEDIR));
+		if (sun_angle < LIGHT3_SIZE) {
+			sky = LIGHT3_COLOR * LIGHT3_ENERGY;
+		} else if (sun_angle < sun_angle_max) {
+			float c2 = (sun_angle - LIGHT3_SIZE) / (sun_angle_max - LIGHT3_SIZE);
+			sky = mix(LIGHT3_COLOR * LIGHT3_ENERGY, sky, clamp(1.0 - pow(1.0 - c2, 1.0 / sun_curve), 0.0, 1.0));
+		}
+	}
+
+	vec4 sky_cover_texture = texture(sky_cover, SKY_COORDS);
+	sky += (sky_cover_texture.rgb * sky_cover_modulate.rgb) * sky_cover_texture.a * sky_cover_modulate.a * sky_energy;
+
+	c = (v_angle - (PI * 0.5)) / (PI * 0.5);
+	vec3 ground = mix(ground_horizon_color.rgb, ground_bottom_color.rgb, clamp(1.0 - pow(1.0 - c, 1.0 / ground_curve), 0.0, 1.0));
+	ground *= ground_energy;
+	
+	vec3 pink_tint = vec3(0.2, 0.1, 0.2);
+	
+	vec2 sky_uv = EYEDIR.xz / EYEDIR.y;
+	vec3 clouds = texture(cloud_texture, (sky_uv*cloud_scale) + (TIME*cloud_direction*cloud_speed*.01)).rgb - texture(cloud_texture2, (sky_uv * cloud_scale) + (TIME * cloud_direction2 * cloud_speed2*.01)).rgb;
+	clouds = clouds - smoothstep(0.0, EYEDIR.y, cloud_distance);
+	clouds = clamp(clouds,0,1);
+	clouds = clouds * pink_tint;
+	sky += clouds;
+	
+	COLOR = mix(ground, sky, step(0.0, EYEDIR.y)) * exposure;
+}
+"
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_jkhhp"]
+seed = 1
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_n1o8p"]
+width = 1024
+height = 1024
+noise = SubResource("FastNoiseLite_jkhhp")
+seamless = true
+in_3d_space = true
+bump_strength = 32.0
+
+[sub_resource type="Gradient" id="Gradient_nunrw"]
+offsets = PackedFloat32Array(0.36036, 1)
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_fij7j"]
+seed = 2
+frequency = 0.0069
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_1t2kw"]
+width = 1024
+height = 1024
+noise = SubResource("FastNoiseLite_fij7j")
+color_ramp = SubResource("Gradient_nunrw")
+seamless = true
+in_3d_space = true
+bump_strength = 0.0
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_kwwiv"]
+shader = SubResource("Shader_0d4o7")
+shader_parameter/sky_top_color = Color(0.6720358, 0.09065009, 0.49995083, 1)
+shader_parameter/sky_horizon_color = Color(0.16480476, 0.08557444, 0.3833468, 1)
+shader_parameter/sky_curve = 0.800000038
+shader_parameter/sky_energy = 1.0
+shader_parameter/sky_cover_modulate = Color(0.37536085, 0.24570289, 0.26572844, 1)
+shader_parameter/ground_bottom_color = Color(0.33897182, 0.608675, 0.94656974, 1)
+shader_parameter/ground_horizon_color = Color(0.06782702, 0.12097972, 0.23545492, 1)
+shader_parameter/ground_curve = 0.400000019
+shader_parameter/ground_energy = 1.0
+shader_parameter/sun_angle_max = 0.0
+shader_parameter/sun_curve = 0.0
+shader_parameter/exposure = 1.0
+shader_parameter/cloud_texture = SubResource("NoiseTexture2D_n1o8p")
+shader_parameter/cloud_texture2 = SubResource("NoiseTexture2D_1t2kw")
+shader_parameter/cloud_direction = Vector2(-1, 1)
+shader_parameter/cloud_direction2 = Vector2(1, -1)
+shader_parameter/cloud_scale = Vector2(0.1, 0.1)
+shader_parameter/cloud_speed = 0.1
+shader_parameter/cloud_speed2 = 0.1
+shader_parameter/cloud_distance = 0.025
+
+[sub_resource type="Sky" id="Sky_ei5jd"]
+sky_material = SubResource("ShaderMaterial_kwwiv")
+
+[sub_resource type="Environment" id="Environment_lsiyx"]
+background_mode = 2
+background_energy_multiplier = 1.5
+sky = SubResource("Sky_ei5jd")
+tonemap_white = 1.5
+ssr_fade_in = 0.178381
+ssao_radius = 3.31
+ssao_intensity = 12.56
+ssao_detail = 3.85
+ssao_horizon = 0.42
+ssao_sharpness = 0.42
+ssao_light_affect = 0.57
+sdfgi_use_occlusion = true
+sdfgi_bounce_feedback = 0.0
+fog_light_energy = 1.85
+fog_aerial_perspective = 1.0
+fog_sky_affect = 0.0
+fog_height = 274.47
+fog_height_density = -16.0
+volumetric_fog_density = 0.0155
+volumetric_fog_albedo = Color(0.667896, 0.0713198, 0.558341, 1)
+volumetric_fog_gi_inject = 1.82
+
+[node name="MainLevel" type="Node3D" unique_id=1023233881]
+
+[node name="Player" parent="." unique_id=99981486 instance=ExtResource("2_o3eya")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 21.134052, -11.101345)
+
+[node name="Section1" type="Node3D" parent="." unique_id=1333959227]
+
+[node name="TunnelStraightB2" parent="Section1" unique_id=275450179 instance=ExtResource("1_s08vq")]
+
+[node name="Section2" type="Node3D" parent="." unique_id=273973473]
+
+[node name="Section3" type="Node3D" parent="." unique_id=455854227]
+
+[node name="Section4" type="Node3D" parent="." unique_id=108228059]
+
+[node name="Section5" type="Node3D" parent="." unique_id=1431028358]
+
+[node name="Section6" type="Node3D" parent="." unique_id=500441437]
+
+[node name="Section7" type="Node3D" parent="." unique_id=2117584249]
+
+[node name="Section8" type="Node3D" parent="." unique_id=1533710864]
+
+[node name="Test" type="Node3D" parent="." unique_id=1533859610]
+
+[node name="Map" type="Node3D" parent="Test" unique_id=678217102]
+
+[node name="TunnelStraightB3" parent="Test/Map" unique_id=2017422923 instance=ExtResource("1_s08vq")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 103.1138)
+
+[node name="TunnelCurvedB2" parent="Test/Map" unique_id=1027106993 instance=ExtResource("3_vl75t")]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 34.591515, 0, 239.54413)
+
+[node name="TunnelStraightV2" parent="Test/Map" unique_id=303453396 instance=ExtResource("4_soxo8")]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 138.09558, 0, 239.63297)
+
+[node name="TunnelCurvedV2" parent="Test/Map" unique_id=2126472801 instance=ExtResource("5_hmlj4")]
+transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 275.74597, 0, 205.02295)
+
+[node name="TunnelStraightB1" parent="Test/Map" unique_id=1634173774 instance=ExtResource("6_nrkev")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 275.53998, 0, 102.17459)
+
+[node name="TunnelAscendingB" parent="Test/Map" unique_id=50180211 instance=ExtResource("7_5bh32")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 275.57697, 0, 0)
+
+[node name="TunnelStraightV1" parent="Test/Map" unique_id=2068404884 instance=ExtResource("8_tf6wi")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 275.47635, 17.888378, -103.42334)
+
+[node name="TunnelCurvedV1" parent="Test/Map" unique_id=1023156626 instance=ExtResource("9_5bh32")]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 241.0915, 17.833183, -240.96262)
+
+[node name="Platforms" type="Node3D" parent="Test" unique_id=1945346318]
+
+[node name="LifterPlatformA" parent="Test/Platforms" unique_id=1671818333 instance=ExtResource("10_tf6wi")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.36491585, 4.857788, 104.668236)
+
+[node name="PillarA" parent="Test/Platforms" unique_id=1669953295 instance=ExtResource("11_8io8c")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 23.379135, 14.843752, 202.96457)
+
+[node name="PillarB" parent="Test/Platforms" unique_id=1784464376 instance=ExtResource("12_c5l35")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -14.865676, 15.45962, 173.73187)
+
+[node name="FloatingPlatformSquare" parent="Test/Platforms" unique_id=98791617 instance=ExtResource("13_i7ckp")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13.209745, 8.476796, 181.62799)
+
+[node name="FloatingPlatformWide" parent="Test/Platforms" unique_id=1525857654 instance=ExtResource("14_sekmo")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -12.4346485, 9.686489, 147.95476)
+
+[node name="FloatingPlatformWide2" parent="Test/Platforms" unique_id=1827332760 instance=ExtResource("14_sekmo")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.0229473, 16.366535, -11.916901)
+
+[node name="CubePlatformA" parent="Test/Platforms" unique_id=140174520 instance=ExtResource("15_n0006")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12.6963005, 13.4585285, 107.899796)
+
+[node name="BigPlatformB2" parent="Test/Platforms" unique_id=1818664296 instance=ExtResource("16_d7fl6")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13.2733345, 11.596386, 115.485016)
+
+[node name="WallExtensionA" parent="Test/Platforms" unique_id=1797127188 instance=ExtResource("15_b2yks")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.8826594, 19.145187, 227.64613)
+
+[node name="CubePillarA" parent="Test/Platforms" unique_id=1840351633 instance=ExtResource("17_d7fl6")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 16.082209, 12.079169, 37.002518)
+
+[node name="CubePillarB" parent="Test/Platforms" unique_id=1731190436 instance=ExtResource("18_kki8d")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -18.077621, 17.313673, 28.029526)
+
+[node name="CubePlatformB" parent="Test/Platforms" unique_id=1306712435 instance=ExtResource("19_br0nr")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 63.079803, 5.888954, 223.7409)
+
+[node name="CubePillarB2" parent="Test/Platforms" unique_id=2016742496 instance=ExtResource("18_kki8d")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 65.62951, 17.403372, 254.98601)
+
+[node name="FloatingPlatformSquare2" parent="Test/Platforms" unique_id=480413629 instance=ExtResource("13_i7ckp")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 101.596375, 15.777263, 253.77045)
+
+[node name="FloatingPlatformWide3" parent="Test/Platforms" unique_id=1775437983 instance=ExtResource("14_sekmo")]
+transform = Transform3D(0.2768451, 0, -0.96091455, 0, 1, 0, 0.96091455, 0, 0.2768451, 146.14061, 18.861668, 239.23119)
+
+[node name="HalfCube" parent="Test/Platforms" unique_id=847344918 instance=ExtResource("20_d5bmo")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 204.46689, 4.3854656, 256.0647)
+
+[node name="WallExtensionA2" parent="Test/Platforms" unique_id=1454512765 instance=ExtResource("15_b2yks")]
+transform = Transform3D(0.1676119, 0, 0.9858531, 0, 1, 0, -0.9858531, 0, 0.1676119, 201.61363, 23.367626, 206.04568)
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=1063078728]
+environment = SubResource("Environment_lsiyx")
