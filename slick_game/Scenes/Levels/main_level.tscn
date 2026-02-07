@@ -1,13 +1,15 @@
 [gd_scene format=3 uid="uid://dyb3ij30xphsd"]
 
 [ext_resource type="PackedScene" uid="uid://dwxt7lr6rqo1i" path="res://Assets/Models/MapPieces/Scene/TunnelStraightB2.tscn" id="1_s08vq"]
+[ext_resource type="PackedScene" uid="uid://bo52f25xk47dk" path="res://Scenes/Menus/pause_menu.tscn" id="2_d5bmo"]
 [ext_resource type="PackedScene" uid="uid://cqqfiaudklw6k" path="res://Scenes/player.tscn" id="2_o3eya"]
-[ext_resource type="PackedScene" uid="uid://4f0ajngttscr" path="res://Assets/Models/MapPieces/Scene/TunnelCurvedB.tscn" id="3_vl75t"]
+[ext_resource type="Script" uid="uid://okwir8fk4yfd" path="res://Scripts/death_screen.gd" id="3_doh41"]
 [ext_resource type="PackedScene" uid="uid://nkto3g8rm4fd" path="res://Assets/Models/MapPieces/Scene/TunnelStraightV2.tscn" id="4_soxo8"]
 [ext_resource type="PackedScene" uid="uid://cuc7gmdntdihm" path="res://Assets/Models/MapPieces/Scene/TunnelCurvedV2.tscn" id="5_hmlj4"]
 [ext_resource type="PackedScene" uid="uid://khiacnwal1qa" path="res://Assets/Models/MapPieces/Scene/TunnelStraightB1.tscn" id="6_nrkev"]
 [ext_resource type="PackedScene" uid="uid://cmnlj2nos7ylr" path="res://Assets/Models/MapPieces/Scene/TunnelAsceningB.tscn" id="7_5bh32"]
-[ext_resource type="PackedScene" uid="uid://dcroebu8h3ysn" path="res://Assets/Models/MapPieces/Scene/TunnelStraightV1.tscn" id="8_tf6wi"]
+[ext_resource type="PackedScene" uid="uid://d4gtowpb3nsis" path="res://Assets/Models/Platforms/Scene/FloatingPlatformLong.tscn" id="7_d7fl6"]
+[ext_resource type="Script" uid="uid://crhnjs6ef2ddn" path="res://Scripts/Components/tutorial_event.gd" id="8_kki8d"]
 [ext_resource type="PackedScene" uid="uid://dpqu6lbcel5e" path="res://Assets/Models/MapPieces/Scene/TunnelCurvedV1.tscn" id="9_5bh32"]
 [ext_resource type="PackedScene" uid="uid://dc8mx6w6mxi10" path="res://Assets/Models/Platforms/Scene/LifterPlatformA.tscn" id="10_tf6wi"]
 [ext_resource type="PackedScene" uid="uid://bmjyu5s6v8anl" path="res://Assets/Models/Platforms/Scene/PillarA.tscn" id="11_8io8c"]
@@ -15,12 +17,156 @@
 [ext_resource type="PackedScene" uid="uid://c2k6fjrkgryut" path="res://Assets/Models/Platforms/Scene/FloatingPlatformSquare.tscn" id="13_i7ckp"]
 [ext_resource type="PackedScene" uid="uid://gap5hmpomjsl" path="res://Assets/Models/Platforms/Scene/FloatingPlatformWide.tscn" id="14_sekmo"]
 [ext_resource type="PackedScene" uid="uid://mey0cnkyif0e" path="res://Assets/Models/Platforms/Scene/WallExtensionA.tscn" id="15_b2yks"]
+[ext_resource type="PackedScene" uid="uid://cmbapyfubp2th" path="res://Entities/enemies/Ranged/enemy.tscn" id="15_d7fl6"]
 [ext_resource type="PackedScene" uid="uid://dhmc3qi0wdkdf" path="res://Assets/Models/Platforms/Scene/CubePlatformA.tscn" id="15_n0006"]
 [ext_resource type="PackedScene" uid="uid://4ufgkp3tx8s4" path="res://Assets/Models/Platforms/Scene/BigPlatformB.tscn" id="16_d7fl6"]
 [ext_resource type="PackedScene" uid="uid://7ved2usd5j6e" path="res://Assets/Models/Platforms/Scene/CubePillarA.tscn" id="17_d7fl6"]
 [ext_resource type="PackedScene" uid="uid://cvm5mvl2dw7ij" path="res://Assets/Models/Platforms/Scene/CubePillarB.tscn" id="18_kki8d"]
 [ext_resource type="PackedScene" uid="uid://by5tu0fk85xiu" path="res://Assets/Models/Platforms/Scene/CubePlatformB.tscn" id="19_br0nr"]
 [ext_resource type="PackedScene" uid="uid://dxocilyy2b75b" path="res://Assets/Models/Platforms/Scene/HalfCube.tscn" id="20_d5bmo"]
+
+[sub_resource type="Animation" id="Animation_d5bmo"]
+resource_name = "Failed"
+length = 2.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Screen/VBoxContainer/RichTextLabel:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [false, true]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Screen/VBoxContainer/Restart:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 1.4),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [false, true]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Screen/VBoxContainer/Menu:visible")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 1.6),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [false, true]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Screen/VBoxContainer/Quit:visible")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [false, true]
+}
+
+[sub_resource type="Animation" id="Animation_doh41"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Screen/VBoxContainer/RichTextLabel:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Screen/VBoxContainer/Restart:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Screen/VBoxContainer/Menu:visible")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Screen/VBoxContainer/Quit:visible")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_qyeca"]
+_data = {
+&"Failed": SubResource("Animation_d5bmo"),
+&"RESET": SubResource("Animation_doh41")
+}
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_br0nr"]
+
+[sub_resource type="NavigationMesh" id="NavigationMesh_n0006"]
+vertices = PackedVector3Array(127.44475, 20.812174, -20.887304, 127.44475, 20.812174, 0.3626957, 155.69475, 20.812174, 0.3626957, 155.69475, 20.812174, -20.887304)
+polygons = [PackedInt32Array(3, 2, 0), PackedInt32Array(0, 2, 1)]
+
+[sub_resource type="Curve3D" id="Curve3D_d7fl6"]
+closed = true
+_data = {
+"points": PackedVector3Array(0, 0, 0, 0, 0, 0, 13.755, 0, 0, 0, 0, 0, 0, 0, 0, 13.755, 0, 18.695, 0, 0, 0, 0, 0, 0, -13.755, 0, 18.695, 0, 0, 0, 0, 0, 0, -13.755, 0, 0, 0, 0, 0, 0, 0, 0, -13.755, 0, -18.695, 0, 0, 0, 0, 0, 0, 13.755, 0, -18.695),
+"tilts": PackedFloat32Array(0, 0, 0, 0, 0, 0)
+}
+point_count = 6
+
+[sub_resource type="Curve3D" id="Curve3D_kki8d"]
+closed = true
+_data = {
+"points": PackedVector3Array(0, 0, 0, 0, 0, 0, -7.03, 0, 7.16, 0, 0, 0, 0, 0, 0, 7.03, 0, 7.16, 0, 0, 0, 0, 0, 0, 7.03, 0, -7.16, 0, 0, 0, 0, 0, 0, -7.03, 0, -7.16),
+"tilts": PackedFloat32Array(0, 0, 0, 0)
+}
+point_count = 4
+
+[sub_resource type="NavigationMesh" id="NavigationMesh_d7fl6"]
+vertices = PackedVector3Array(-9.627156, 22.074467, -102.72936, -9.627156, 22.074467, -82.47936, 10.622844, 22.074467, -82.47936, 10.622844, 22.074467, -102.72936)
+polygons = [PackedInt32Array(3, 2, 0), PackedInt32Array(0, 2, 1)]
+
+[sub_resource type="Curve3D" id="Curve3D_br0nr"]
+closed = true
+_data = {
+"points": PackedVector3Array(0, 0, 0, 0, 0, 0, -7, 0, 8, 0, 0, 0, 0, 0, 0, 7, 0, 8, 0, 0, 0, 0, 0, 0, 7, 0, -8, 0, 0, 0, 0, 0, 0, -7, 0, -8),
+"tilts": PackedFloat32Array(0, 0, 0, 0)
+}
+point_count = 4
 
 [sub_resource type="Shader" id="Shader_0d4o7"]
 code = "
@@ -199,104 +345,373 @@ volumetric_fog_gi_inject = 1.82
 [node name="Player" parent="." unique_id=99981486 instance=ExtResource("2_o3eya")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 21.134052, -11.101345)
 
+[node name="Pause Menu" parent="." unique_id=1489435571 instance=ExtResource("2_d5bmo")]
+visible = true
+
+[node name="Death Screen" type="Control" parent="." unique_id=500774878]
+layout_mode = 3
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+script = ExtResource("3_doh41")
+
+[node name="Screen" type="Control" parent="Death Screen" unique_id=818309844]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Death Screen/Screen" unique_id=905069866]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+alignment = 1
+
+[node name="RichTextLabel" type="RichTextLabel" parent="Death Screen/Screen/VBoxContainer" unique_id=1007173656]
+visible = false
+custom_minimum_size = Vector2(392.905, 93.96)
+layout_mode = 2
+theme_override_colors/default_color = Color(0.89495116, 0.052714452, 0.2681346, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_outline_size = 9
+theme_override_constants/shadow_offset_x = 2
+theme_override_font_sizes/normal_font_size = 64
+text = "You failed..."
+
+[node name="Restart" type="Button" parent="Death Screen/Screen/VBoxContainer" unique_id=460888063]
+visible = false
+layout_mode = 2
+theme_override_font_sizes/font_size = 52
+text = "Restart"
+
+[node name="Menu" type="Button" parent="Death Screen/Screen/VBoxContainer" unique_id=2047777623]
+visible = false
+layout_mode = 2
+theme_override_font_sizes/font_size = 52
+text = "Back to Menu"
+
+[node name="Quit" type="Button" parent="Death Screen/Screen/VBoxContainer" unique_id=334952912]
+visible = false
+layout_mode = 2
+theme_override_font_sizes/font_size = 52
+text = "Quit"
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Death Screen" unique_id=760609174]
+libraries/ = SubResource("AnimationLibrary_qyeca")
+
 [node name="Section1" type="Node3D" parent="." unique_id=1333959227]
 
-[node name="TunnelStraightB2" parent="Section1" unique_id=275450179 instance=ExtResource("1_s08vq")]
+[node name="VisibleOnScreenEnabler3D" type="VisibleOnScreenEnabler3D" parent="Section1" unique_id=848144772]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 27, -36)
+aabb = AABB(-49, -34, -18.5475, 98, 68, 106)
+
+[node name="CubePillarA" parent="Section1" unique_id=1840351633 instance=ExtResource("17_d7fl6")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 16.082209, 12.079169, 37.002518)
+
+[node name="CubePillarB" parent="Section1" unique_id=1731190436 instance=ExtResource("18_kki8d")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -18.077621, 17.313673, 28.029526)
+
+[node name="Tunnel" type="Node3D" parent="Section1" unique_id=1921325634]
+
+[node name="TunnelStraightB2" parent="Section1/Tunnel" unique_id=275450179 instance=ExtResource("1_s08vq")]
+
+[node name="TunnelStraightB1" parent="Section1/Tunnel" unique_id=1634173774 instance=ExtResource("6_nrkev")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 103)
+
+[node name="Platforms" type="Node3D" parent="Section1" unique_id=846989074]
+
+[node name="FloatingPlatformWide2" parent="Section1/Platforms" unique_id=1827332760 instance=ExtResource("14_sekmo")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.0229473, 16.366535, -11.916901)
+
+[node name="FloatingPlatformWide3" parent="Section1/Platforms" unique_id=1525857654 instance=ExtResource("14_sekmo")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -15.022947, 16.366535, 145.0831)
+
+[node name="FloatingPlatformLong" parent="Section1/Platforms" unique_id=569186872 instance=ExtResource("7_d7fl6")]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, -5, 42, 75)
+
+[node name="Tutorial Triggers" type="Node3D" parent="Section1" unique_id=1774097630]
+
+[node name="Basic Tutorial Event" type="Area3D" parent="Section1/Tutorial Triggers" unique_id=535399956]
+transform = Transform3D(28.375, 0, 0, 0, 28.375, 0, 0, 0, 28.375, 0, 17, 0)
+collision_layer = 0
+monitorable = false
+script = ExtResource("8_kki8d")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Section1/Tutorial Triggers/Basic Tutorial Event" unique_id=894350101]
+shape = SubResource("SphereShape3D_br0nr")
+
+[node name="Control" type="Control" parent="Section1/Tutorial Triggers/Basic Tutorial Event" unique_id=165709275]
+visible = false
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="RichTextLabel" type="RichTextLabel" parent="Section1/Tutorial Triggers/Basic Tutorial Event/Control" unique_id=1052515208]
+layout_mode = 1
+offset_left = 19.08
+offset_top = 31.585
+offset_right = 192.625
+offset_bottom = 173.815
+text = "W - Move Forward
+A - Move Left
+S - Move Backward
+D - Move Right
+Spacebar - Jump"
+metadata/_edit_use_anchors_ = true
+
+[node name="Wall-Running Tutorial Event" type="Area3D" parent="Section1/Tutorial Triggers" unique_id=1015336529]
+transform = Transform3D(16.055, 0, 0, 0, 16.055, 0, 0, 0, 16.055, -17, 34, 28)
+collision_layer = 0
+monitorable = false
+script = ExtResource("8_kki8d")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Section1/Tutorial Triggers/Wall-Running Tutorial Event" unique_id=1545760511]
+shape = SubResource("SphereShape3D_br0nr")
+
+[node name="Control" type="Control" parent="Section1/Tutorial Triggers/Wall-Running Tutorial Event" unique_id=1631339309]
+visible = false
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="RichTextLabel" type="RichTextLabel" parent="Section1/Tutorial Triggers/Wall-Running Tutorial Event/Control" unique_id=1654441979]
+layout_mode = 1
+offset_left = 19.08
+offset_top = 31.585
+offset_right = 192.625
+offset_bottom = 173.815
+text = "Move into the wall to
+run along its side."
+metadata/_edit_use_anchors_ = true
 
 [node name="Section2" type="Node3D" parent="." unique_id=273973473]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 411.1138)
+visible = false
+
+[node name="VisibleOnScreenEnabler3D2" type="VisibleOnScreenEnabler3D" parent="Section2" unique_id=745911177]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 27, -36)
+aabb = AABB(-49, -34, -18.5475, 98, 68, 106)
+
+[node name="TunnelStraightB3" parent="Section2" unique_id=2017422923 instance=ExtResource("1_s08vq")]
+visible = false
+
+[node name="FloatingPlatformWide" parent="Section2" unique_id=1687807906 instance=ExtResource("14_sekmo")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -12.4346485, 9.686489, 44.840958)
+
+[node name="BigPlatformB2" parent="Section2" unique_id=1818664296 instance=ExtResource("16_d7fl6")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13.2733345, 11.596386, 12.371216)
+visible = false
+
+[node name="CubePlatformA" parent="Section2" unique_id=140174520 instance=ExtResource("15_n0006")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12.6963005, 13.4585285, 4.7859955)
+
+[node name="TunnelStraightB1" parent="Section2" unique_id=1190335323 instance=ExtResource("6_nrkev")]
+
+[node name="LifterPlatformA" parent="Section2" unique_id=1671818333 instance=ExtResource("10_tf6wi")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.36491585, 4.857788, 1.5544357)
 
 [node name="Section3" type="Node3D" parent="." unique_id=455854227]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 514.544)
+visible = false
+
+[node name="TunnelStraightB2" parent="Section3" unique_id=1812328433 instance=ExtResource("1_s08vq")]
+
+[node name="WallExtensionA" parent="Section3" unique_id=1797127188 instance=ExtResource("15_b2yks")]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -1.1173401, 17.145187, 12.102127)
+
+[node name="WallExtensionA2" parent="Section3" unique_id=1341542375 instance=ExtResource("15_b2yks")]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 17.88266, 17.145187, 38.102127)
+
+[node name="PillarA" parent="Section3" unique_id=1669953295 instance=ExtResource("11_8io8c")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 23.379135, 14.843752, -3.5794373)
+
+[node name="PillarB" parent="Section3" unique_id=1784464376 instance=ExtResource("12_c5l35")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -14.865676, 15.45962, -32.812134)
+
+[node name="FloatingPlatformSquare" parent="Section3" unique_id=98791617 instance=ExtResource("13_i7ckp")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13.209745, 8.476796, -24.916016)
+
+[node name="VisibleOnScreenEnabler3D2" type="VisibleOnScreenEnabler3D" parent="Section3" unique_id=450851791]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 27, -35.544006)
+aabb = AABB(-49, -34, -18.5475, 98, 68, 106)
 
 [node name="Section4" type="Node3D" parent="." unique_id=108228059]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 617.633)
+visible = false
+
+[node name="VisibleOnScreenEnabler3D3" type="VisibleOnScreenEnabler3D" parent="Section4" unique_id=420625127]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 27, -33.632996)
+aabb = AABB(-49, -34, -18.5475, 98, 68, 106)
+
+[node name="TunnelStraightV2" parent="Section4" unique_id=303453396 instance=ExtResource("4_soxo8")]
+
+[node name="FloatingPlatformWide2" parent="Section4" unique_id=2065188744 instance=ExtResource("14_sekmo")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.4346485, 9.686489, -14.678223)
+
+[node name="FloatingPlatformWide3" parent="Section4" unique_id=1378602717 instance=ExtResource("14_sekmo")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.4346485, 9.686489, 34.321777)
 
 [node name="Section5" type="Node3D" parent="." unique_id=1431028358]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 34, 0, 755.023)
+visible = false
+
+[node name="TunnelCurvedV2" parent="Section5" unique_id=2126472801 instance=ExtResource("5_hmlj4")]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 0, 0, 0)
+
+[node name="Enemies" type="Node3D" parent="Section5" unique_id=558509726]
+
+[node name="NavigationRegion3D" type="NavigationRegion3D" parent="Section5" unique_id=629356792]
+navigation_mesh = SubResource("NavigationMesh_n0006")
+
+[node name="FloatingPlatformWide4" parent="Section5/NavigationRegion3D" unique_id=1490687077 instance=ExtResource("14_sekmo")]
+transform = Transform3D(0.8660254, 0, 0.5, 0, 1, 0, -0.5, 0, 0.8660254, -7.4346466, 9.686489, -46.068237)
+
+[node name="Path3D" type="Path3D" parent="Section5/NavigationRegion3D/FloatingPlatformWide4" unique_id=569328426]
+curve = SubResource("Curve3D_d7fl6")
+
+[node name="VisibleOnScreenEnabler3D4" type="VisibleOnScreenEnabler3D" parent="Section5" unique_id=1560045945]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -15, 27, -48.02301)
+aabb = AABB(-69, -34, -38.5475, 138, 68, 146)
+
+[node name="Enemy" parent="Section5" unique_id=1279462332 node_paths=PackedStringArray("Idle_Path") instance=ExtResource("15_d7fl6")]
+transform = Transform3D(0.25881907, 0, 0.9659258, 0, 1, 0, -0.9659258, 0, 0.25881907, -4, 11, -41)
+Idle_Path = NodePath("../NavigationRegion3D/FloatingPlatformWide4/Path3D")
+starting_index = 1
+
+[node name="Enemy2" parent="Section5" unique_id=1242187644 node_paths=PackedStringArray("Idle_Path") instance=ExtResource("15_d7fl6")]
+transform = Transform3D(-0.50000006, 0, -0.8660254, 0, 1, 0, 0.8660254, 0, -0.50000006, -13, 11, -48)
+Idle_Path = NodePath("../NavigationRegion3D/FloatingPlatformWide4/Path3D")
+starting_index = 4
 
 [node name="Section6" type="Node3D" parent="." unique_id=500441437]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 151, 0, 763)
+visible = false
+
+[node name="TunnelStraightB2" parent="Section6" unique_id=720976383 instance=ExtResource("6_nrkev")]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -14, 0, -8)
+
+[node name="VisibleOnScreenEnabler3D" type="VisibleOnScreenEnabler3D" parent="Section6" unique_id=168255441]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -13, 26, -43)
+aabb = AABB(-52, -34, -18.5475, 104, 68, 106)
+
+[node name="CubePlatformB" parent="Section6" unique_id=1306712435 instance=ExtResource("19_br0nr")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -87.9202, 5.888954, -24.259094)
+
+[node name="CubePillarB2" parent="Section6" unique_id=2016742496 instance=ExtResource("18_kki8d")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -85.37049, 17.403372, 6.986023)
+
+[node name="FloatingPlatformSquare2" parent="Section6" unique_id=480413629 instance=ExtResource("13_i7ckp")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -49.403625, 15.777263, 5.770447)
+
+[node name="FloatingPlatformSquare3" parent="Section6" unique_id=638169185 instance=ExtResource("13_i7ckp")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 0.9, -27.403625, 19.777264, -18.229553)
+
+[node name="NavigationRegion3D2" type="NavigationRegion3D" parent="Section6" unique_id=152016120]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -117, 0, -7.9769897)
+navigation_mesh = SubResource("NavigationMesh_n0006")
+
+[node name="FloatingPlatformSquare4" parent="Section6/NavigationRegion3D2" unique_id=43247690 instance=ExtResource("13_i7ckp")]
+transform = Transform3D(1.7, 0, 0, 0, 1, 0, 0, 0, 1.2, 141.59637, 19.777264, -10.252563)
+
+[node name="Path3D" type="Path3D" parent="Section6/NavigationRegion3D2/FloatingPlatformSquare4" unique_id=1135972813]
+curve = SubResource("Curve3D_kki8d")
+
+[node name="Enemy3" parent="Section6" unique_id=913855242 node_paths=PackedStringArray("Idle_Path") instance=ExtResource("15_d7fl6")]
+transform = Transform3D(-0.50000006, 0, -0.8660254, 0, 1, 0, 0.8660254, 0, -0.50000006, 15, 20, -18.97699)
+Idle_Path = NodePath("../../Section5/NavigationRegion3D/FloatingPlatformWide4/Path3D")
+starting_index = 4
 
 [node name="Section7" type="Node3D" parent="." unique_id=2117584249]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 243, -18, 679)
+visible = false
+
+[node name="TunnelAscendingB" parent="Section7" unique_id=50180211 instance=ExtResource("7_5bh32")]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -3, 0, 76)
+
+[node name="WallExtensionA2" parent="Section7" unique_id=1454512765 instance=ExtResource("15_b2yks")]
+transform = Transform3D(0.9677091, 0.25206932, 0, -0.25206932, 0.9677091, 0, 0, 0, 1, -10.386368, 34.367626, 58.045685)
+
+[node name="VisibleOnScreenEnabler3D" type="VisibleOnScreenEnabler3D" parent="Section7" unique_id=1651434493]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 36, 43)
+aabb = AABB(-52, -41, -15.547501, 104, 82, 100)
 
 [node name="Section8" type="Node3D" parent="." unique_id=1533710864]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 378, -18, 720.7)
+visible = false
+
+[node name="TunnelCurvedV1" parent="Section8" unique_id=503982332 instance=ExtResource("9_5bh32")]
+transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 0, 0, 0)
+
+[node name="VisibleOnScreenEnabler3D" type="VisibleOnScreenEnabler3D" parent="Section8" unique_id=12508125]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -14, 27, -19)
+aabb = AABB(-69, -34, -38.5475, 138, 68, 146)
+
+[node name="NavigationRegion3D" type="NavigationRegion3D" parent="Section8" unique_id=1746696360]
+navigation_mesh = SubResource("NavigationMesh_d7fl6")
+
+[node name="HalfCube" parent="Section8/NavigationRegion3D" unique_id=847344918 instance=ExtResource("20_d5bmo")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.46688843, 17.385466, -92.635315)
+
+[node name="Path3D" type="Path3D" parent="Section8/NavigationRegion3D/HalfCube" unique_id=1999786321]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5, 0)
+curve = SubResource("Curve3D_br0nr")
+
+[node name="Enemy4" parent="Section8" unique_id=931946469 node_paths=PackedStringArray("Idle_Path") instance=ExtResource("15_d7fl6")]
+transform = Transform3D(-0.50000006, 0, -0.8660254, 0, 1, 0, 0.8660254, 0, -0.50000006, -3.5331116, 21.385466, -94.635315)
+Idle_Path = NodePath("../NavigationRegion3D/HalfCube/Path3D")
+
+[node name="Enemy5" parent="Section8" unique_id=74622909 node_paths=PackedStringArray("Idle_Path") instance=ExtResource("15_d7fl6")]
+transform = Transform3D(0.5, 0, -0.86602545, 0, 1, 0, 0.86602545, 0, 0.5, 2.4668884, 21.385466, -92.635315)
+Idle_Path = NodePath("../NavigationRegion3D/HalfCube/Path3D")
+starting_index = 2
+
+[node name="Section9" type="Node3D" parent="." unique_id=2037116077]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 378, -18, 535)
+visible = false
+
+[node name="TunnelStraightV2" parent="Section9" unique_id=892703569 instance=ExtResource("4_soxo8")]
+
+[node name="Section10" type="Node3D" parent="." unique_id=2049661505]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 308)
+visible = false
 
 [node name="Test" type="Node3D" parent="." unique_id=1533859610]
 
 [node name="Map" type="Node3D" parent="Test" unique_id=678217102]
 
-[node name="TunnelStraightB3" parent="Test/Map" unique_id=2017422923 instance=ExtResource("1_s08vq")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 103.1138)
-
-[node name="TunnelCurvedB2" parent="Test/Map" unique_id=1027106993 instance=ExtResource("3_vl75t")]
-transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 34.591515, 0, 239.54413)
-
-[node name="TunnelStraightV2" parent="Test/Map" unique_id=303453396 instance=ExtResource("4_soxo8")]
-transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 138.09558, 0, 239.63297)
-
-[node name="TunnelCurvedV2" parent="Test/Map" unique_id=2126472801 instance=ExtResource("5_hmlj4")]
-transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 275.74597, 0, 205.02295)
-
-[node name="TunnelStraightB1" parent="Test/Map" unique_id=1634173774 instance=ExtResource("6_nrkev")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 275.53998, 0, 102.17459)
-
-[node name="TunnelAscendingB" parent="Test/Map" unique_id=50180211 instance=ExtResource("7_5bh32")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 275.57697, 0, 0)
-
-[node name="TunnelStraightV1" parent="Test/Map" unique_id=2068404884 instance=ExtResource("8_tf6wi")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 275.47635, 17.888378, -103.42334)
-
-[node name="TunnelCurvedV1" parent="Test/Map" unique_id=1023156626 instance=ExtResource("9_5bh32")]
-transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 241.0915, 17.833183, -240.96262)
-
 [node name="Platforms" type="Node3D" parent="Test" unique_id=1945346318]
-
-[node name="LifterPlatformA" parent="Test/Platforms" unique_id=1671818333 instance=ExtResource("10_tf6wi")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.36491585, 4.857788, 104.668236)
-
-[node name="PillarA" parent="Test/Platforms" unique_id=1669953295 instance=ExtResource("11_8io8c")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 23.379135, 14.843752, 202.96457)
-
-[node name="PillarB" parent="Test/Platforms" unique_id=1784464376 instance=ExtResource("12_c5l35")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -14.865676, 15.45962, 173.73187)
-
-[node name="FloatingPlatformSquare" parent="Test/Platforms" unique_id=98791617 instance=ExtResource("13_i7ckp")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13.209745, 8.476796, 181.62799)
-
-[node name="FloatingPlatformWide" parent="Test/Platforms" unique_id=1525857654 instance=ExtResource("14_sekmo")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -12.4346485, 9.686489, 147.95476)
-
-[node name="FloatingPlatformWide2" parent="Test/Platforms" unique_id=1827332760 instance=ExtResource("14_sekmo")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.0229473, 16.366535, -11.916901)
-
-[node name="CubePlatformA" parent="Test/Platforms" unique_id=140174520 instance=ExtResource("15_n0006")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12.6963005, 13.4585285, 107.899796)
-
-[node name="BigPlatformB2" parent="Test/Platforms" unique_id=1818664296 instance=ExtResource("16_d7fl6")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13.2733345, 11.596386, 115.485016)
-
-[node name="WallExtensionA" parent="Test/Platforms" unique_id=1797127188 instance=ExtResource("15_b2yks")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.8826594, 19.145187, 227.64613)
-
-[node name="CubePillarA" parent="Test/Platforms" unique_id=1840351633 instance=ExtResource("17_d7fl6")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 16.082209, 12.079169, 37.002518)
-
-[node name="CubePillarB" parent="Test/Platforms" unique_id=1731190436 instance=ExtResource("18_kki8d")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -18.077621, 17.313673, 28.029526)
-
-[node name="CubePlatformB" parent="Test/Platforms" unique_id=1306712435 instance=ExtResource("19_br0nr")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 63.079803, 5.888954, 223.7409)
-
-[node name="CubePillarB2" parent="Test/Platforms" unique_id=2016742496 instance=ExtResource("18_kki8d")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 65.62951, 17.403372, 254.98601)
-
-[node name="FloatingPlatformSquare2" parent="Test/Platforms" unique_id=480413629 instance=ExtResource("13_i7ckp")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 101.596375, 15.777263, 253.77045)
-
-[node name="FloatingPlatformWide3" parent="Test/Platforms" unique_id=1775437983 instance=ExtResource("14_sekmo")]
-transform = Transform3D(0.2768451, 0, -0.96091455, 0, 1, 0, 0.96091455, 0, 0.2768451, 146.14061, 18.861668, 239.23119)
-
-[node name="HalfCube" parent="Test/Platforms" unique_id=847344918 instance=ExtResource("20_d5bmo")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 204.46689, 4.3854656, 256.0647)
-
-[node name="WallExtensionA2" parent="Test/Platforms" unique_id=1454512765 instance=ExtResource("15_b2yks")]
-transform = Transform3D(0.1676119, 0, 0.9858531, 0, 1, 0, -0.9858531, 0, 0.1676119, 201.61363, 23.367626, 206.04568)
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=1063078728]
 environment = SubResource("Environment_lsiyx")
+
+[connection signal="pressed" from="Death Screen/Screen/VBoxContainer/Restart" to="Death Screen" method="_on_restart_pressed"]
+[connection signal="pressed" from="Death Screen/Screen/VBoxContainer/Menu" to="Death Screen" method="_on_menu_pressed"]
+[connection signal="pressed" from="Death Screen/Screen/VBoxContainer/Quit" to="Death Screen" method="_on_quit_pressed"]
+[connection signal="body_entered" from="Section1/Tutorial Triggers/Basic Tutorial Event" to="Section1/Tutorial Triggers/Basic Tutorial Event" method="_on_body_entered"]
+[connection signal="body_exited" from="Section1/Tutorial Triggers/Basic Tutorial Event" to="Section1/Tutorial Triggers/Basic Tutorial Event" method="_on_body_exited"]
+[connection signal="body_entered" from="Section1/Tutorial Triggers/Wall-Running Tutorial Event" to="Section1/Tutorial Triggers/Wall-Running Tutorial Event" method="_on_body_entered"]
+[connection signal="body_exited" from="Section1/Tutorial Triggers/Wall-Running Tutorial Event" to="Section1/Tutorial Triggers/Wall-Running Tutorial Event" method="_on_body_exited"]

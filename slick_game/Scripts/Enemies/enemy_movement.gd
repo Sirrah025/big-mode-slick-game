@@ -10,6 +10,7 @@ extends CharacterBody3D
 @export var turn_speed = 4.0
 @export var Idle_Path: Path3D
 @onready var Idle_Path_Curve = Idle_Path.get_curve()
+@export var starting_index := 0
 var Idle_Targets_index: int
 
 
@@ -30,7 +31,7 @@ func _ready() -> void:
 	# Grab player by Group
 	player_target = get_tree().get_first_node_in_group("Player")
 	# Set Idle Index to 0
-	Idle_Targets_index = 0
+	Idle_Targets_index = starting_index
 	# Start idle movement if not already set
 	set_new_idle_target_pos()
 
