@@ -1,0 +1,13 @@
+[gd_resource type="ShaderMaterial" format=3 uid="uid://ddb6ol07ef1hx"]
+
+[ext_resource type="Shader" uid="uid://bm7oinlvktn7v" path="res://Entities/arts/PSX_Shader.gdshader" id="1_2pxjd"]
+[ext_resource type="Texture2D" uid="uid://slwaayflc6c4" path="res://Entities/players/Player Texture Map.png" id="2_u6f6n"]
+
+[resource]
+render_priority = 0
+shader = ExtResource("1_2pxjd")
+shader_parameter/affine_mapping = false
+shader_parameter/albedo = ExtResource("2_u6f6n")
+shader_parameter/alpha_scissor = 0.5
+shader_parameter/jitter = 0.25
+shader_parameter/resolution = Vector2i(320, 240)
