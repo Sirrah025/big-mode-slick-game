@@ -134,6 +134,18 @@ _data = {
 &"RESET": SubResource("Animation_doh41")
 }
 
+[sub_resource type="NavigationMesh" id="NavigationMesh_d5bmo"]
+vertices = PackedVector3Array(-33.000595, -0.53647065, 480.91916, -33.000595, -0.53647065, 535.1692, 21.999405, -0.53647065, 535.1692, 21.999405, -0.53647065, 480.91916)
+polygons = [PackedInt32Array(3, 2, 0), PackedInt32Array(0, 2, 1)]
+
+[sub_resource type="Curve3D" id="Curve3D_doh41"]
+closed = true
+_data = {
+"points": PackedVector3Array(0, 0, 0, 0, 0, 0, 11.765, 0, 16.685, 0, 0, 0, 0, 0, 0, -11.765, 0, 16.685, 0, 0, 0, 0, 0, 0, -11.765, 0, -16.685, 0, 0, 0, 0, 0, 0, 11.765, 0, -16.685),
+"tilts": PackedFloat32Array(0, 0, 0, 0)
+}
+point_count = 4
+
 [sub_resource type="SphereShape3D" id="SphereShape3D_br0nr"]
 
 [sub_resource type="NavigationMesh" id="NavigationMesh_n0006"]
@@ -421,55 +433,95 @@ text = "Quit"
 [node name="AnimationPlayer" type="AnimationPlayer" parent="Death Screen" unique_id=760609174]
 libraries/ = SubResource("AnimationLibrary_qyeca")
 
-[node name="Section1" type="Node3D" parent="." unique_id=1333959227]
+[node name="Section1 Tutorial" type="Node3D" parent="." unique_id=1333959227]
 
-[node name="VisibleOnScreenEnabler3D" type="VisibleOnScreenEnabler3D" parent="Section1" unique_id=848144772]
+[node name="VisibleOnScreenEnabler3D" type="VisibleOnScreenEnabler3D" parent="Section1 Tutorial" unique_id=848144772]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 27, -36)
 aabb = AABB(-49, -34, -18.5475, 98, 68, 106)
 
-[node name="CubePillarA" parent="Section1" unique_id=1840351633 instance=ExtResource("17_d7fl6")]
+[node name="CubePillarA" parent="Section1 Tutorial" unique_id=1840351633 instance=ExtResource("17_d7fl6")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 16.082209, 12.079169, 37.002518)
 
-[node name="CubePillarB" parent="Section1" unique_id=1731190436 instance=ExtResource("18_kki8d")]
+[node name="CubePillarB" parent="Section1 Tutorial" unique_id=1731190436 instance=ExtResource("18_kki8d")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -18.077621, 17.313673, 28.029526)
 
-[node name="Tunnel" type="Node3D" parent="Section1" unique_id=1921325634]
+[node name="Tunnel" type="Node3D" parent="Section1 Tutorial" unique_id=1921325634]
 
-[node name="TunnelStraightB2" parent="Section1/Tunnel" unique_id=275450179 instance=ExtResource("1_s08vq")]
+[node name="TunnelStraightB2" parent="Section1 Tutorial/Tunnel" unique_id=275450179 instance=ExtResource("1_s08vq")]
 
-[node name="TunnelStraightB1" parent="Section1/Tunnel" unique_id=1634173774 instance=ExtResource("6_nrkev")]
+[node name="TunnelStraightB3" parent="Section1 Tutorial/Tunnel" unique_id=2009024775 instance=ExtResource("1_s08vq")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 206.4303)
+
+[node name="TunnelStraightB1" parent="Section1 Tutorial/Tunnel" unique_id=1634173774 instance=ExtResource("6_nrkev")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 103)
 
-[node name="Platforms" type="Node3D" parent="Section1" unique_id=846989074]
+[node name="TunnelStraightB4" parent="Section1 Tutorial/Tunnel" unique_id=1571928907 instance=ExtResource("6_nrkev")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 413.18304)
 
-[node name="FloatingPlatformWide2" parent="Section1/Platforms" unique_id=1827332760 instance=ExtResource("14_sekmo")]
+[node name="TunnelStraightV2" parent="Section1 Tutorial/Tunnel" unique_id=303453396 instance=ExtResource("4_soxo8")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 309.93488)
+
+[node name="TunnelAscendingB" parent="Section1 Tutorial/Tunnel" unique_id=50180211 instance=ExtResource("7_5bh32")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -18, 516)
+
+[node name="Platforms" type="Node3D" parent="Section1 Tutorial" unique_id=846989074]
+
+[node name="FloatingPlatformWide2" parent="Section1 Tutorial/Platforms" unique_id=1827332760 instance=ExtResource("14_sekmo")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.0229473, 16.366535, -11.916901)
 
-[node name="FloatingPlatformWide3" parent="Section1/Platforms" unique_id=1525857654 instance=ExtResource("14_sekmo")]
+[node name="FloatingPlatformWide3" parent="Section1 Tutorial/Platforms" unique_id=1525857654 instance=ExtResource("14_sekmo")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -15.022947, 16.366535, 145.0831)
 
-[node name="FloatingPlatformLong" parent="Section1/Platforms" unique_id=569186872 instance=ExtResource("7_d7fl6")]
+[node name="FloatingPlatformWide4" parent="Section1 Tutorial/Platforms" unique_id=322643846 instance=ExtResource("14_sekmo")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 2.3973656, -6.9739094, 23.714748, 389.46283)
+
+[node name="FloatingPlatformLong" parent="Section1 Tutorial/Platforms" unique_id=569186872 instance=ExtResource("7_d7fl6")]
 transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, -5, 42, 75)
 
-[node name="Tutorial Triggers" type="Node3D" parent="Section1" unique_id=1774097630]
+[node name="FloatingPlatformLong2" parent="Section1 Tutorial/Platforms" unique_id=869083810 instance=ExtResource("7_d7fl6")]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 8.86368, 30.139679, 183.96175)
 
-[node name="Basic Tutorial Event" type="Area3D" parent="Section1/Tutorial Triggers" unique_id=535399956]
+[node name="FloatingPlatformLong4" parent="Section1 Tutorial/Platforms" unique_id=1922610133 instance=ExtResource("7_d7fl6")]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 8.86368, 42, 294.94617)
+
+[node name="FloatingPlatformLong3" parent="Section1 Tutorial/Platforms" unique_id=434733032 instance=ExtResource("7_d7fl6")]
+transform = Transform3D(4.371139e-08, 1, -8.742278e-08, 1, -4.371139e-08, 0, -3.821371e-15, -8.742278e-08, -1, -21.642109, 37.972195, 234.6418)
+
+[node name="WallExtensionA" parent="Section1 Tutorial/Platforms" unique_id=1797127188 instance=ExtResource("15_b2yks")]
+transform = Transform3D(2, 0, 0, 0, 3.2124763, 0, 0, 0, 1, -0.73960495, 38.972088, 395.60767)
+
+[node name="CubePlatformA" parent="Section1 Tutorial/Platforms" unique_id=140174520 instance=ExtResource("15_n0006")]
+transform = Transform3D(3.1978946, 0, 0, 0, 1.2422941, -1.6799152, 0, 0.30148375, 6.9222617, -5.87941, 10.604577, 475.29047)
+
+[node name="NavigationRegion3D" type="NavigationRegion3D" parent="Section1 Tutorial/Platforms" unique_id=315660771]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 11.037453, 27.155396)
+navigation_mesh = SubResource("NavigationMesh_d5bmo")
+
+[node name="FloatingPlatformWide5" parent="Section1 Tutorial/Platforms/NavigationRegion3D" unique_id=1193096848 instance=ExtResource("14_sekmo")]
+transform = Transform3D(1.8627672, 0, 0, 0, 1, 0, 0, 0, 1.3611165, -5.5217, -1.5713825, 508.10434)
+
+[node name="Path3D" type="Path3D" parent="Section1 Tutorial/Platforms/NavigationRegion3D/FloatingPlatformWide5" unique_id=1134785525]
+curve = SubResource("Curve3D_doh41")
+
+[node name="Tutorial Triggers" type="Node3D" parent="Section1 Tutorial" unique_id=1774097630]
+
+[node name="Basic Tutorial Event" type="Area3D" parent="Section1 Tutorial/Tutorial Triggers" unique_id=535399956]
 transform = Transform3D(28.375, 0, 0, 0, 28.375, 0, 0, 0, 28.375, 0, 17, 0)
 collision_layer = 0
 monitorable = false
 script = ExtResource("8_kki8d")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Section1/Tutorial Triggers/Basic Tutorial Event" unique_id=894350101]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Section1 Tutorial/Tutorial Triggers/Basic Tutorial Event" unique_id=894350101]
 shape = SubResource("SphereShape3D_br0nr")
 
-[node name="Control" type="Control" parent="Section1/Tutorial Triggers/Basic Tutorial Event" unique_id=165709275]
+[node name="Control" type="Control" parent="Section1 Tutorial/Tutorial Triggers/Basic Tutorial Event" unique_id=165709275]
 visible = false
 layout_mode = 3
 anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
 
-[node name="RichTextLabel" type="RichTextLabel" parent="Section1/Tutorial Triggers/Basic Tutorial Event/Control" unique_id=1052515208]
+[node name="RichTextLabel" type="RichTextLabel" parent="Section1 Tutorial/Tutorial Triggers/Basic Tutorial Event/Control" unique_id=1052515208]
 layout_mode = 1
 offset_left = 19.08
 offset_top = 31.585
@@ -482,23 +534,23 @@ D - Move Right
 Spacebar - Jump"
 metadata/_edit_use_anchors_ = true
 
-[node name="Wall-Running Tutorial Event" type="Area3D" parent="Section1/Tutorial Triggers" unique_id=1015336529]
+[node name="Wall-Running Tutorial Event" type="Area3D" parent="Section1 Tutorial/Tutorial Triggers" unique_id=1015336529]
 transform = Transform3D(16.055, 0, 0, 0, 16.055, 0, 0, 0, 16.055, -17, 34, 28)
 collision_layer = 0
 monitorable = false
 script = ExtResource("8_kki8d")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Section1/Tutorial Triggers/Wall-Running Tutorial Event" unique_id=1545760511]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Section1 Tutorial/Tutorial Triggers/Wall-Running Tutorial Event" unique_id=1545760511]
 shape = SubResource("SphereShape3D_br0nr")
 
-[node name="Control" type="Control" parent="Section1/Tutorial Triggers/Wall-Running Tutorial Event" unique_id=1631339309]
+[node name="Control" type="Control" parent="Section1 Tutorial/Tutorial Triggers/Wall-Running Tutorial Event" unique_id=1631339309]
 visible = false
 layout_mode = 3
 anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
 
-[node name="RichTextLabel" type="RichTextLabel" parent="Section1/Tutorial Triggers/Wall-Running Tutorial Event/Control" unique_id=1654441979]
+[node name="RichTextLabel" type="RichTextLabel" parent="Section1 Tutorial/Tutorial Triggers/Wall-Running Tutorial Event/Control" unique_id=1654441979]
 layout_mode = 1
 offset_left = 19.08
 offset_top = 31.585
@@ -507,6 +559,22 @@ offset_bottom = 173.815
 text = "Move into the wall to
 run along its side."
 metadata/_edit_use_anchors_ = true
+
+[node name="Enemies" type="Node3D" parent="Section1 Tutorial" unique_id=498075612]
+
+[node name="Enemy" parent="Section1 Tutorial/Enemies" unique_id=1279462332 node_paths=PackedStringArray("Idle_Path") instance=ExtResource("15_d7fl6")]
+transform = Transform3D(-0.50000006, 0, -0.8660254, 0, 1, 0, 0.8660254, 0, -0.50000006, 0, 10.280279, 541.4599)
+Idle_Path = NodePath("../../../Section5/NavigationRegion3D/FloatingPlatformWide4/Path3D")
+starting_index = 1
+
+[node name="Enemy2" parent="Section1 Tutorial/Enemies" unique_id=1463523071 node_paths=PackedStringArray("Idle_Path") instance=ExtResource("15_d7fl6")]
+transform = Transform3D(-0.50000006, 0, -0.8660254, 0, 1, 0, 0.8660254, 0, -0.50000006, -9.092053, 10.28028, 537.86456)
+Idle_Path = NodePath("../../../Section5/NavigationRegion3D/FloatingPlatformWide4/Path3D")
+starting_index = 4
+
+[node name="Enemy3" parent="Section1 Tutorial/Enemies" unique_id=691748813 node_paths=PackedStringArray("Idle_Path") instance=ExtResource("15_d7fl6")]
+transform = Transform3D(-0.50000006, 0, -0.8660254, 0, 1, 0, 0.8660254, 0, -0.50000006, -0.46393108, 10.280281, 534.67426)
+Idle_Path = NodePath("../../../Section5/NavigationRegion3D/FloatingPlatformWide4/Path3D")
 
 [node name="Section2" type="Node3D" parent="." unique_id=273973473]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 411.1138)
@@ -526,7 +594,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -12.4346485, 9.686489, 44.840
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13.2733345, 11.596386, 12.371216)
 visible = false
 
-[node name="CubePlatformA" parent="Section2" unique_id=140174520 instance=ExtResource("15_n0006")]
+[node name="CubePlatformA" parent="Section2" unique_id=1705598410 instance=ExtResource("15_n0006")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12.6963005, 13.4585285, 4.7859955)
 
 [node name="TunnelStraightB1" parent="Section2" unique_id=1190335323 instance=ExtResource("6_nrkev")]
@@ -540,7 +608,7 @@ visible = false
 
 [node name="TunnelStraightB2" parent="Section3" unique_id=1812328433 instance=ExtResource("1_s08vq")]
 
-[node name="WallExtensionA" parent="Section3" unique_id=1797127188 instance=ExtResource("15_b2yks")]
+[node name="WallExtensionA" parent="Section3" unique_id=1512620109 instance=ExtResource("15_b2yks")]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -1.1173401, 17.145187, 12.102127)
 
 [node name="WallExtensionA2" parent="Section3" unique_id=1341542375 instance=ExtResource("15_b2yks")]
@@ -567,7 +635,7 @@ visible = false
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 27, -33.632996)
 aabb = AABB(-49, -34, -18.5475, 98, 68, 106)
 
-[node name="TunnelStraightV2" parent="Section4" unique_id=303453396 instance=ExtResource("4_soxo8")]
+[node name="TunnelStraightV2" parent="Section4" unique_id=106970537 instance=ExtResource("4_soxo8")]
 
 [node name="FloatingPlatformWide2" parent="Section4" unique_id=2065188744 instance=ExtResource("14_sekmo")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.4346485, 9.686489, -14.678223)
@@ -597,7 +665,7 @@ curve = SubResource("Curve3D_d7fl6")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -15, 27, -48.02301)
 aabb = AABB(-69, -34, -38.5475, 138, 68, 146)
 
-[node name="Enemy" parent="Section5" unique_id=1279462332 node_paths=PackedStringArray("Idle_Path") instance=ExtResource("15_d7fl6")]
+[node name="Enemy" parent="Section5" unique_id=1637589184 node_paths=PackedStringArray("Idle_Path") instance=ExtResource("15_d7fl6")]
 transform = Transform3D(0.25881907, 0, 0.9659258, 0, 1, 0, -0.9659258, 0, 0.25881907, -4, 11, -41)
 Idle_Path = NodePath("../NavigationRegion3D/FloatingPlatformWide4/Path3D")
 starting_index = 1
@@ -649,7 +717,7 @@ starting_index = 4
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 243, -18, 679)
 visible = false
 
-[node name="TunnelAscendingB" parent="Section7" unique_id=50180211 instance=ExtResource("7_5bh32")]
+[node name="TunnelAscendingB" parent="Section7" unique_id=1364581585 instance=ExtResource("7_5bh32")]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -3, 0, 76)
 
 [node name="WallExtensionA2" parent="Section7" unique_id=1454512765 instance=ExtResource("15_b2yks")]
@@ -711,7 +779,7 @@ environment = SubResource("Environment_lsiyx")
 [connection signal="pressed" from="Death Screen/Screen/VBoxContainer/Restart" to="Death Screen" method="_on_restart_pressed"]
 [connection signal="pressed" from="Death Screen/Screen/VBoxContainer/Menu" to="Death Screen" method="_on_menu_pressed"]
 [connection signal="pressed" from="Death Screen/Screen/VBoxContainer/Quit" to="Death Screen" method="_on_quit_pressed"]
-[connection signal="body_entered" from="Section1/Tutorial Triggers/Basic Tutorial Event" to="Section1/Tutorial Triggers/Basic Tutorial Event" method="_on_body_entered"]
-[connection signal="body_exited" from="Section1/Tutorial Triggers/Basic Tutorial Event" to="Section1/Tutorial Triggers/Basic Tutorial Event" method="_on_body_exited"]
-[connection signal="body_entered" from="Section1/Tutorial Triggers/Wall-Running Tutorial Event" to="Section1/Tutorial Triggers/Wall-Running Tutorial Event" method="_on_body_entered"]
-[connection signal="body_exited" from="Section1/Tutorial Triggers/Wall-Running Tutorial Event" to="Section1/Tutorial Triggers/Wall-Running Tutorial Event" method="_on_body_exited"]
+[connection signal="body_entered" from="Section1 Tutorial/Tutorial Triggers/Basic Tutorial Event" to="Section1 Tutorial/Tutorial Triggers/Basic Tutorial Event" method="_on_body_entered"]
+[connection signal="body_exited" from="Section1 Tutorial/Tutorial Triggers/Basic Tutorial Event" to="Section1 Tutorial/Tutorial Triggers/Basic Tutorial Event" method="_on_body_exited"]
+[connection signal="body_entered" from="Section1 Tutorial/Tutorial Triggers/Wall-Running Tutorial Event" to="Section1 Tutorial/Tutorial Triggers/Wall-Running Tutorial Event" method="_on_body_entered"]
+[connection signal="body_exited" from="Section1 Tutorial/Tutorial Triggers/Wall-Running Tutorial Event" to="Section1 Tutorial/Tutorial Triggers/Wall-Running Tutorial Event" method="_on_body_exited"]
