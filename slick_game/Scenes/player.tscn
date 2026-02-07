@@ -74,8 +74,8 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.505445, 0)
 [node name="Player Death Handler" type="Node" parent="." unique_id=928962245]
 script = ExtResource("4_vgqql")
 
-[node name="Hitbox Component" parent="." unique_id=973421447 instance=ExtResource("3_6t5aa")]
-visible = false
+[node name="Hitbox Component" parent="." unique_id=973421447 node_paths=PackedStringArray("damage_audio") instance=ExtResource("3_6t5aa")]
+damage_audio = NodePath("../AudioPlayers/PlayerDamageAudioPlayer")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Hitbox Component" unique_id=574987428]
 shape = SubResource("CapsuleShape3D_vgqql")

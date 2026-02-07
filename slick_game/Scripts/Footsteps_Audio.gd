@@ -24,3 +24,6 @@ func play_random_audio() -> void:
 		previous_index = random_audio
 		stream = audio.get(random_audio)
 		play()
+
+func stop_audio() -> void:
+	stop()

@@ -2,10 +2,9 @@ extends State
 
 
 @onready var state_machine = get_parent()
-@onready var reaction_time = %"Reaction Timer"
 
 
-var unlocked_attacking = false
+var unlocked_attacking = true
 
 
 ## Virtual function
