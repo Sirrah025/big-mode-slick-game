@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://cwd2larse212k"]
 
 [ext_resource type="Script" uid="uid://di2n6ssehce0u" path="res://Scripts/Scene Changes/next_scene.gd" id="1_pha2q"]
-[ext_resource type="PackedScene" uid="uid://dyb3ij30xphsd" path="res://Scenes/Levels/main_level.tscn" id="2_pha2q"]
+[ext_resource type="PackedScene" uid="uid://bx0vtgn8uqjqk" path="res://Scenes/Levels/main_level_f.tscn" id="2_pha2q"]
 
 [node name="Main Menu" type="Control" unique_id=1779451589]
 layout_mode = 3
@@ -49,6 +49,13 @@ text = "Settings"
 script = ExtResource("1_pha2q")
 metadata/_edit_use_anchors_ = true
 
+[node name="Credits" type="Button" parent="Main Menu Components" unique_id=1759065039]
+layout_mode = 2
+theme_override_font_sizes/font_size = 38
+text = "Credits"
+script = ExtResource("1_pha2q")
+metadata/_edit_use_anchors_ = true
+
 [node name="Quit" type="Button" parent="Main Menu Components" unique_id=1525847825]
 layout_mode = 2
 theme_override_font_sizes/font_size = 38
@@ -58,4 +65,5 @@ metadata/_edit_use_anchors_ = true
 
 [connection signal="pressed" from="Main Menu Components/Start Game" to="Main Menu Components/Start Game" method="_on_start_game_pressed"]
 [connection signal="pressed" from="Main Menu Components/Settings" to="Main Menu Components/Settings" method="_on_settings_pressed"]
+[connection signal="pressed" from="Main Menu Components/Credits" to="Main Menu Components/Credits" method="_on_credits_pressed"]
 [connection signal="pressed" from="Main Menu Components/Quit" to="Main Menu Components/Quit" method="_on_quit_pressed"]
