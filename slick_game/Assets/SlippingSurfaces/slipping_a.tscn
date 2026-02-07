@@ -1,0 +1,20 @@
+[gd_scene format=3 uid="uid://jl1snohecyot"]
+
+[ext_resource type="Texture2D" uid="uid://outlafksupf3" path="res://Assets/Textures/TextureA.webp" id="1_2lkml"]
+[ext_resource type="Script" uid="uid://8a5d7ghhldie" path="res://Scripts/Properties/slipping_property.gd" id="1_arlw8"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_02o4v"]
+size = Vector3(2, 2, 2)
+
+[node name="SlippingA" type="Area3D" unique_id=939815780]
+script = ExtResource("1_arlw8")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1749638342]
+shape = SubResource("BoxShape3D_02o4v")
+
+[node name="Decal" type="Decal" parent="." unique_id=1262604952]
+texture_albedo = ExtResource("1_2lkml")
+texture_normal = ExtResource("1_2lkml")
+texture_orm = ExtResource("1_2lkml")
+texture_emission = ExtResource("1_2lkml")
+emission_energy = 8.85

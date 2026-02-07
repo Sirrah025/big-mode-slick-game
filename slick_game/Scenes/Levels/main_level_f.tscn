@@ -22,7 +22,7 @@
 [ext_resource type="AudioStream" uid="uid://0cr2n36vuldy" path="res://Audio/Music/bigmode1.mp3" id="17_s8te4"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_c22wr"]
-size = Vector3(107.764404, 54.536133, 13.672974)
+size = Vector3(107.764404, 94.08328, 13.672974)
 
 [sub_resource type="Animation" id="Animation_d5bmo"]
 resource_name = "Failed"
@@ -353,6 +353,8 @@ transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, -137
 [node name="FloatingPlatformWide" parent="Section1/Platforms" unique_id=1525857654 instance=ExtResource("6_sxyel")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 14.462118, 31.416359)
 
+[node name="Slipping" type="Node3D" parent="Section1" unique_id=1216984043]
+
 [node name="Section2" type="Node3D" parent="." unique_id=1491945417]
 
 [node name="Wall" parent="Section2" unique_id=961490059 instance=ExtResource("4_igj5h")]
@@ -391,6 +393,8 @@ transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -411
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -514.1198, 0, 138.57538)
 
 [node name="Platforms" type="Node3D" parent="Section2" unique_id=1486890042]
+
+[node name="Slipping" type="Node3D" parent="Section2" unique_id=391310635]
 
 [node name="Section3" type="Node3D" parent="." unique_id=1438837375]
 
@@ -431,6 +435,8 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -580.6555, 0, -169.93697)
 
 [node name="Platforms" type="Node3D" parent="Section3" unique_id=734329663]
 
+[node name="Slipping" type="Node3D" parent="Section3" unique_id=676250981]
+
 [node name="Section4" type="Node3D" parent="." unique_id=1795246332]
 
 [node name="Wall" parent="Section4" unique_id=1061678863 instance=ExtResource("4_igj5h")]
@@ -469,6 +475,8 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 276.92035, 0, -340.50443)
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 277.14398, 0, -237.10352)
 
 [node name="Platforms" type="Node3D" parent="Section4" unique_id=1286887635]
+
+[node name="Slipping" type="Node3D" parent="Section4" unique_id=1627892504]
 
 [node name="Section5" type="Node3D" parent="." unique_id=929597371]
 
@@ -509,6 +517,8 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 277.081, 0, 244.887)
 
 [node name="Platforms" type="Node3D" parent="Section5" unique_id=701562509]
 
+[node name="Slipping" type="Node3D" parent="Section5" unique_id=1401335309]
+
 [node name="Section6" type="Node3D" parent="." unique_id=1123079760]
 
 [node name="Wall" parent="Section6" unique_id=2029567054 instance=ExtResource("4_igj5h")]
@@ -544,6 +554,8 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 449.299, 17.797968, -134.7855
 transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 449.29865, 0, -238.10548)
 
 [node name="Platforms" type="Node3D" parent="Section6" unique_id=1645366819]
+
+[node name="Slipping" type="Node3D" parent="Section6" unique_id=1380386131]
 
 [node name="Section7" type="Node3D" parent="." unique_id=136273058]
 
@@ -584,6 +596,8 @@ transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 276.
 
 [node name="Platforms" type="Node3D" parent="Section7" unique_id=1840684938]
 
+[node name="Slipping" type="Node3D" parent="Section7" unique_id=449233500]
+
 [node name="Section8" type="Node3D" parent="." unique_id=1314613441]
 
 [node name="Wall" parent="Section8" unique_id=846148480 instance=ExtResource("4_igj5h")]
@@ -616,6 +630,8 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 41.886, 0, -1512.0111)
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 41.885845, 0, -1615.4744)
 
 [node name="Platforms" type="Node3D" parent="Section8" unique_id=2023448476]
+
+[node name="Slipping" type="Node3D" parent="Section8" unique_id=1572759387]
 
 [node name="Decorations" type="Node3D" parent="." unique_id=698989455]
 
@@ -717,18 +733,17 @@ gate = NodePath("../../../Section2/Wall")
 open = true
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D/GateManagers/OpenS2" unique_id=1728591080]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.49852, 20.019043, -11.565979)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.49852, -1.8096466, -11.565979)
 shape = SubResource("BoxShape3D_c22wr")
 
 [node name="CloseS2" type="Area3D" parent="Area3D/GateManagers" unique_id=995994266 node_paths=PackedStringArray("gate")]
-transform = Transform3D(0.9833343, 0, 0.18180653, 0, 1, 0, -0.18180653, 0, 0.9833343, -95.27861, 10.939346, 186.0025)
-collision_layer = 0
-collision_mask = 65
+transform = Transform3D(0.9833343, 0, 0.18180653, 0, 1, 0, -0.18180653, 0, 0.9833343, -95.27861, 8.372089, 186.0025)
+collision_layer = 64
 script = ExtResource("17_m6cin")
 gate = NodePath("../../../Section2/Wall")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D/GateManagers/CloseS2" unique_id=1936283678]
-transform = Transform3D(0.98625374, 0, -0.16523689, 0, 1, 0, 0.16523689, 0, 0.98625374, -3.9285278, 20.019043, 8.112579)
+transform = Transform3D(0.9862538, 0, -0.16523682, 0, 1, 0, 0.16523682, 0, 0.9862538, -3.9285278, 7.6800537, 8.112579)
 shape = SubResource("BoxShape3D_c22wr")
 
 [node name="OpenS3" type="Area3D" parent="Area3D/GateManagers" unique_id=2100506968 node_paths=PackedStringArray("gate")]
@@ -743,7 +758,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.49852, 20.019043, -11.56597
 shape = SubResource("BoxShape3D_c22wr")
 
 [node name="CloseS3" type="Area3D" parent="Area3D/GateManagers" unique_id=2113205834 node_paths=PackedStringArray("gate")]
-transform = Transform3D(0.07280299, 0, 0.9973463, 0, 1, 0, -0.9973463, 0, 0.07280299, -663.72876, 10.939346, 126.36809)
+transform = Transform3D(0.07280299, 0, 0.9973463, 0, 1, 0, -0.9973463, 0, 0.07280299, -663.72876, 10.939346, 136.16739)
 collision_layer = 64
 script = ExtResource("17_m6cin")
 gate = NodePath("../../../Section3/Wall")

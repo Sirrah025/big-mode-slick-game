@@ -378,8 +378,6 @@ func _apply_velocity(delta: float) -> void:
 	if final_velocity.length() < slip_to_crouch_threshold and is_sliding:
 		_exit_slide()
 		_enter_crouch()
-	
-	$SpeedTest.text = "Speed: " + str(final_velocity.length())
 
 func _handle_wall_jump() -> void:
 	var forward_dir = -head.transform.basis.z.normalized()

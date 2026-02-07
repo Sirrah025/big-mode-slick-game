@@ -105,9 +105,24 @@ one_shot = true
 wait_time = 0.3
 one_shot = true
 
-[node name="SpeedTest" type="Label" parent="." unique_id=404264627]
+[node name="PlayerUI" type="Control" parent="." unique_id=2055256434]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="Life" type="TextureProgressBar" parent="PlayerUI" unique_id=2005959924]
+layout_mode = 0
 offset_right = 40.0
-offset_bottom = 23.0
+offset_bottom = 40.0
+
+[node name="DashCooldown" type="TextureProgressBar" parent="PlayerUI" unique_id=1127407621]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
 
 [node name="AudioPlayers" type="Node" parent="." unique_id=489650414]
 
