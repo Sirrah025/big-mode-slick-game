@@ -1,0 +1,109 @@
+[gd_scene format=3 uid="uid://40uyesmfi6d5"]
+
+[ext_resource type="Script" uid="uid://5wxuwbx5f86t" path="res://Entities/enemies/Flying/flying_enemy_movement.gd" id="1_6ut10"]
+[ext_resource type="PackedScene" uid="uid://dvm2ofty1p7q5" path="res://Entities/enemies/Flying/Flying Enemy.glb" id="1_51cwm"]
+[ext_resource type="Script" uid="uid://bt5lx546qxxbm" path="res://Scripts/Components/State Machine/State_Machine.gd" id="3_ghjfk"]
+[ext_resource type="Script" uid="uid://b4y56k4pfgmok" path="res://Entities/enemies/Flying/idle_state.gd" id="4_saulv"]
+[ext_resource type="Script" uid="uid://dmvcoviucrhrq" path="res://Entities/enemies/Flying/flying_state.gd" id="5_saulv"]
+[ext_resource type="Script" uid="uid://co5d7iy1hwygm" path="res://Entities/enemies/Flying/firing_state.gd" id="6_f6fd6"]
+[ext_resource type="PackedScene" uid="uid://b12fqgptd5y3d" path="res://Systems/components/hitbox_component.tscn" id="7_xfbi8"]
+[ext_resource type="PackedScene" uid="uid://bpxws01g1myf6" path="res://Systems/components/health_component.tscn" id="8_4wkhf"]
+[ext_resource type="Script" uid="uid://c8d3rb8u4vjwf" path="res://Scripts/3D_audio.gd" id="9_n3j5q"]
+[ext_resource type="AudioStream" uid="uid://bf45qcmxlwe2p" path="res://Audio/SFX/Enemy/enemy movement_attack 1.mp3" id="10_8ybh7"]
+[ext_resource type="AudioStream" uid="uid://bj8uih0gdguhr" path="res://Audio/SFX/Enemy/enemy movement_attack 2.mp3" id="11_e4doe"]
+[ext_resource type="AudioStream" uid="uid://d3lr11qvtr42e" path="res://Audio/SFX/Enemy/enemy movement_attack 3.mp3" id="12_ce1f2"]
+[ext_resource type="AudioStream" uid="uid://ctusyxt1s22po" path="res://Audio/SFX/Enemy/enemy movement_attack 4.mp3" id="13_qlhte"]
+[ext_resource type="AudioStream" uid="uid://d30ngc2gfi0pf" path="res://Audio/SFX/Enemy Death/enemy death1.mp3" id="14_rsm5x"]
+[ext_resource type="AudioStream" uid="uid://d0tg1y6tb6aim" path="res://Audio/SFX/Enemy Death/enemy death 2.mp3" id="15_dyffs"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_51cwm"]
+radius = 0.107980154
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_ghjfk"]
+radius = 10.0
+
+[sub_resource type="Animation" id="Animation_f6fd6"]
+resource_name = "Fire"
+tracks/0/type = "method"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("State_Machine/Firing")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0.6333333),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"fire_projectile"
+}]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_527p8"]
+_data = {
+&"Fire": SubResource("Animation_f6fd6")
+}
+
+[node name="CharacterBody3D" type="CharacterBody3D" unique_id=258025364]
+collision_mask = 3
+script = ExtResource("1_6ut10")
+
+[node name="ForwardDirection" type="Node3D" parent="." unique_id=335858948]
+
+[node name="Flying Enemy" parent="." unique_id=888267832 instance=ExtResource("1_51cwm")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.5280522, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=618102513]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.14192821, -0.030708529)
+shape = SubResource("SphereShape3D_51cwm")
+
+[node name="State_Machine" type="Node" parent="." unique_id=1844791984]
+script = ExtResource("3_ghjfk")
+metadata/_custom_type_script = "uid://bt5lx546qxxbm"
+
+[node name="Idle" type="Node" parent="State_Machine" unique_id=58834112]
+script = ExtResource("4_saulv")
+
+[node name="Flying" type="Node" parent="State_Machine" unique_id=872673140]
+script = ExtResource("5_saulv")
+
+[node name="Firing" type="Node" parent="State_Machine" unique_id=190384750]
+script = ExtResource("6_f6fd6")
+
+[node name="Activation" type="Area3D" parent="." unique_id=472101273]
+monitorable = false
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Activation" unique_id=64229127]
+shape = SubResource("SphereShape3D_ghjfk")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=256724142]
+libraries/ = SubResource("AnimationLibrary_527p8")
+
+[node name="Hitbox Component" parent="." unique_id=973421447 instance=ExtResource("7_xfbi8")]
+
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="Hitbox Component" unique_id=1230448524]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.14192821, -0.030708529)
+shape = SubResource("SphereShape3D_51cwm")
+
+[node name="Health Component" parent="." unique_id=1334057615 instance=ExtResource("8_4wkhf")]
+health = 25
+
+[node name="Audios" type="Node" parent="." unique_id=969199810]
+
+[node name="Enemy Movement" type="AudioStreamPlayer3D" parent="Audios" unique_id=2016013131]
+unique_name_in_owner = true
+script = ExtResource("9_n3j5q")
+audio = Array[AudioStreamMP3]([ExtResource("10_8ybh7"), ExtResource("11_e4doe"), ExtResource("12_ce1f2"), ExtResource("13_qlhte")])
+truncate_audio = true
+
+[node name="Enemy Death" type="AudioStreamPlayer3D" parent="Audios" unique_id=1448708516]
+unique_name_in_owner = true
+script = ExtResource("9_n3j5q")
+audio = Array[AudioStreamMP3]([ExtResource("14_rsm5x"), ExtResource("15_dyffs")])
+
+[connection signal="body_entered" from="Activation" to="State_Machine/Idle" method="_on_activation_body_entered"]
+[connection signal="animation_finished" from="AnimationPlayer" to="State_Machine/Firing" method="_on_animation_player_animation_finished"]
+[connection signal="damage" from="Hitbox Component" to="Health Component" method="_on_damage"]
+[connection signal="entity_died" from="Health Component" to="." method="_on_health_component_entity_died"]
+
+[editable path="Flying Enemy"]

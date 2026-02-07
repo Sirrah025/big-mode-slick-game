@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://b776e3erfk1h3"
-path="res://.godot/imported/Ranged Enemy Color Map.png-d539f959ee59abe00709ec68735b630c.ctex"
+uid="uid://yocvh8erold8"
+path="res://.godot/imported/Flying Bot Color Map.png-ab6df06745c5a9282f527fddc3c73283.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Entities/enemies/Ranged/Ranged Enemy Color Map.png"
-dest_files=["res://.godot/imported/Ranged Enemy Color Map.png-d539f959ee59abe00709ec68735b630c.ctex"]
+source_file="res://Entities/enemies/Flying/Flying Bot Color Map.png"
+dest_files=["res://.godot/imported/Flying Bot Color Map.png-ab6df06745c5a9282f527fddc3c73283.ctex"]
 
 [params]
 
