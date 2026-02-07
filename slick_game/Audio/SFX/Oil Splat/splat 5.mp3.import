@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://bhm3wekum1r0t"
+path="res://.godot/imported/splat 5.mp3-4e928c07a1698e559320067e9ea9fdeb.mp3str"
+
+[deps]
+
+source_file="res://Audio/SFX/Oil Splat/splat 5.mp3"
+dest_files=["res://.godot/imported/splat 5.mp3-4e928c07a1698e559320067e9ea9fdeb.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

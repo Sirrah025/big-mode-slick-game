@@ -10,6 +10,16 @@
 [ext_resource type="Script" uid="uid://ddtnqi1undu5d" path="res://Scripts/Enemies/States/idle.gd" id="8_xc2wx"]
 [ext_resource type="Script" uid="uid://cmut33u2o3scq" path="res://Scripts/Enemies/States/attack.gd" id="9_ryoam"]
 [ext_resource type="Script" uid="uid://dmgiit17ys18i" path="res://Scripts/Enemies/States/aggressive.gd" id="9_uyk2m"]
+[ext_resource type="AudioStream" uid="uid://bf45qcmxlwe2p" path="res://Audio/SFX/Enemy/enemy movement_attack 1.mp3" id="12_g7j46"]
+[ext_resource type="AudioStream" uid="uid://bj8uih0gdguhr" path="res://Audio/SFX/Enemy/enemy movement_attack 2.mp3" id="13_30t2o"]
+[ext_resource type="AudioStream" uid="uid://d3lr11qvtr42e" path="res://Audio/SFX/Enemy/enemy movement_attack 3.mp3" id="14_r84mg"]
+[ext_resource type="AudioStream" uid="uid://ctusyxt1s22po" path="res://Audio/SFX/Enemy/enemy movement_attack 4.mp3" id="15_mjx6j"]
+[ext_resource type="AudioStream" uid="uid://d30ngc2gfi0pf" path="res://Audio/SFX/Enemy Death/enemy death1.mp3" id="16_bkres"]
+[ext_resource type="Script" uid="uid://c8d3rb8u4vjwf" path="res://Scripts/3D_audio.gd" id="16_r5bsr"]
+[ext_resource type="AudioStream" uid="uid://d0tg1y6tb6aim" path="res://Audio/SFX/Enemy Death/enemy death 2.mp3" id="17_g3kb6"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_j7534"]
+radius = 10.0
 
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_pa5df"]
 animation = &"Float"
@@ -41,9 +51,11 @@ advance_mode = 0
 
 [sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_2f1rj"]
 switch_mode = 2
+advance_mode = 2
 
 [sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_lkdd0"]
 switch_mode = 2
+advance_mode = 2
 
 [sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_ryoam"]
 advance_mode = 0
@@ -59,10 +71,10 @@ states/Idle/position = Vector2(380, 100)
 "states/Ready Fire/node" = SubResource("AnimationNodeAnimation_lkdd0")
 "states/Ready Fire/position" = Vector2(539, 100)
 transitions = ["Start", "Idle", SubResource("AnimationNodeStateMachineTransition_xc2wx"), "Fire", "End", SubResource("AnimationNodeStateMachineTransition_78gku"), "Idle", "Ready Fire", SubResource("AnimationNodeStateMachineTransition_jnjvl"), "Ready Fire", "At Ready", SubResource("AnimationNodeStateMachineTransition_2f1rj"), "Fire", "At Ready", SubResource("AnimationNodeStateMachineTransition_lkdd0"), "At Ready", "Fire", SubResource("AnimationNodeStateMachineTransition_ryoam")]
-graph_offset = Vector2(-55, 2)
+graph_offset = Vector2(25, -9)
 
 [sub_resource type="AnimationNodeBlendTree" id="AnimationNodeBlendTree_r5bsr"]
-graph_offset = Vector2(-679, 99)
+graph_offset = Vector2(-655, 107)
 nodes/Animation/node = SubResource("AnimationNodeAnimation_pa5df")
 nodes/Animation/position = Vector2(-380, 380)
 "nodes/Float Blend/node" = SubResource("AnimationNodeBlend2_ymcu4")
@@ -80,20 +92,41 @@ collision_layer = 16
 collision_mask = 2
 script = ExtResource("1_jnjvl")
 
+[node name="FaceDirection" type="Node3D" parent="." unique_id=1669096082]
+
+[node name="Near Vision" type="Area3D" parent="." unique_id=203209768]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Near Vision" unique_id=395329087]
+shape = SubResource("SphereShape3D_j7534")
+
+[node name="Vision" type="Node3D" parent="." unique_id=1409292633]
+unique_name_in_owner = true
+
+[node name="RayCast3D" type="RayCast3D" parent="Vision" unique_id=1904402400]
+target_position = Vector3(0, 0, 15)
+
+[node name="RayCast3D2" type="RayCast3D" parent="Vision" unique_id=748108796]
+target_position = Vector3(12.5, 0, 12.5)
+
+[node name="RayCast3D3" type="RayCast3D" parent="Vision" unique_id=342436519]
+target_position = Vector3(-12.5, 0, 12.5)
+
 [node name="NavigationAgent3D" type="NavigationAgent3D" parent="." unique_id=1252521370]
 
 [node name="Ranged Enemy" parent="." unique_id=291246549 instance=ExtResource("1_ar4ve")]
+transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 0, -0.20490897, 0)
 
 [node name="Skeleton3D" parent="Ranged Enemy/Ranged Armature" parent_id_path=PackedInt32Array(291246549, 794327750) index="0" unique_id=1077688716]
-bones/1/position = Vector3(0, 1.6723558, 0)
-bones/5/rotation = Quaternion(-0.26579824, -0.1738688, -0.49822935, 0.8067766)
-bones/6/rotation = Quaternion(0.65280277, -2.5738034e-05, -0.46033502, 0.60161483)
-bones/8/rotation = Quaternion(-0.31801873, 0.15927142, 0.5069328, 0.7851852)
-bones/9/rotation = Quaternion(0.67518896, 2.4121255e-05, 0.47612092, 0.56340826)
-bones/10/position = Vector3(2.1374474, 3.899799, 1.7322459)
-bones/11/position = Vector3(-1.9202275, -2.070725, -4.866846)
-bones/12/position = Vector3(-2.0701807, 3.9726698, 1.5263634)
-bones/13/position = Vector3(2.364166, -2.6123853, -5.385218)
+bones/1/position = Vector3(0, 1.6946037, 0)
+bones/1/rotation = Quaternion(0, 0.08231154, 0, 0.99660665)
+bones/5/rotation = Quaternion(-0.43554074, -0.00786982, -0.3589019, 0.8254888)
+bones/6/rotation = Quaternion(0.75667185, -1.6245991e-05, -0.53357995, 0.37780985)
+bones/8/rotation = Quaternion(-0.39903694, 0.045047827, 0.3915444, 0.82790893)
+bones/9/rotation = Quaternion(0.6921936, 2.269633e-05, 0.48811185, 0.5316153)
+bones/10/position = Vector3(2.137447, 4.520536, 0.5884607)
+bones/11/position = Vector3(-1.9202279, -2.6493692, -4.9479523)
+bones/12/position = Vector3(-2.2746778, 3.8037367, 0.74696225)
+bones/13/position = Vector3(1.4953651, -3.1259365, -5.5199623)
 
 [node name="AnimationTree" type="AnimationTree" parent="." unique_id=24667294]
 root_node = NodePath("../Ranged Enemy")
@@ -103,6 +136,7 @@ anim_player = NodePath("../Ranged Enemy/AnimationPlayer")
 script = ExtResource("2_0gfor")
 
 [node name="Attack Origins" type="Node3D" parent="." unique_id=265711064]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.20490897, 0)
 script = ExtResource("3_pa5df")
 
 [node name="Attack Origin Left" type="Node3D" parent="Attack Origins" unique_id=210210761]
@@ -137,10 +171,30 @@ script = ExtResource("9_uyk2m")
 [node name="Attack" type="Node" parent="Aggression State Machine" unique_id=2122168653]
 script = ExtResource("9_ryoam")
 
-[connection signal="target_reached" from="NavigationAgent3D" to="." method="_on_navigation_agent_3d_target_reached"]
+[node name="Reaction Timer" type="Timer" parent="." unique_id=2095899895]
+unique_name_in_owner = true
+wait_time = 0.5
+one_shot = true
+
+[node name="Audios" type="Node" parent="." unique_id=372183566]
+
+[node name="Enemy Movement" type="AudioStreamPlayer3D" parent="Audios" unique_id=925456538]
+unique_name_in_owner = true
+script = ExtResource("16_r5bsr")
+audio = Array[AudioStreamMP3]([ExtResource("12_g7j46"), ExtResource("13_30t2o"), ExtResource("14_r84mg"), ExtResource("15_mjx6j")])
+truncate_audio = true
+
+[node name="Enemy Death" type="AudioStreamPlayer3D" parent="Audios" unique_id=267201279]
+unique_name_in_owner = true
+script = ExtResource("16_r5bsr")
+audio = Array[AudioStreamMP3]([ExtResource("16_bkres"), ExtResource("17_g3kb6")])
+
+[connection signal="body_entered" from="Near Vision" to="Aggression State Machine/Idle" method="_on_near_vision_body_entered"]
+[connection signal="navigation_finished" from="NavigationAgent3D" to="." method="_on_navigation_agent_3d_navigation_finished"]
 [connection signal="damage" from="Hitbox Component" to="Health Component" method="_on_damage"]
 [connection signal="entity_died" from="Health Component" to="." method="_on_entity_died"]
-[connection signal="ready_weapons" from="Aggression State Machine/Aggressive" to="AnimationTree" method="_on_ready_weapons"]
+[connection signal="ready_weapons" from="Aggression State Machine/Idle" to="AnimationTree" method="_on_ready_weapons"]
 [connection signal="fire_weapons" from="Aggression State Machine/Attack" to="AnimationTree" method="_on_fire_weapons"]
+[connection signal="timeout" from="Reaction Timer" to="Aggression State Machine/Attack" method="_on_reaction_timer_timeout"]
 
 [editable path="Ranged Enemy"]
