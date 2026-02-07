@@ -4,9 +4,14 @@
 [ext_resource type="PackedScene" uid="uid://bpxws01g1myf6" path="res://Systems/components/health_component.tscn" id="2_6t5aa"]
 [ext_resource type="PackedScene" uid="uid://b12fqgptd5y3d" path="res://Systems/components/hitbox_component.tscn" id="3_6t5aa"]
 [ext_resource type="Script" uid="uid://cqufbqehm15a" path="res://Scripts/Player/player_death_handler.gd" id="4_vgqql"]
+[ext_resource type="Texture2D" uid="uid://cmr2le6wjj4xg" path="res://Assets/Textures/DashU.png" id="5_2ijsl"]
 [ext_resource type="Script" uid="uid://1oni077krkxk" path="res://Scripts/Footsteps_Audio.gd" id="5_fkybt"]
+[ext_resource type="Texture2D" uid="uid://ctjrn845dvtn2" path="res://Assets/Textures/PlayerUI.png" id="5_wpjfl"]
+[ext_resource type="Texture2D" uid="uid://xf0g0u5nt2a4" path="res://Assets/Textures/LifeU.png" id="6_0gysh"]
 [ext_resource type="AudioStream" uid="uid://cui3rtq87okeq" path="res://Audio/SFX/Player Movement/footstep1.mp3" id="6_f1ek2"]
+[ext_resource type="Texture2D" uid="uid://brsuu0qwkbo6q" path="res://Assets/Textures/DashP.png" id="6_p1odr"]
 [ext_resource type="AudioStream" uid="uid://d12bsocp0c8jn" path="res://Audio/SFX/Player Movement/footstep2.mp3" id="7_tx1dd"]
+[ext_resource type="Texture2D" uid="uid://dibiq02aiahw8" path="res://Assets/Textures/LifeP.png" id="7_vfarp"]
 [ext_resource type="AudioStream" uid="uid://bvu3bb3ywabf7" path="res://Audio/SFX/Player Movement/footstep3.mp3" id="8_gymyn"]
 [ext_resource type="AudioStream" uid="uid://7kwgqypucjy0" path="res://Audio/SFX/Player Movement/footstep4.mp3" id="9_pu2lt"]
 [ext_resource type="AudioStream" uid="uid://ddamjn01nfdk3" path="res://Audio/SFX/Player Movement/jump.mp3" id="10_h4iuc"]
@@ -114,15 +119,27 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 
+[node name="Player" type="TextureRect" parent="PlayerUI" unique_id=1961728354]
+layout_mode = 0
+offset_right = 761.0
+offset_bottom = 352.0
+texture = ExtResource("5_wpjfl")
+
 [node name="Life" type="TextureProgressBar" parent="PlayerUI" unique_id=2005959924]
 layout_mode = 0
 offset_right = 40.0
 offset_bottom = 40.0
+value = 100.0
+texture_under = ExtResource("6_0gysh")
+texture_progress = ExtResource("7_vfarp")
 
 [node name="DashCooldown" type="TextureProgressBar" parent="PlayerUI" unique_id=1127407621]
 layout_mode = 0
 offset_right = 40.0
 offset_bottom = 40.0
+value = 100.0
+texture_under = ExtResource("5_2ijsl")
+texture_progress = ExtResource("6_p1odr")
 
 [node name="AudioPlayers" type="Node" parent="." unique_id=489650414]
 
