@@ -24,6 +24,7 @@ buses/default_bus_layout="uid://bvscwyd48yj7q"
 Settings="*uid://5htr5nv5adyt"
 GlobalSignals="*uid://cg8be46oyhk51"
 LoadScenes="*uid://cfrbntjytvmhg"
+SceneTransition="*uid://upl23q30j1fe"
 
 [display]
 
