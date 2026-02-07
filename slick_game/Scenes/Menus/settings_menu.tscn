@@ -29,10 +29,72 @@ layout_mode = 2
 script = ExtResource("1_7y5a0")
 metadata/_tab_index = 0
 
+[node name="HBoxContainer2" type="HBoxContainer" parent="TabContainer/Video" unique_id=1285523061]
+layout_mode = 2
+
+[node name="RichTextLabel" type="RichTextLabel" parent="TabContainer/Video/HBoxContainer2" unique_id=1241270388]
+custom_minimum_size = Vector2(254.705, 62.07)
+layout_mode = 2
+theme_override_font_sizes/normal_font_size = 32
+text = "FullScreen"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="FullscreenButton" type="CheckButton" parent="TabContainer/Video/HBoxContainer2" unique_id=955571567]
+layout_mode = 2
+
 [node name="Audio" type="VBoxContainer" parent="TabContainer" unique_id=1461703993]
 layout_mode = 2
 script = ExtResource("4_3etfd")
 metadata/_tab_index = 1
+
+[node name="HBoxContainer" type="HBoxContainer" parent="TabContainer/Audio" unique_id=35795626]
+layout_mode = 2
+
+[node name="RichTextLabel" type="RichTextLabel" parent="TabContainer/Audio/HBoxContainer" unique_id=478643761]
+custom_minimum_size = Vector2(254.705, 62.07)
+layout_mode = 2
+theme_override_font_sizes/normal_font_size = 32
+text = "Master Volume"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="MasterSlider" type="HSlider" parent="TabContainer/Audio/HBoxContainer" unique_id=178519330]
+custom_minimum_size = Vector2(0, 64.035)
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="TabContainer/Audio" unique_id=1113347102]
+layout_mode = 2
+
+[node name="RichTextLabel" type="RichTextLabel" parent="TabContainer/Audio/HBoxContainer2" unique_id=882257218]
+custom_minimum_size = Vector2(254.705, 62.07)
+layout_mode = 2
+theme_override_font_sizes/normal_font_size = 32
+text = "Music Volume"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="MusicSlider" type="HSlider" parent="TabContainer/Audio/HBoxContainer2" unique_id=1972152750]
+custom_minimum_size = Vector2(0, 64.035)
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="HBoxContainer3" type="HBoxContainer" parent="TabContainer/Audio" unique_id=1933504024]
+layout_mode = 2
+
+[node name="RichTextLabel" type="RichTextLabel" parent="TabContainer/Audio/HBoxContainer3" unique_id=79030202]
+custom_minimum_size = Vector2(254.705, 62.07)
+layout_mode = 2
+theme_override_font_sizes/normal_font_size = 32
+text = "Effects Volume"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="SFXSlider" type="HSlider" parent="TabContainer/Audio/HBoxContainer3" unique_id=1790991914]
+custom_minimum_size = Vector2(0, 64.035)
+layout_mode = 2
+size_flags_horizontal = 3
 
 [node name="Game" type="VBoxContainer" parent="TabContainer" unique_id=322908651]
 visible = false
@@ -54,4 +116,8 @@ vertical_alignment = 1
 [node name="HeadbobCheckButton" type="CheckButton" parent="TabContainer/Game/HBoxContainer" unique_id=1941611775]
 layout_mode = 2
 
+[connection signal="toggled" from="TabContainer/Video/HBoxContainer2/FullscreenButton" to="TabContainer/Video" method="_on_fullscreen_check_button_toggled"]
+[connection signal="value_changed" from="TabContainer/Audio/HBoxContainer/MasterSlider" to="TabContainer/Audio" method="_on_master_slider_value_changed"]
+[connection signal="value_changed" from="TabContainer/Audio/HBoxContainer2/MusicSlider" to="TabContainer/Audio" method="_on_music_slider_value_changed"]
+[connection signal="value_changed" from="TabContainer/Audio/HBoxContainer3/SFXSlider" to="TabContainer/Audio" method="_on_sfx_slider_value_changed"]
 [connection signal="toggled" from="TabContainer/Game/HBoxContainer/HeadbobCheckButton" to="TabContainer/Game" method="_on_headbob_check_button_toggled"]

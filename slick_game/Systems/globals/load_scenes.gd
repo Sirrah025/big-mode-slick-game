@@ -22,6 +22,11 @@ func change_to_death():
 	get_tree().change_scene_to_file("res://Scenes/Menus/death_screen.tscn")
 	SceneTransition.fade_out_red()
 
+func change_to_win():
+	SceneTransition.fade_in()
+	get_tree().change_scene_to_file("res://Scenes/Menus/Win Screen.tscn")
+	SceneTransition.fade_out()
+
 func start_game(scene: PackedScene):
 	SceneTransition.fade_in()
 	if scene:

@@ -12,4 +12,7 @@ func _process(delta: float) -> void:
 
 
 func _on_fullscreen_check_button_toggled(toggled_on: bool) -> void:
-	pass # Replace with function body.
+	if toggled_on:
+		DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_FULLSCREEN)
+	else:
+		DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_FULLSCREEN)
