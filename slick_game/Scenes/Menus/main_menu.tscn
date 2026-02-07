@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://cwd2larse212k"]
 
 [ext_resource type="Script" uid="uid://di2n6ssehce0u" path="res://Scripts/Scene Changes/next_scene.gd" id="1_pha2q"]
-[ext_resource type="PackedScene" uid="uid://c5vfddgd0xde0" path="res://Scenes/Levels/prototype_scene.tscn" id="2_penys"]
+[ext_resource type="PackedScene" uid="uid://bx0vtgn8uqjqk" path="res://Scenes/Levels/main_level_f.tscn" id="2_pha2q"]
 
 [node name="Main Menu" type="Control" unique_id=1779451589]
 layout_mode = 3
@@ -39,7 +39,7 @@ layout_mode = 2
 theme_override_font_sizes/font_size = 38
 text = "Start Game"
 script = ExtResource("1_pha2q")
-next_scene = ExtResource("2_penys")
+next_scene = ExtResource("2_pha2q")
 metadata/_edit_use_anchors_ = true
 
 [node name="Settings" type="Button" parent="Main Menu Components" unique_id=1420054076]

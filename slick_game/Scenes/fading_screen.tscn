@@ -1,0 +1,33 @@
+[gd_scene format=3 uid="uid://eanapm00h3hi"]
+
+[sub_resource type="Animation" id="Animation_y8ciw"]
+resource_name = "FadeIn"
+
+[sub_resource type="Animation" id="Animation_73081"]
+resource_name = "FadeOut"
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_yywx5"]
+_data = {
+&"FadeIn": SubResource("Animation_y8ciw"),
+&"FadeOut": SubResource("Animation_73081")
+}
+
+[node name="FadingScreen" type="Control" unique_id=59200641]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ColorRect" type="ColorRect" parent="." unique_id=1348713820]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 1)
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=401687505]
+libraries/ = SubResource("AnimationLibrary_yywx5")
