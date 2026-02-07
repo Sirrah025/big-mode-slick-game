@@ -1,8 +1,8 @@
-[gd_resource type="ShaderMaterial" format=3 uid="uid://py7da67qt44x"]
+[gd_resource type="ShaderMaterial" format=3 uid="uid://bu1vl3c1wqen7"]
 
-[ext_resource type="Texture2D" uid="uid://b6uc76cexcy6y" path="res://Assets/Textures/TextureM.webp" id="1_iftua"]
+[ext_resource type="Texture2D" uid="uid://outlafksupf3" path="res://Assets/Textures/TextureA.webp" id="1_m5vuu"]
 
-[sub_resource type="Shader" id="Shader_iftua"]
+[sub_resource type="Shader" id="Shader_3wum6"]
 code = "// NOTE: Shader based on your Godot 4.6 StandardMaterial3D shader, extended for triplanar world-space tiling + scrolling.
 
 shader_type spatial;
@@ -157,25 +157,25 @@ void fragment() {
 
 [resource]
 render_priority = 0
-shader = SubResource("Shader_iftua")
-shader_parameter/albedo = Color(0.44329813, 0.4217801, 0.17998782, 1)
-shader_parameter/texture_albedo = ExtResource("1_iftua")
+shader = SubResource("Shader_3wum6")
+shader_parameter/albedo = Color(0.40604228, 0.6226409, 0.87941635, 1)
+shader_parameter/texture_albedo = ExtResource("1_m5vuu")
 shader_parameter/albedo_texture_size = Vector2i(256, 256)
 shader_parameter/point_size = 0.0
 shader_parameter/roughness = 1.0
 shader_parameter/metallic_texture_channel = Vector4(1, 0, 0, 0)
-shader_parameter/specular = 0.0
+shader_parameter/specular = 0.5
 shader_parameter/metallic = 0.0
-shader_parameter/texture_emission = ExtResource("1_iftua")
-shader_parameter/emission = Color(0.408139, 0.044082865, 0.26074883, 1)
-shader_parameter/emission_energy = 0.999999977648
-shader_parameter/uv1_scale = Vector3(1, 1, 1)
+shader_parameter/texture_emission = ExtResource("1_m5vuu")
+shader_parameter/emission = Color(0.0131391175, 0.057963148, 0.11820962, 1)
+shader_parameter/emission_energy = 7.1999998390656
+shader_parameter/uv1_scale = Vector3(30, 30, 30)
 shader_parameter/uv1_offset = Vector3(0, 0, 0)
-shader_parameter/uv2_scale = Vector3(1, 1, 1)
+shader_parameter/uv2_scale = Vector3(0, 0, 0)
 shader_parameter/uv2_offset = Vector3(0, 0, 0)
 shader_parameter/use_world_uv = 1.0
-shader_parameter/world_tiling = 0.25000001117647996
+shader_parameter/world_tiling = 0.00999999977648
 shader_parameter/world_offset = Vector2(0, 0)
-shader_parameter/scroll_speed = Vector2(0, 0)
+shader_parameter/scroll_speed = Vector2(0.1, 0.2)
 shader_parameter/triplanar_enable = 1.0
 shader_parameter/triplanar_blend = 1.0

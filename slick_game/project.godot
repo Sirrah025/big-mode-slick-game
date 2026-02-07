@@ -109,6 +109,7 @@ Pause={
 3d_physics/layer_4="Enemy Attack"
 3d_physics/layer_5="Enemy Hitbox"
 3d_physics/layer_6="Slipping"
+3d_physics/layer_7="Areas"
 
 [physics]
 

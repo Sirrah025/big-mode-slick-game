@@ -158,7 +158,7 @@ void fragment() {
 [resource]
 render_priority = 0
 shader = SubResource("Shader_72ksj")
-shader_parameter/albedo = Color(0.9876606, 0.9169834, 0.89990133, 1)
+shader_parameter/albedo = Color(0.055857144, 0.11166016, 0.32083893, 1)
 shader_parameter/texture_albedo = ExtResource("1_e3bal")
 shader_parameter/albedo_texture_size = Vector2i(256, 256)
 shader_parameter/point_size = 1.0
@@ -166,8 +166,9 @@ shader_parameter/roughness = 1.0
 shader_parameter/metallic_texture_channel = Vector4(1, 0, 0, 0)
 shader_parameter/specular = 0.5
 shader_parameter/metallic = 0.0
+shader_parameter/texture_emission = ExtResource("1_e3bal")
 shader_parameter/emission = Color(0, 0, 0, 1)
-shader_parameter/emission_energy = 0.0
+shader_parameter/emission_energy = 0.02999999932944
 shader_parameter/uv1_scale = Vector3(1, 1, 1)
 shader_parameter/uv1_offset = Vector3(0, 0, 0)
 shader_parameter/uv2_scale = Vector3(1, 1, 1)
