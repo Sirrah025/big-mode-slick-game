@@ -1,4 +1,181 @@
-[gd_resource type="StandardMaterial3D" format=3 uid="uid://dy2jamrliisif"]
+[gd_resource type="ShaderMaterial" format=3 uid="uid://dy2jamrliisif"]
+
+[ext_resource type="Texture2D" uid="uid://b1ddx4vgpldtq" path="res://Assets/Textures/TextureT.webp" id="1_e3bal"]
+
+[sub_resource type="Shader" id="Shader_72ksj"]
+code = "// NOTE: Shader based on your Godot 4.6 StandardMaterial3D shader, extended for triplanar world-space tiling + scrolling.
+
+shader_type spatial;
+render_mode blend_mix, depth_draw_opaque, cull_back, diffuse_burley, specular_schlick_ggx;
+
+uniform vec4 albedo : source_color;
+uniform sampler2D texture_albedo : source_color, filter_nearest_mipmap, repeat_enable;
+uniform ivec2 albedo_texture_size;
+uniform float point_size : hint_range(0.1, 128.0, 0.1);
+
+uniform float roughness : hint_range(0.0, 1.0);
+uniform sampler2D texture_metallic : hint_default_white, filter_nearest_mipmap, repeat_enable;
+uniform vec4 metallic_texture_channel;
+uniform sampler2D texture_roughness : hint_roughness_r, filter_nearest_mipmap, repeat_enable;
+
+uniform float specular : hint_range(0.0, 1.0, 0.01);
+uniform float metallic : hint_range(0.0, 1.0, 0.01);
+
+uniform sampler2D texture_emission : source_color, hint_default_black, filter_nearest_mipmap, repeat_enable;
+uniform vec4 emission : source_color;
+uniform float emission_energy : hint_range(0.0, 100.0, 0.01);
+
+uniform vec3 uv1_scale;
+uniform vec3 uv1_offset;
+uniform vec3 uv2_scale;
+uniform vec3 uv2_offset;
+
+// --- NEW: world-space tiling + scrolling + triplanar controls ---
+uniform float use_world_uv : hint_range(0.0, 1.0) = 1.0; // 1 -> use world mapping; 0 -> use UVs (existing)
+uniform float world_tiling : hint_range(0.01, 100.0) = 1.0; // scale: how many repeats per world unit
+uniform vec2 world_offset = vec2(0.0, 0.0); // common offset for world projections
+uniform vec2 scroll_speed = vec2(0.0, 0.0); // scrolling speed (UV units / second)
+uniform float triplanar_enable : hint_range(0.0, 1.0) = 1.0; // 1 -> use triplanar, 0 -> use simple projection
+uniform float triplanar_blend : hint_range(0.01, 8.0) = 1.0; // >1 sharpens blend to favor dominant axis (increase to reduce blending)
+
+varying vec3 v_world_pos;
+varying vec3 v_world_normal;
+
+void vertex() {
+	// Keep existing UV transform
+	UV = UV * uv1_scale.xy + uv1_offset.xy;
+
+	// Pass world-space position
+	v_world_pos = (MODEL_MATRIX * vec4(VERTEX, 1.0)).xyz;
+
+	// Transform normal to world-space (w=0 to avoid translation)
+	v_world_normal = (MODEL_MATRIX * vec4(NORMAL, 0.0)).xyz;
+}
+
+//
+// Triplanar sampling helper
+//
+vec4 triplanar_albedo_sample(sampler2D tex, vec3 world_pos, vec3 world_normal, float tiling, vec2 offset, vec2 scroll) {
+    // Normalize and take absolute to compute blend weights
+    vec3 n = abs(normalize(world_normal));
+    // Initial weights (relative importance of each projection)
+    vec3 weights = n;
+
+    // Optionally sharpen the weights (larger triplanar_blend -> less blending)
+    // We'll apply trimming in the caller (we only pass scalar param here), so just return samples and weight them externally.
+    // But for convenience we use the global triplanar_blend uniform inside this helper.
+    weights = pow(weights, vec3(triplanar_blend));
+    // Normalize weights so they sum to 1
+    float wsum = weights.x + weights.y + weights.z + 1e-6;
+    weights /= wsum;
+
+    // For each projection choose appropriate UV components:
+    // Projection X plane (faces mostly along X axis) -> use world_pos.yz
+    vec2 uv_x = world_pos.yz * tiling + offset + scroll * TIME;
+    // Projection Y plane (faces mostly along Y axis) -> use world_pos.xz
+    vec2 uv_y = world_pos.xz * tiling + offset + scroll * TIME;
+    // Projection Z plane (faces mostly along Z axis) -> use world_pos.xy
+    vec2 uv_z = world_pos.xy * tiling + offset + scroll * TIME;
+
+    vec4 sx = texture(tex, uv_x);
+    vec4 sy = texture(tex, uv_y);
+    vec4 sz = texture(tex, uv_z);
+
+    // Weighted blend
+    return sx * weights.x + sy * weights.y + sz * weights.z;
+}
+
+void fragment() {
+	// Option A: preserve user UVs (already transformed in vertex)
+	vec2 uv_user = UV;
+
+	// Option B: simple world-projection (XZ) like before, but with scroll and tiling
+	vec2 world_proj = v_world_pos.xz * world_tiling + world_offset + scroll_speed * TIME;
+
+	// Final base_uv depends on toggles:
+	vec4 albedo_tex;
+	if (use_world_uv < 0.5) {
+		// Use original UVs
+		albedo_tex = texture(texture_albedo, uv_user);
+	} else {
+		// Use world mapping. If triplanar enabled, use triplanar sampling to avoid stretching on vertical faces
+		if (triplanar_enable >= 0.5) {
+			albedo_tex = triplanar_albedo_sample(texture_albedo, v_world_pos, v_world_normal, world_tiling, world_offset, scroll_speed);
+		} else {
+			// Simple XZ projection (kept for compatibility)
+			albedo_tex = texture(texture_albedo, world_proj);
+		}
+	}
+
+	ALBEDO = albedo.rgb * albedo_tex.rgb;
+
+	// --- Metallic / Specular / Roughness (use same UV selection behavior for consistency) ---
+	// We'll use the same sampling mode as albedo: if using world UVs & triplanar, sample similarly.
+	float metallic_tex;
+	if (use_world_uv < 0.5) {
+		metallic_tex = dot(texture(texture_metallic, uv_user), metallic_texture_channel);
+	} else {
+		if (triplanar_enable >= 0.5) {
+			vec4 m = triplanar_albedo_sample(texture_metallic, v_world_pos, v_world_normal, world_tiling, world_offset, scroll_speed);
+			metallic_tex = dot(m, metallic_texture_channel);
+		} else {
+			metallic_tex = dot(texture(texture_metallic, world_proj), metallic_texture_channel);
+		}
+	}
+	METALLIC = metallic_tex * metallic;
+	SPECULAR = specular;
+
+	// Roughness: original code used red channel only
+	float roughness_tex;
+	if (use_world_uv < 0.5) {
+		roughness_tex = dot(texture(texture_roughness, uv_user), vec4(1.0, 0.0, 0.0, 0.0));
+	} else {
+		if (triplanar_enable >= 0.5) {
+			vec4 r = triplanar_albedo_sample(texture_roughness, v_world_pos, v_world_normal, world_tiling, world_offset, scroll_speed);
+			roughness_tex = dot(r, vec4(1.0, 0.0, 0.0, 0.0));
+		} else {
+			roughness_tex = dot(texture(texture_roughness, world_proj), vec4(1.0, 0.0, 0.0, 0.0));
+		}
+	}
+	ROUGHNESS = roughness_tex * roughness;
+
+	// Emission: same sampling strategy
+	vec3 emission_tex;
+	if (use_world_uv < 0.5) {
+		emission_tex = texture(texture_emission, uv_user).rgb;
+	} else {
+		if (triplanar_enable >= 0.5) {
+			emission_tex = triplanar_albedo_sample(texture_emission, v_world_pos, v_world_normal, world_tiling, world_offset, scroll_speed).rgb;
+		} else {
+			emission_tex = texture(texture_emission, world_proj).rgb;
+		}
+	}
+	// Emission Operator: Add
+	EMISSION = (emission.rgb + emission_tex) * emission_energy;
+}
+"
 
 [resource]
-albedo_color = Color(0.9803874, 0.8666332, 0.8391752, 1)
+render_priority = 0
+shader = SubResource("Shader_72ksj")
+shader_parameter/albedo = Color(0.055857144, 0.11166016, 0.32083893, 1)
+shader_parameter/texture_albedo = ExtResource("1_e3bal")
+shader_parameter/albedo_texture_size = Vector2i(256, 256)
+shader_parameter/point_size = 1.0
+shader_parameter/roughness = 1.0
+shader_parameter/metallic_texture_channel = Vector4(1, 0, 0, 0)
+shader_parameter/specular = 0.5
+shader_parameter/metallic = 0.0
+shader_parameter/texture_emission = ExtResource("1_e3bal")
+shader_parameter/emission = Color(0, 0, 0, 1)
+shader_parameter/emission_energy = 0.02999999932944
+shader_parameter/uv1_scale = Vector3(1, 1, 1)
+shader_parameter/uv1_offset = Vector3(0, 0, 0)
+shader_parameter/uv2_scale = Vector3(1, 1, 1)
+shader_parameter/uv2_offset = Vector3(0, 0, 0)
+shader_parameter/use_world_uv = 1.0
+shader_parameter/world_tiling = 0.10000000405148
+shader_parameter/world_offset = Vector2(0, 0)
+shader_parameter/scroll_speed = Vector2(0, 0)
+shader_parameter/triplanar_enable = 1.0
+shader_parameter/triplanar_blend = 1.0

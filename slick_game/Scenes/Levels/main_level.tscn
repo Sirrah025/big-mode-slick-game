@@ -180,7 +180,7 @@ _data = {
 }
 point_count = 4
 
-[sub_resource type="Shader" id="Shader_0d4o7"]
+[sub_resource type="Shader" id="Shader_d5bmo"]
 code = "
 // NOTE: Shader automatically converted from Godot Engine 4.3.stable's ProceduralSkyMaterial.
 
@@ -279,7 +279,7 @@ void sky() {
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_jkhhp"]
 seed = 1
 
-[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_n1o8p"]
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_doh41"]
 width = 1024
 height = 1024
 noise = SubResource("FastNoiseLite_jkhhp")
@@ -294,7 +294,7 @@ offsets = PackedFloat32Array(0.36036, 1)
 seed = 2
 frequency = 0.0069
 
-[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_1t2kw"]
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_qyeca"]
 width = 1024
 height = 1024
 noise = SubResource("FastNoiseLite_fij7j")
@@ -304,7 +304,7 @@ in_3d_space = true
 bump_strength = 0.0
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_kwwiv"]
-shader = SubResource("Shader_0d4o7")
+shader = SubResource("Shader_d5bmo")
 shader_parameter/sky_top_color = Color(0.6720358, 0.09065009, 0.49995083, 1)
 shader_parameter/sky_horizon_color = Color(0.16480476, 0.08557444, 0.3833468, 1)
 shader_parameter/sky_curve = 0.800000038
@@ -317,8 +317,8 @@ shader_parameter/ground_energy = 1.0
 shader_parameter/sun_angle_max = 0.0
 shader_parameter/sun_curve = 0.0
 shader_parameter/exposure = 1.0
-shader_parameter/cloud_texture = SubResource("NoiseTexture2D_n1o8p")
-shader_parameter/cloud_texture2 = SubResource("NoiseTexture2D_1t2kw")
+shader_parameter/cloud_texture = SubResource("NoiseTexture2D_doh41")
+shader_parameter/cloud_texture2 = SubResource("NoiseTexture2D_qyeca")
 shader_parameter/cloud_direction = Vector2(-1, 1)
 shader_parameter/cloud_direction2 = Vector2(1, -1)
 shader_parameter/cloud_scale = Vector2(0.1, 0.1)
@@ -326,13 +326,13 @@ shader_parameter/cloud_speed = 0.1
 shader_parameter/cloud_speed2 = 0.1
 shader_parameter/cloud_distance = 0.025
 
-[sub_resource type="Sky" id="Sky_ei5jd"]
+[sub_resource type="Sky" id="Sky_4tv8k"]
 sky_material = SubResource("ShaderMaterial_kwwiv")
 
 [sub_resource type="Environment" id="Environment_lsiyx"]
 background_mode = 2
 background_energy_multiplier = 1.5
-sky = SubResource("Sky_ei5jd")
+sky = SubResource("Sky_4tv8k")
 tonemap_white = 1.5
 ssr_fade_in = 0.178381
 ssao_radius = 3.31
@@ -378,7 +378,6 @@ size_flags_vertical = 3
 script = ExtResource("3_doh41")
 
 [node name="Screen" type="Control" parent="Death Screen" unique_id=818309844]
-visible = false
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -436,8 +435,8 @@ libraries/ = SubResource("AnimationLibrary_qyeca")
 [node name="Section1 Tutorial" type="Node3D" parent="." unique_id=1333959227]
 
 [node name="VisibleOnScreenEnabler3D" type="VisibleOnScreenEnabler3D" parent="Section1 Tutorial" unique_id=848144772]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 27, -36)
-aabb = AABB(-49, -34, -18.5475, 98, 68, 106)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 27, -42.820198)
+aabb = AABB(-49, -34, -20.862297, 98, 68, 110.62962)
 
 [node name="CubePillarA" parent="Section1 Tutorial" unique_id=1840351633 instance=ExtResource("17_d7fl6")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 16.082209, 12.079169, 37.002518)
@@ -564,21 +563,23 @@ metadata/_edit_use_anchors_ = true
 
 [node name="Enemy" parent="Section1 Tutorial/Enemies" unique_id=1279462332 node_paths=PackedStringArray("Idle_Path") instance=ExtResource("15_d7fl6")]
 transform = Transform3D(-0.50000006, 0, -0.8660254, 0, 1, 0, 0.8660254, 0, -0.50000006, 0, 10.280279, 541.4599)
+max_attack_margin = 15.0
 Idle_Path = NodePath("../../../Section5/NavigationRegion3D/FloatingPlatformWide4/Path3D")
 starting_index = 1
 
 [node name="Enemy2" parent="Section1 Tutorial/Enemies" unique_id=1463523071 node_paths=PackedStringArray("Idle_Path") instance=ExtResource("15_d7fl6")]
 transform = Transform3D(-0.50000006, 0, -0.8660254, 0, 1, 0, 0.8660254, 0, -0.50000006, -9.092053, 10.28028, 537.86456)
+max_attack_margin = 15.0
 Idle_Path = NodePath("../../../Section5/NavigationRegion3D/FloatingPlatformWide4/Path3D")
 starting_index = 4
 
 [node name="Enemy3" parent="Section1 Tutorial/Enemies" unique_id=691748813 node_paths=PackedStringArray("Idle_Path") instance=ExtResource("15_d7fl6")]
 transform = Transform3D(-0.50000006, 0, -0.8660254, 0, 1, 0, 0.8660254, 0, -0.50000006, -0.46393108, 10.280281, 534.67426)
+max_attack_margin = 15.0
 Idle_Path = NodePath("../../../Section5/NavigationRegion3D/FloatingPlatformWide4/Path3D")
 
 [node name="Section2" type="Node3D" parent="." unique_id=273973473]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 411.1138)
-visible = false
 
 [node name="VisibleOnScreenEnabler3D2" type="VisibleOnScreenEnabler3D" parent="Section2" unique_id=745911177]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 27, -36)
@@ -604,7 +605,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.36491585, 4.857788, 1.5544
 
 [node name="Section3" type="Node3D" parent="." unique_id=455854227]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 514.544)
-visible = false
 
 [node name="TunnelStraightB2" parent="Section3" unique_id=1812328433 instance=ExtResource("1_s08vq")]
 
@@ -629,7 +629,6 @@ aabb = AABB(-49, -34, -18.5475, 98, 68, 106)
 
 [node name="Section4" type="Node3D" parent="." unique_id=108228059]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 617.633)
-visible = false
 
 [node name="VisibleOnScreenEnabler3D3" type="VisibleOnScreenEnabler3D" parent="Section4" unique_id=420625127]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 27, -33.632996)
@@ -645,7 +644,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.4346485, 9.686489, 34.3217
 
 [node name="Section5" type="Node3D" parent="." unique_id=1431028358]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 34, 0, 755.023)
-visible = false
 
 [node name="TunnelCurvedV2" parent="Section5" unique_id=2126472801 instance=ExtResource("5_hmlj4")]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 0, 0, 0)
@@ -677,7 +675,6 @@ starting_index = 4
 
 [node name="Section6" type="Node3D" parent="." unique_id=500441437]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 151, 0, 763)
-visible = false
 
 [node name="TunnelStraightB2" parent="Section6" unique_id=720976383 instance=ExtResource("6_nrkev")]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -14, 0, -8)
@@ -715,7 +712,6 @@ starting_index = 4
 
 [node name="Section7" type="Node3D" parent="." unique_id=2117584249]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 243, -18, 679)
-visible = false
 
 [node name="TunnelAscendingB" parent="Section7" unique_id=1364581585 instance=ExtResource("7_5bh32")]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -3, 0, 76)
@@ -729,7 +725,6 @@ aabb = AABB(-52, -41, -15.547501, 104, 82, 100)
 
 [node name="Section8" type="Node3D" parent="." unique_id=1533710864]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 378, -18, 720.7)
-visible = false
 
 [node name="TunnelCurvedV1" parent="Section8" unique_id=503982332 instance=ExtResource("9_5bh32")]
 transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 0, 0, 0)

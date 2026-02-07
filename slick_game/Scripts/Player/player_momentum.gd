@@ -172,7 +172,7 @@ func _physics_process(delta: float) -> void:
 	if is_sliding and can_stand() and !Input.is_action_pressed("Sliding"):
 		_exit_slide()
 	was_on_floor = is_on_floor()
-	_handle_audio()
+	#_handle_audio()
 
 func _handle_audio() -> void:
 	if is_on_floor() and !is_sliding and !is_slipping:
@@ -266,7 +266,7 @@ func _handle_jump() -> void:
 		
 		velocity.y = jump_velocity * jump_boost
 		jumps_left -= 1
-		jump_audio.play_random_audio()
+		#jump_audio.play_random_audio()
 
 # --- Momentum System ---
 func _update_momentum(delta: float) -> void:
