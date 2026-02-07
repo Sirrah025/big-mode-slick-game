@@ -1,0 +1,102 @@
+[gd_scene format=3 uid="uid://upl23q30j1fe"]
+
+[ext_resource type="Script" uid="uid://cepeshsaey8gv" path="res://Systems/globals/scene_transition.gd" id="1_p0slu"]
+
+[sub_resource type="Animation" id="Animation_1wksc"]
+resource_name = "Fade In"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("ColorRect:color")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.96666664),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(0, 0, 0, 0), Color(0, 0, 0, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_p0slu"]
+resource_name = "Fade In Red"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("ColorRect:color")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(0, 0, 0, 0), Color(0.5058824, 0, 0, 0.6509804)]
+}
+
+[sub_resource type="Animation" id="Animation_ydx7y"]
+resource_name = "Fade OUt"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("ColorRect:color")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.96666664),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(0, 0, 0, 1), Color(0, 0, 0, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_7qt2f"]
+resource_name = "Fade Out Red"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("ColorRect:color")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(0.5058824, 0, 0, 0.6509804), Color(0.5058824, 0, 0, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_840se"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("ColorRect:color")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(0, 0, 0, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_7qt2f"]
+_data = {
+&"Fade In": SubResource("Animation_1wksc"),
+&"Fade In Red": SubResource("Animation_p0slu"),
+&"Fade Out": SubResource("Animation_ydx7y"),
+&"Fade Out Red": SubResource("Animation_7qt2f"),
+&"RESET": SubResource("Animation_840se")
+}
+
+[node name="SceneTransition" type="CanvasLayer" unique_id=855650942]
+script = ExtResource("1_p0slu")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=807428467]
+libraries/ = SubResource("AnimationLibrary_7qt2f")
+
+[node name="ColorRect" type="ColorRect" parent="." unique_id=1133779844]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0, 0, 0, 1)

@@ -17,3 +17,7 @@ func _on_back_to_menu_pressed() -> void:
 
 func _on_quit_pressed() -> void:
 	get_tree().quit()
+
+
+func _on_credits_pressed() -> void:
+	LoadScenes.change_to_credits()

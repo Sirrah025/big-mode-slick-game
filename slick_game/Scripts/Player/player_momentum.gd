@@ -627,3 +627,4 @@ func _on_projectile_cooldown_timeout() -> void:
 
 func _on_player_death() -> void:
 	player_death_audio.play_random_audio()
+	LoadScenes.change_to_death()
