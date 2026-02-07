@@ -1,0 +1,44 @@
+[gd_scene format=3 uid="uid://40uyesmfi6d5"]
+
+[ext_resource type="Script" uid="uid://5wxuwbx5f86t" path="res://Entities/enemies/Flying/flying_enemy_movement.gd" id="1_6ut10"]
+[ext_resource type="PackedScene" uid="uid://dvm2ofty1p7q5" path="res://Entities/enemies/Flying/Flying Enemy.glb" id="1_51cwm"]
+[ext_resource type="Script" uid="uid://bt5lx546qxxbm" path="res://Scripts/Components/State Machine/State_Machine.gd" id="3_ghjfk"]
+[ext_resource type="Script" uid="uid://b4y56k4pfgmok" path="res://Entities/enemies/Flying/idle_state.gd" id="4_saulv"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_51cwm"]
+radius = 0.107980154
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_ghjfk"]
+radius = 10.0
+
+[node name="CharacterBody3D" type="CharacterBody3D" unique_id=258025364]
+collision_mask = 3
+script = ExtResource("1_6ut10")
+
+[node name="Flying Enemy" parent="." unique_id=888267832 instance=ExtResource("1_51cwm")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.5280522, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=618102513]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.14192821, -0.030708529)
+shape = SubResource("SphereShape3D_51cwm")
+
+[node name="State_Machine" type="Node" parent="." unique_id=1844791984]
+script = ExtResource("3_ghjfk")
+metadata/_custom_type_script = "uid://bt5lx546qxxbm"
+
+[node name="Idle" type="Node" parent="State_Machine" unique_id=58834112]
+script = ExtResource("4_saulv")
+
+[node name="Flying" type="Node" parent="State_Machine" unique_id=872673140]
+
+[node name="Firing" type="Node" parent="State_Machine" unique_id=190384750]
+
+[node name="Activation" type="Area3D" parent="." unique_id=472101273]
+monitorable = false
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Activation" unique_id=64229127]
+shape = SubResource("SphereShape3D_ghjfk")
+
+[connection signal="body_entered" from="Activation" to="State_Machine/Idle" method="_on_activation_body_entered"]
+
+[editable path="Flying Enemy"]
