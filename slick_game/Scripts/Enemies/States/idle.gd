@@ -45,11 +45,13 @@ func target_reached() -> void:
 	print_debug("We are at index " + str(parent.Idle_Targets_index))
 	# Grab next point
 	Idle_Path_Pos = parent.Idle_Path_Curve.get_point_position(parent.Idle_Targets_index)
-	print_debug("We are targeting position  " + str(Idle_Path_Pos))
-	print_debug("Our current position is " + str(parent.global_position)) 
 	# Set target_position to new position on idle path
 	parent.set_new_idle_target_pos()
 
 func _activate_aggression() -> void:
 	print_debug("We are aggressive now")
 	state_machine.change_state($"../Aggressive")
+
+
+func _on_near_vision_body_entered(body: Node3D) -> void:
+	_activate_aggression()

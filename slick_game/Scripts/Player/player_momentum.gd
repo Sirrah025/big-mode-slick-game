@@ -176,7 +176,10 @@ func _physics_process(delta: float) -> void:
 
 func _handle_audio() -> void:
 	if is_on_floor() and !is_sliding and !is_slipping:
-		footstep_audio.play_random_audio()
+		if Input.is_action_pressed("Forward") or Input.is_action_pressed("Back") or Input.is_action_pressed("Left") or Input.is_action_pressed("Right"):
+			footstep_audio.play_random_audio()
+		elif Input.is_action_just_released("Forward") or Input.is_action_just_released("Back") or Input.is_action_just_released("Left") or Input.is_action_just_released("Right"):
+			footstep_audio.stop_audio()
 	elif is_on_floor() and is_sliding and !is_slipping:
 		oil_slide.play_random_audio()
 	elif is_on_floor() and is_slipping:
