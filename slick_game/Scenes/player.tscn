@@ -4,6 +4,23 @@
 [ext_resource type="PackedScene" uid="uid://bpxws01g1myf6" path="res://Systems/components/health_component.tscn" id="2_6t5aa"]
 [ext_resource type="PackedScene" uid="uid://b12fqgptd5y3d" path="res://Systems/components/hitbox_component.tscn" id="3_6t5aa"]
 [ext_resource type="Script" uid="uid://cqufbqehm15a" path="res://Scripts/Player/player_death_handler.gd" id="4_vgqql"]
+[ext_resource type="Script" uid="uid://1oni077krkxk" path="res://Scripts/Footsteps_Audio.gd" id="5_fkybt"]
+[ext_resource type="AudioStream" uid="uid://cui3rtq87okeq" path="res://Audio/SFX/Player Movement/footstep1.mp3" id="6_f1ek2"]
+[ext_resource type="AudioStream" uid="uid://d12bsocp0c8jn" path="res://Audio/SFX/Player Movement/footstep2.mp3" id="7_tx1dd"]
+[ext_resource type="AudioStream" uid="uid://bvu3bb3ywabf7" path="res://Audio/SFX/Player Movement/footstep3.mp3" id="8_gymyn"]
+[ext_resource type="AudioStream" uid="uid://7kwgqypucjy0" path="res://Audio/SFX/Player Movement/footstep4.mp3" id="9_pu2lt"]
+[ext_resource type="AudioStream" uid="uid://ddamjn01nfdk3" path="res://Audio/SFX/Player Movement/jump.mp3" id="10_h4iuc"]
+[ext_resource type="AudioStream" uid="uid://ci3i27xf6km33" path="res://Audio/SFX/Dash/dash1.mp3" id="10_olqyp"]
+[ext_resource type="AudioStream" uid="uid://tqvxpls4ndgw" path="res://Audio/SFX/Player Movement/land.mp3" id="11_fd4e3"]
+[ext_resource type="AudioStream" uid="uid://dkeauvlwmv61m" path="res://Audio/SFX/Dash/dash 2.mp3" id="11_wpjfl"]
+[ext_resource type="AudioStream" uid="uid://bamdi1rydj44d" path="res://Audio/SFX/Dash/dash 3.mp3" id="12_bi64h"]
+[ext_resource type="AudioStream" uid="uid://186atqvc1pno" path="res://Audio/SFX/Player Movement/land oil.mp3" id="12_qqcod"]
+[ext_resource type="AudioStream" uid="uid://b2soj1upfgbaw" path="res://Audio/SFX/Player Movement/oil slide 1.mp3" id="13_igrcy"]
+[ext_resource type="AudioStream" uid="uid://cwxgyv4glj2x6" path="res://Audio/SFX/Player Movement/oil slide 2.mp3" id="14_fs7ks"]
+[ext_resource type="AudioStream" uid="uid://bhbvbkwiffjee" path="res://Audio/SFX/Player Movement/Oil slide 3.mp3" id="15_l6n3p"]
+[ext_resource type="AudioStream" uid="uid://dfy4ulhdo588h" path="res://Audio/SFX/Player Damage/player death.mp3" id="16_igrcy"]
+[ext_resource type="AudioStream" uid="uid://dwte4kv0nbqvf" path="res://Audio/SFX/Player Damage/player damage 1.mp3" id="17_fs7ks"]
+[ext_resource type="AudioStream" uid="uid://cbuoxrfw3hx8" path="res://Audio/SFX/Player Damage/player damage 2.mp3" id="18_l6n3p"]
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_f60y1"]
 radius = 0.375
@@ -91,6 +108,48 @@ one_shot = true
 [node name="SpeedTest" type="Label" parent="." unique_id=404264627]
 offset_right = 40.0
 offset_bottom = 23.0
+
+[node name="AudioPlayers" type="Node" parent="." unique_id=489650414]
+
+[node name="FootStepAudioPlayer" type="AudioStreamPlayer" parent="AudioPlayers" unique_id=23483981]
+unique_name_in_owner = true
+script = ExtResource("5_fkybt")
+audio = Array[AudioStreamMP3]([ExtResource("6_f1ek2"), ExtResource("7_tx1dd"), ExtResource("8_gymyn"), ExtResource("9_pu2lt")])
+
+[node name="DashAudioPlayer" type="AudioStreamPlayer" parent="AudioPlayers" unique_id=1364455911]
+unique_name_in_owner = true
+script = ExtResource("5_fkybt")
+audio = Array[AudioStreamMP3]([ExtResource("10_olqyp"), ExtResource("11_wpjfl"), ExtResource("12_bi64h")])
+
+[node name="JumpAudioPlayer" type="AudioStreamPlayer" parent="AudioPlayers" unique_id=1939061116]
+unique_name_in_owner = true
+script = ExtResource("5_fkybt")
+audio = Array[AudioStreamMP3]([ExtResource("10_h4iuc")])
+
+[node name="LandingAudioPlayer" type="AudioStreamPlayer" parent="AudioPlayers" unique_id=1161883981]
+unique_name_in_owner = true
+script = ExtResource("5_fkybt")
+audio = Array[AudioStreamMP3]([ExtResource("11_fd4e3")])
+
+[node name="LandingOilAudioPlayer" type="AudioStreamPlayer" parent="AudioPlayers" unique_id=1934521249]
+unique_name_in_owner = true
+script = ExtResource("5_fkybt")
+audio = Array[AudioStreamMP3]([ExtResource("12_qqcod")])
+
+[node name="OilSlideAudioPlayer" type="AudioStreamPlayer" parent="AudioPlayers" unique_id=1637871154]
+unique_name_in_owner = true
+script = ExtResource("5_fkybt")
+audio = Array[AudioStreamMP3]([ExtResource("13_igrcy"), ExtResource("14_fs7ks"), ExtResource("15_l6n3p")])
+
+[node name="PlayerDeathAudioPlayer" type="AudioStreamPlayer" parent="AudioPlayers" unique_id=962777236]
+unique_name_in_owner = true
+script = ExtResource("5_fkybt")
+audio = Array[AudioStreamMP3]([ExtResource("16_igrcy")])
+
+[node name="PlayerDamageAudioPlayer" type="AudioStreamPlayer" parent="AudioPlayers" unique_id=1351702702]
+unique_name_in_owner = true
+script = ExtResource("5_fkybt")
+audio = Array[AudioStreamMP3]([ExtResource("17_fs7ks"), ExtResource("18_l6n3p")])
 
 [connection signal="entity_died" from="Health Component" to="Player Death Handler" method="_on_entity_died"]
 [connection signal="area_entered" from="Hitbox Component" to="Hitbox Component" method="_on_area_entered"]

@@ -10,6 +10,13 @@
 [ext_resource type="Script" uid="uid://ddtnqi1undu5d" path="res://Scripts/Enemies/States/idle.gd" id="8_xc2wx"]
 [ext_resource type="Script" uid="uid://cmut33u2o3scq" path="res://Scripts/Enemies/States/attack.gd" id="9_ryoam"]
 [ext_resource type="Script" uid="uid://dmgiit17ys18i" path="res://Scripts/Enemies/States/aggressive.gd" id="9_uyk2m"]
+[ext_resource type="AudioStream" uid="uid://bf45qcmxlwe2p" path="res://Audio/SFX/Enemy/enemy movement_attack 1.mp3" id="12_g7j46"]
+[ext_resource type="AudioStream" uid="uid://bj8uih0gdguhr" path="res://Audio/SFX/Enemy/enemy movement_attack 2.mp3" id="13_30t2o"]
+[ext_resource type="AudioStream" uid="uid://d3lr11qvtr42e" path="res://Audio/SFX/Enemy/enemy movement_attack 3.mp3" id="14_r84mg"]
+[ext_resource type="AudioStream" uid="uid://ctusyxt1s22po" path="res://Audio/SFX/Enemy/enemy movement_attack 4.mp3" id="15_mjx6j"]
+[ext_resource type="AudioStream" uid="uid://d30ngc2gfi0pf" path="res://Audio/SFX/Enemy Death/enemy death1.mp3" id="16_bkres"]
+[ext_resource type="Script" uid="uid://c8d3rb8u4vjwf" path="res://Scripts/3D_audio.gd" id="16_r5bsr"]
+[ext_resource type="AudioStream" uid="uid://d0tg1y6tb6aim" path="res://Audio/SFX/Enemy Death/enemy death 2.mp3" id="17_g3kb6"]
 
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_pa5df"]
 animation = &"Float"
@@ -85,15 +92,15 @@ script = ExtResource("1_jnjvl")
 [node name="Ranged Enemy" parent="." unique_id=291246549 instance=ExtResource("1_ar4ve")]
 
 [node name="Skeleton3D" parent="Ranged Enemy/Ranged Armature" parent_id_path=PackedInt32Array(291246549, 794327750) index="0" unique_id=1077688716]
-bones/1/position = Vector3(0, 1.6723558, 0)
-bones/5/rotation = Quaternion(-0.26579824, -0.1738688, -0.49822935, 0.8067766)
-bones/6/rotation = Quaternion(0.65280277, -2.5738034e-05, -0.46033502, 0.60161483)
-bones/8/rotation = Quaternion(-0.31801873, 0.15927142, 0.5069328, 0.7851852)
-bones/9/rotation = Quaternion(0.67518896, 2.4121255e-05, 0.47612092, 0.56340826)
-bones/10/position = Vector3(2.1374474, 3.899799, 1.7322459)
-bones/11/position = Vector3(-1.9202275, -2.070725, -4.866846)
-bones/12/position = Vector3(-2.0701807, 3.9726698, 1.5263634)
-bones/13/position = Vector3(2.364166, -2.6123853, -5.385218)
+bones/1/position = Vector3(0, 1.8113121, 0)
+bones/5/rotation = Quaternion(0.0064260643, 0.04872845, -0.5822865, 0.8114967)
+bones/6/rotation = Quaternion(0.05068841, -4.2782973e-05, -0.035743777, 0.9980747)
+bones/8/rotation = Quaternion(0.0064260904, -0.04872849, 0.5822865, 0.8114967)
+bones/9/rotation = Quaternion(0.05068841, 4.2782973e-05, 0.035743777, 0.9980747)
+bones/10/position = Vector3(2.0993812, 1.3935988, -6.8738746e-07)
+bones/11/position = Vector3(-2.3641672, -0.060679875, -0.9693103)
+bones/12/position = Vector3(-2.0993812, 1.3935988, -6.8738746e-07)
+bones/13/position = Vector3(2.3641672, -0.060679875, -0.9693103)
 
 [node name="AnimationTree" type="AnimationTree" parent="." unique_id=24667294]
 root_node = NodePath("../Ranged Enemy")
@@ -137,10 +144,23 @@ script = ExtResource("9_uyk2m")
 [node name="Attack" type="Node" parent="Aggression State Machine" unique_id=2122168653]
 script = ExtResource("9_ryoam")
 
-[connection signal="target_reached" from="NavigationAgent3D" to="." method="_on_navigation_agent_3d_target_reached"]
+[node name="Audios" type="Node" parent="." unique_id=372183566]
+
+[node name="Enemy Movement" type="AudioStreamPlayer3D" parent="Audios" unique_id=925456538]
+unique_name_in_owner = true
+script = ExtResource("16_r5bsr")
+audio = Array[AudioStreamMP3]([ExtResource("12_g7j46"), ExtResource("13_30t2o"), ExtResource("14_r84mg"), ExtResource("15_mjx6j")])
+truncate_audio = true
+
+[node name="Enemy Death" type="AudioStreamPlayer3D" parent="Audios" unique_id=267201279]
+unique_name_in_owner = true
+script = ExtResource("16_r5bsr")
+audio = Array[AudioStreamMP3]([ExtResource("16_bkres"), ExtResource("17_g3kb6")])
+
+[connection signal="navigation_finished" from="NavigationAgent3D" to="." method="_on_navigation_agent_3d_navigation_finished"]
 [connection signal="damage" from="Hitbox Component" to="Health Component" method="_on_damage"]
 [connection signal="entity_died" from="Health Component" to="." method="_on_entity_died"]
-[connection signal="ready_weapons" from="Aggression State Machine/Aggressive" to="AnimationTree" method="_on_ready_weapons"]
+[connection signal="ready_weapons" from="Aggression State Machine/Idle" to="AnimationTree" method="_on_ready_weapons"]
 [connection signal="fire_weapons" from="Aggression State Machine/Attack" to="AnimationTree" method="_on_fire_weapons"]
 
 [editable path="Ranged Enemy"]

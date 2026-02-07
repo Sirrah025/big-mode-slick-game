@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://bf45qcmxlwe2p"
+path="res://.godot/imported/enemy movement_attack 1.mp3-910f20b818d3bced91da58fee8484a14.mp3str"
+
+[deps]
+
+source_file="res://Audio/SFX/Enemy/enemy movement_attack 1.mp3"
+dest_files=["res://.godot/imported/enemy movement_attack 1.mp3-910f20b818d3bced91da58fee8484a14.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

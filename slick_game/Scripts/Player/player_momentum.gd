@@ -122,7 +122,18 @@ var bob_timer: float = 0.0
 # --- Runtime ---
 var momentum: Vector3 = Vector3.ZERO
 
+# --- Audio Players ---
+@onready var footstep_audio = %FootStepAudioPlayer
+@onready var dash_audio = %DashAudioPlayer
+@onready var jump_audio =  %JumpAudioPlayer
+@onready var landing_audio = %LandingAudioPlayer
+@onready var landing_oil_audio = %LandingOilAudioPlayer
+@onready var oil_slide = %OilSlideAudioPlayer
+@onready var player_death_audio = %PlayerDeathAudioPlayer
+
 func _ready() -> void:
+	GlobalSignals.connect("Player_Dies", _on_player_death)
+	
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 	
 	normal_hitbox.disabled = false
@@ -161,6 +172,23 @@ func _physics_process(delta: float) -> void:
 	if is_sliding and can_stand() and !Input.is_action_pressed("Sliding"):
 		_exit_slide()
 	was_on_floor = is_on_floor()
+	_handle_audio()
+
+func _handle_audio() -> void:
+	if is_on_floor() and !is_sliding and !is_slipping:
+		footstep_audio.play_random_audio()
+	elif is_on_floor() and is_sliding and !is_slipping:
+		oil_slide.play_random_audio()
+	elif is_on_floor() and is_slipping:
+		oil_slide.play_random_audio()
+	elif is_dashing:
+		dash_audio.play_random_audio()
+	elif is_wallrunning:
+		footstep_audio.play_random_audio()
+	elif is_wall_jumping:
+		jump_audio.play_random_audio()
+	elif !was_on_floor and is_on_floor:
+		landing_audio.play_random_audio()
 
 # --- Gravity ---
 func _apply_gravity(delta: float) -> void:
@@ -235,6 +263,7 @@ func _handle_jump() -> void:
 		
 		velocity.y = jump_velocity * jump_boost
 		jumps_left -= 1
+		jump_audio.play_random_audio()
 
 # --- Momentum System ---
 func _update_momentum(delta: float) -> void:
@@ -520,24 +549,6 @@ func _handle_landing() -> void:
 			else:
 				_enter_crouch()
 
-# --- Shooting ---
-func _handle_shooting():
-	if Input.is_action_pressed("Shooting") and can_shoot:
-		var projectile = player_projectile_scene.instantiate()
-		get_tree().current_scene.add_child(projectile)
-
-		var cam_transform = camera.global_transform
-
-		var spawn_position = cam_transform.origin
-		spawn_position += cam_transform.basis.x * projectile_x_offset
-		spawn_position += cam_transform.basis.y * projectile_y_offset
-		spawn_position += cam_transform.basis.z * projectile_z_offset
-
-		projectile.global_transform.origin = spawn_position
-		projectile.global_transform.basis = cam_transform.basis
-
-		projectile_cooldown_timer.start()
-		can_shoot = false
 
 # --- Handle Sliding States ---
 func _enter_slide() -> void:
@@ -612,3 +623,6 @@ func _on_wall_jump_push_duration_timeout() -> void:
 
 func _on_projectile_cooldown_timeout() -> void:
 	can_shoot = true
+
+func _on_player_death() -> void:
+	player_death_audio.play_random_audio()

@@ -1,0 +1,9 @@
+[gd_scene format=3 uid="uid://bqra77lspibev"]
+
+[ext_resource type="AudioStream" uid="uid://0cr2n36vuldy" path="res://Audio/Music/bigmode1.mp3" id="1_2wnsa"]
+[ext_resource type="Script" uid="uid://bue4sgrkxbrnh" path="res://Systems/globals/music_player.gd" id="2_fdr1j"]
+
+[node name="MusicPlayer" type="AudioStreamPlayer" unique_id=1286570808]
+stream = ExtResource("1_2wnsa")
+autoplay = true
+script = ExtResource("2_fdr1j")
