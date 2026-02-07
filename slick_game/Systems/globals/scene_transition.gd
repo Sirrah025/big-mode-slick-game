@@ -1,5 +1,8 @@
 extends CanvasLayer
 
+func _ready():
+	fade_out()
+
 func fade_in() -> void:
 	$AnimationPlayer.play("Fade In")
 	await $AnimationPlayer.animation_finished
